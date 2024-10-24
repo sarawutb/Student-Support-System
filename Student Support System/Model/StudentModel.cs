@@ -49,7 +49,7 @@ namespace Student_Support_System.Model
         private void SetNameStd()
         {
             var lst = _fullName.Split(' ');
-            if (lst.Length >= 2)
+            if(lst.Length >= 2)
             {
                 firstNameStd = lst[0];
                 lastNameStd = lst[1];

@@ -1,7 +1,6 @@
 ﻿@using Student_Support_System.Utility
-@using ViewModel;
+@using Student_Support_System.ViewModel;
 @page "/CreareStudent"
-@inject CreareStudentSupportMasterViewModel viewModel
 
 <div class="content-body">
     <!-- row -->
@@ -51,7 +50,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-2">
                                         <label class="card-title">ค้าหาจาก</label>
-                                        <select id="selSearchStd" class="form-control">
+                                        <select id="selSearchStd" class="form-control" @onchange="OnSelectTypeSearch">
                                             <option disabled selected="">===กรุณาเลือก===</option>
                                             <option value="1">รหัสนักศึกษา</option>
                                             <option value="2">ชื่อ-สกุล</option>
@@ -59,59 +58,59 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="card-title">ค้นหา</label>
-                                        <select class="form-control w-100" id="search-data-std"></select>
+                                        <select class="form-control w-100" id="search-data-std" @bind="@selectedValue"></select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">ระดับ</label>
-                                        <select id="levelStd" class="form-control">
-                                            <option disabled selected="">===กรุณาเลือก===</option>
+                                        <select disabled id="levelStd" class="form-control">
+                                            <option disabled selected="">===กรุณาค้นหา===</option>
                                             <option value="1">ปวช</option>
                                             <option value="2">ปวส</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="card-title">รหัสนักศึกษา</label>
-                                        <input id="noStd" @bind-value="viewModel.studentProfile.IdStd" readonly type="text" class="form-control"
+                                        <input id="noStd" readonly type="text" class="form-control"
                                                placeholder="รหัสนักศึกษา" />
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="card-title">คำนำหน้า</label>
-                                        <select readonly id="prefixStd" @bind="viewModel.studentProfile.GenreStd" class="form-control">
+                                        <select readonly id="prefixStd" class="form-control">
                                             <option value="1">นาย</option>
                                             <option value="2">นางสาว</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">ชื่อ</label>
-                                        <input id="fNameStd" @bind-value="viewModel.studentProfile.firstNameStd" readonly type="text" class="form-control" placeholder="ชื่อ" />
+                                        <input id="fNameStd" readonly @bind="@viewModel.studentProfile.firstNameStd" type="text" class="form-control" placeholder="ชื่อ" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">สกุล</label>
-                                        <input id="lNameStd" @bind-value="viewModel.studentProfile.lastNameStd" readonly type="text" class="form-control" placeholder="สกุล" />
+                                        <input id="lNameStd" readonly @bind="@viewModel.studentProfile.lastNameStd" type="text" class="form-control" placeholder="สกุล" />
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="card-title">ชื่อเล่น</label>
-                                        <input id="nickNameStd" @bind-value="viewModel.studentSupportMst.StdNicName" type="text" class="form-control" placeholder="ชื่อเล่น" />
+                                        <input id="nickNameStd" type="text" class="form-control" placeholder="ชื่อเล่น" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">สาขา</label>
-                                        <input @bind-value="viewModel.studentProfile.BranchNameStd" type="text" class="form-control" placeholder="สาขา" />
+                                        <input type="text" class="form-control" placeholder="สาขา" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">ระดับชั้น</label>
-                                        <input @bind-value="viewModel.studentProfile.DegreeStd" type="text" class="form-control" placeholder="ระดับชั้น" />
+                                        <input type="text" class="form-control" placeholder="ระดับชั้น" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">ห้อง</label>
-                                        <input @bind-value="viewModel.studentProfile.SectionStd" type="text" class="form-control" placeholder="ห้อง" />
+                                        <input type="text" class="form-control" placeholder="ห้อง" />
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="card-title">เกิดวันที่</label>
-                                        <input @bind-value="viewModel.studentSupportMst.StdDateOfBirthSeparate.Day" type="text" class="form-control" placeholder="วันที่" />
+                                        <input type="text" class="form-control" placeholder="วันที่" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">เดือน</label>
-                                        <select id="inputState" @bind="viewModel.studentSupportMst.StdDateOfBirthSeparate.Month" class="form-control">
+                                        <select id="inputState" class="form-control">
                                             <option disabled selected="0">===กรุณาเลือก===</option>
                                             <option value="1">มกราคม</option>
                                             <option value="2">กุมภาพันธ์</option>
@@ -129,79 +128,79 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="card-title">ปี (พ.ศ.)</label>
-                                        <input @bind-value="viewModel.studentSupportMst.StdDateOfBirthSeparate.Year" type="text" class="form-control" placeholder="ปี" />
+                                        <input type="text" class="form-control" placeholder="ปี" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">เบอร์โทร</label>
-                                        <input @bind-value="viewModel.studentSupportMst.StdPhone" type="text" class="form-control" />
+                                        <input type="text" class="form-control" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">เบอร์โทรผู้ปกครอง</label>
-                                        <input @bind-value="viewModel.studentSupportMst.ParentsPhone" type="text" class="form-control" />
+                                        <input type="text" class="form-control" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">ชื่อหมู่บ้าน</label>
-                                        <input @bind-value="viewModel.studentSupportMst.StdAddress.VillageName" type="text" class="form-control" />
+                                        <input type="text" class="form-control" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">หมู่ที่</label>
-                                        <input @bind-value="viewModel.studentSupportMst.StdAddress.VillageNo" type="text" class="form-control" />
+                                        <input type="text" class="form-control" />
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="card-title">จังหวัด</label>
-                                        <select @bind="viewModel.studentSupportMst.StdAddress.IdProvinces" class="form-control">
+                                        <select class="form-control">
                                             <option disabled selected="">===กรุณาเลือก===</option>
                                         </select>
                                         <div class="form-group col-md-3">
                                             <label class="card-title">อำเภอ</label>
-                                            <select @bind="viewModel.studentSupportMst.StdAddress.IdDistricts" class="form-control">
+                                            <select class="form-control">
                                                 <option disabled selected="">===กรุณาเลือก===</option>
                                             </select>
                                         </div>ect>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="card-title">ตำบล</label>
-                                        <select @bind="viewModel.studentSupportMst.StdAddress.IdSubdistricts" class="form-control">
+                                        <select class="form-control">
                                             <option disabled selected="">===กรุณาเลือก===</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="card-title">รหัสไปรษณีย์</label>
-                                        <input readonly @bind-value="viewModel.studentSupportMst.StdAddress.ZipCode" type="text" class="form-control" />
+                                        <input readonly type="text" class="form-control" />
                                     </div>
                                     <fieldset class="form-group col-md-4">
                                         <label class="col-form-label card-title">ปัจจุบันพักอยู่กับ</label>
                                         <div class="col-sm-10">
                                             <div class="form-check">
                                                 <input class="form-check-input" id="radio-1" type="radio"
-                                                       name="gridRadios" value="1" @bind="viewModel.studentSupportMst.CurrentlyLivingWith" />
+                                                       name="gridRadios" />
                                                 <label class="form-check-label card-title" for="radio-1">
                                                     บิดามารดา
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" id="radio-2" type="radio"
-                                                       name="gridRadios" value="2" @bind="viewModel.studentSupportMst.CurrentlyLivingWith" />
+                                                       name="gridRadios" />
                                                 <label class="form-check-label card-title" for="radio-2">
                                                     บิดา
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" id="radio-3" type="radio"
-                                                       name="gridRadios" value="3" @bind="viewModel.studentSupportMst.CurrentlyLivingWith" />
+                                                       name="gridRadios" />
                                                 <label class="form-check-label card-title" for="radio-3">
                                                     มารดา
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" id="radio-4" type="radio"
-                                                       name="gridRadios" value="4" @bind="viewModel.studentSupportMst.CurrentlyLivingWith" />
+                                                       name="gridRadios" />
                                                 <label class="form-check-label card-title" for="radio-4">
                                                     บุคคลอื่น(ระบุ)
                                                 </label>
                                                 <div class="form-group" id="other-person-input" style="display: @(ShowOtherPersonInput ? "block" : "none")">
                                                     <label class="text-dark" for="other-person">โปรดระบุ:</label>
-                                                    <input @bind="viewModel.studentSupportMst.CurrentlyLivingWithOther" type="text" class="form-control" id="other-person" />
+                                                    <input type="text" class="form-control" id="other-person" />
                                                 </div>
                                             </div>
                                         </div>
@@ -361,15 +360,49 @@
 </div>
 
 @inject IJSRuntime JSRuntime
+@inject CreareStudentSupportMasterViewModel viewModel
 @code {
+    private bool ShowOtherPersonInput { get; set; }
+    private string selectedValue { get; set; }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             await StartJavaScriptDefault.StartJavaScript(JSRuntime);
+            //await JSRuntime.InvokeVoidAsync("loadScript", "select2-init.js", DotNetObjectReference.Create(this));
             await JSRuntime.InvokeVoidAsync("loadScript", "./js/view/CreareStudentSupportMaster.js");
+            await JSRuntime.InvokeVoidAsync("InitSelect2SearchDataStd", "search-data-std");
         }
 
-        viewModel.studentSupportMst.CurrentlyLivingWith = 2;
+        //viewModel.studentSupportMst.CurrentlyLivingWith = 2;
+    }
+
+    private async void OnSelectTypeSearch(ChangeEventArgs e)
+    {
+        if (e?.Value != null)
+        {
+            viewModel.SelectTypeSearch = int.Parse(e.Value.ToString());
+            viewModel.IsSearchStd = true;
+            Console.WriteLine(viewModel.SelectTypeSearch);
+        }
+        else
+        {
+            viewModel.IsSearchStd = false;
+        }
+        await JSRuntime.InvokeVoidAsync("SetSelect2SearchStd", viewModel.IsSearchStd, viewModel.SelectTypeSearch);
+    }
+
+    [JSInvokable("OnSelect2Change")]
+    public void OnSelect2Change(string value)
+    {
+        Console.WriteLine(value);
+        selectedValue = value;
+        StateHasChanged();
+    }
+
+    private void TestSelectData(ChangeEventArgs e)
+    {
+        Console.WriteLine(e);
     }
 }

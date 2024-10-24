@@ -9,7 +9,7 @@ namespace Student_Support_System.ViewModel
 
         }
 
-        private StudentModel _studentProfile;
+        private StudentModel _studentProfile = new StudentModel();
         public StudentModel studentProfile
         {
             get => _studentProfile;
@@ -20,7 +20,29 @@ namespace Student_Support_System.ViewModel
             }
         }
 
-        private StudentSupportMasterModel _studentSupportMst;
+        private int? _selectTypeSearch;
+        public int? SelectTypeSearch
+        {
+            get => _selectTypeSearch;
+            set
+            {
+                _selectTypeSearch = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isSearchStd;
+        public bool IsSearchStd
+        {
+            get => _isSearchStd;
+            set
+            {
+                _isSearchStd = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private StudentSupportMasterModel _studentSupportMst = new StudentSupportMasterModel();
         public StudentSupportMasterModel studentSupportMst
         {
             get => _studentSupportMst;

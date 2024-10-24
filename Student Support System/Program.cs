@@ -13,7 +13,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 // Conditional base address for HttpClient depending on build configuration
 #if DEBUG
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://192.168.1.41") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://192.168.10.220") });
 #else
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 #endif

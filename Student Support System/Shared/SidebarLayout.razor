@@ -1,0 +1,35 @@
+﻿@inject IJSRuntime JSRuntime
+
+<div class="quixnav">
+    <div class="quixnav-scroll">
+        <ul class="metismenu" id="menu">
+            <li class="nav-label first">เมนูหลัก</li>
+            <li>
+                <NavLink href="/" aria-expanded="false" Match="NavLinkMatch.All">
+                    <i class="icon icon-home"></i><span class="nav-text">หน้าหลัก</span>
+                </NavLink>
+            </li>
+            <li class="nav-label first">นักศึกษา</li>
+            <li class="mm-active">
+                <NavLink class="has-arrow" href="#" aria-expanded="false">
+                    <i class="icon icon-single-04"></i><span class="nav-text">ข้อมูลนักศึกษา</span>
+                </NavLink>
+                <ul aria-expanded="false">
+                    <li><NavLink href="#" class="mm-active">จัดการนักศึกษา</NavLink></li>
+                    <li><NavLink href="#">ใบลาออกนักศึกษา</NavLink></li>
+                    <li><NavLink href="#">ใบเชิญผู้ปกครอง</NavLink></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("loadScript", "./vendor/global/global.min.js");
+        }
+    }
+}

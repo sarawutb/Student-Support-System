@@ -1,0 +1,45 @@
+﻿@using Student_Support_System.Utility
+@inherits LayoutComponentBase
+@inject IJSRuntime JSRuntime
+
+<div class="page">
+    <main>
+        <NavHeader />
+        <HeaderLayout />
+        <SidebarLayout />
+        @Body
+        <FooterLayout />
+    </main>
+</div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await StartJavaScriptDefault.StartJavaScript(JSRuntime);
+        }
+    }
+}
+@*
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+ *@

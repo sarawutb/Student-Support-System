@@ -1,0 +1,42 @@
+﻿<div class="nav-header">
+    <NavLink href="/" class="brand-logo" Match="NavLinkMatch.All">
+        ระบบดูแลช่วยเหลือนักศึกษา
+        <!-- <img class="logo-abbr" src="./images/logo.png" alt="">
+        <img class="logo-compact" src="./images/logo-text.png" alt="">
+        <img class="brand-title" src="./images/logo-text.png" alt=""> -->
+    </NavLink>
+
+    <div class="nav-control">
+        <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+            <span class="line"></span><span class="line"></span><span class="line"></span>
+        </div>
+    </div>
+</div>
+
+@inject IJSRuntime JSRuntime
+@code {
+    private bool _collapseNavMenu;
+    public bool collapseNavMenu
+    {
+        get => _collapseNavMenu;
+        set
+        {
+            _collapseNavMenu = value;
+            NavMenuCssClass = _collapseNavMenu ? "hamburger" : "hamburger is-active";
+        }
+    }
+    private string? NavMenuCssClass { get; set; }
+
+    protected override void OnInitialized()
+    {
+        collapseNavMenu = true;
+        base.OnInitialized();
+    }
+
+    private async Task ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+        await JSRuntime.InvokeVoidAsync("OnToggleNavMenu", collapseNavMenu);
+
+    }
+}

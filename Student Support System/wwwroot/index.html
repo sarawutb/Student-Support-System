@@ -43,33 +43,26 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
-    <script>function loadScript2(src, callback) {
-            var script = document.createElement("script");
-            script.type = "text/javascript";
-            script.src = src;
-            script.async = true; // Optional: Load script asynchronously
-
-            // Call the callback function once the script is loaded
-            script.onload = function () {
-                if (callback) callback();
-            };
-
-            // Append the script to the document head
-            document.head.appendChild(script);
-        }
-
+    <script>
         function loadScript(url) {
-            // Remove existing script if it exists
             const existingScript = document.querySelector(`script[src="${url}"]`);
             if (existingScript) {
                 existingScript.remove();
             }
-
-            // Create and append new script
-            const script = document.createElement('script');
-            script.src = url;
-            script.async = true; // Optional: Load script asynchronously
-            document.head.appendChild(script);
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.type = "text/javascript";
+                script.src = url;
+                script.async = true; 
+                script.onload = function () {
+                    resolve();
+                };
+                script.onerror = function () {
+                    console.error(`Failed to load script: ${url}`);
+                    reject();
+                };
+                document.head.appendChild(script);
+            });
         }
 
         function OnToggleNavMenu(isToggle) {
@@ -82,7 +75,8 @@
     <script src="./vendor/global/global.min.js"></script>
     <script src="./js/quixnav-init.js"></script>
     <script src="./js/custom.min.js"></script>
-
+    <script src="./js/widget/dialog.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 

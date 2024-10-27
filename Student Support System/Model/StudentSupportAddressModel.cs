@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Student_Support_System.Model
+namespace StudentSupportSystem.Model
 {
     public class StudentSupportAddressModel : ModifyData
     {

@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Student_Support_System.Service.Implement;
-using Student_Support_System.Service.Interface;
-using Student_Support_System.ViewModel;
-using Student_Support_System;
+using StudentSupportSystem.Service.Implement;
+using StudentSupportSystem.Service.Interface;
+using StudentSupportSystem.ViewModel;
+using StudentSupportSystem;
+using Microsoft.JSInterop;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -23,6 +24,11 @@ builder.Services.AddScoped<IHttpClientService, HttpClientService>(); // Adjusted
 builder.Services.AddSingleton<BaseViewModel>();
 builder.Services.AddScoped<StudentSupportMasterViewModel>();
 builder.Services.AddScoped<CreareStudentSupportMasterViewModel>();
+builder.Services.AddSingleton<IDialogService>(d =>
+{
+    var js = d.GetRequiredService<IJSRuntime>()!;
+    return new DialogService(js);
+});
 
 // Build and run the app
 await builder.Build().RunAsync();

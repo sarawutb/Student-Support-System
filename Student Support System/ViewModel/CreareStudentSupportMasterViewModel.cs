@@ -1,21 +1,23 @@
-﻿using Student_Support_System.Model;
+﻿using Microsoft.JSInterop;
+using Newtonsoft.Json;
+using StudentSupportSystem.Model;
 
-namespace Student_Support_System.ViewModel
+namespace StudentSupportSystem.ViewModel
 {
     public class CreareStudentSupportMasterViewModel : BaseViewModel
     {
         public CreareStudentSupportMasterViewModel()
         {
-
         }
 
-        private StudentModel _studentProfile = new StudentModel();
-        public StudentModel studentProfile
+        private StudentModel? _studentProfile = new StudentModel();
+        public StudentModel? StudentProfile
         {
             get => _studentProfile;
             set
             {
                 _studentProfile = value;
+                _studentProfile?.SetNameStd();
                 OnPropertyChanged();
             }
         }
@@ -42,13 +44,58 @@ namespace Student_Support_System.ViewModel
             }
         }
 
-        private StudentSupportMasterModel _studentSupportMst = new StudentSupportMasterModel();
-        public StudentSupportMasterModel studentSupportMst
+        private string? _IdStd;
+        public string? IdStd
+        {
+            get => _IdStd;
+            set
+            {
+                _IdStd = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isCurrentlyLivingWithOther;
+        public bool IsCurrentlyLivingWithOther
+        {
+            get => _isCurrentlyLivingWithOther;
+            set
+            {
+                _isCurrentlyLivingWithOther = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        private string? _nickNameStd;
+        public string? NickNameStd
+        {
+            get => _nickNameStd;
+            set
+            {
+                _nickNameStd = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private StudentSupportMasterModel? _studentSupportMst = new StudentSupportMasterModel();
+        public StudentSupportMasterModel? studentSupportMst
         {
             get => _studentSupportMst;
             set
             {
                 _studentSupportMst = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TeacherModel? _teacherProfile = new TeacherModel();
+        public TeacherModel? TeacherProfile
+        {
+            get => _teacherProfile;
+            set
+            {
+                _teacherProfile = value;
+                _teacherProfile?.SetNameTeacher();
                 OnPropertyChanged();
             }
         }

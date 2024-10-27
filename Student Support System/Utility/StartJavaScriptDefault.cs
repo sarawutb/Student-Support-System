@@ -1,6 +1,6 @@
 ﻿using Microsoft.JSInterop;
 
-namespace Student_Support_System.Utility
+namespace StudentSupportSystem.Utility
 {
     public class StartJavaScriptDefault
     {

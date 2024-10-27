@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Student Support System", "Student Support System\Student Support System.csproj", "{E556E186-F753-4CFB-91B7-F02373B8981E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentSupportSystem", "Student Support System\StudentSupportSystem.csproj", "{E556E186-F753-4CFB-91B7-F02373B8981E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

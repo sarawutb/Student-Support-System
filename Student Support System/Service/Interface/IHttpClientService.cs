@@ -1,4 +1,4 @@
-﻿namespace Student_Support_System.Service.Interface
+﻿namespace StudentSupportSystem.Service.Interface
 {
     public interface IHttpClientService
     {

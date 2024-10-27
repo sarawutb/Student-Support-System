@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Student_Support_System.ViewModel
+namespace StudentSupportSystem.ViewModel
 {
     public class BaseViewModel : INotifyPropertyChanged
     {

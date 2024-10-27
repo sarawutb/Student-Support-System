@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
-using Student_Support_System.Service.Interface;
+using StudentSupportSystem.Service.Interface;
 using System.Text;
 
-namespace Student_Support_System.Service.Implement
+namespace StudentSupportSystem.Service.Implement
 {
     public class HttpClientService : IHttpClientService
     {

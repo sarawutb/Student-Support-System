@@ -1,6 +1,6 @@
-﻿using Student_Support_System.Service.Interface;
+﻿using StudentSupportSystem.Service.Interface;
 
-namespace Student_Support_System.ViewModel
+namespace StudentSupportSystem.ViewModel
 {
     public class StudentSupportMasterViewModel : BaseViewModel
     {

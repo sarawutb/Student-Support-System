@@ -73,3 +73,8 @@ a, .btn-link {
     border-radius: 5px;
     border: 2px dashed #343957;
 }
+
+.custom-swal {
+    width : 100%;
+    max-width: 700px;
+}

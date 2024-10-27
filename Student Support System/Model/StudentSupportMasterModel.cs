@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Student_Support_System.Model
+namespace StudentSupportSystem.Model
 {
     public class StudentSupportMasterModel : ModifyData
     {
@@ -8,20 +8,20 @@ namespace Student_Support_System.Model
         public int Id { get; set; }
 
         [JsonProperty("IdStd")]
-        public int IdStd { get; set; }
+        public int? IdStd { get; set; }
 
         [JsonProperty("StdPrefix")]
-        public int StdPrefix { get; set; }
+        public int? StdPrefix { get; set; }
 
         [JsonProperty("Std_NicName")]
         public string? StdNicName { get; set; }
 
         [JsonProperty("Std_Age")]
-        public int StdAge { get; set; }
+        public int? StdAge { get; set; }
 
-        private DateTime _stdDateOfBirth;
+        private DateTime? _stdDateOfBirth;
         [JsonProperty("Std_DateOfBirth")]
-        public DateTime StdDateOfBirth
+        public DateTime? StdDateOfBirth
         {
             get => _stdDateOfBirth;
             set
@@ -30,16 +30,16 @@ namespace Student_Support_System.Model
                 SetStdDateOfBirthSeparate();
             }
         }
-        public StdDateOfBirthModel StdDateOfBirthSeparate { get; set; }
+        public StdDateOfBirthModel? StdDateOfBirthSeparate { get; set; }
 
         [JsonProperty("Currently_living_with")]
-        public int CurrentlyLivingWith { get; set; }
+        public int? CurrentlyLivingWith { get; set; }
 
         [JsonProperty("Currently_living_with_other")]
         public string? CurrentlyLivingWithOther { get; set; }
 
         [JsonProperty("Id_Teacher")]
-        public int IdTeacher { get; set; }
+        public int? IdTeacher { get; set; }
 
         [JsonProperty("Parents_Phone")]
         public string? ParentsPhone { get; set; }
@@ -48,16 +48,17 @@ namespace Student_Support_System.Model
         public string? StdPhone { get; set; }
 
         [JsonProperty("Std_Address")]
-        public StudentSupportAddressModel StdAddress { get; set; }
+        public StudentSupportAddressModel? StdAddress { get; set; }
 
         private void SetStdDateOfBirthSeparate()
         {
-            StdDateOfBirthSeparate = new StdDateOfBirthModel
-            {
-                Day = _stdDateOfBirth.Day,
-                Month = _stdDateOfBirth.Month,
-                Year = _stdDateOfBirth.Year,
-            };
+            if (_stdDateOfBirth != null)
+                StdDateOfBirthSeparate = new StdDateOfBirthModel
+                {
+                    Day = _stdDateOfBirth.Value.Day,
+                    Month = _stdDateOfBirth.Value.Month,
+                    Year = _stdDateOfBirth.Value.Year,
+                };
         }
     }
 

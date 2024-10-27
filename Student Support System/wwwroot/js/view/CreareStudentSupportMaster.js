@@ -46,6 +46,7 @@ unitTestInput.addEventListener('input', function () {
 var dataStd = [];
 
 function initializeSelect2SearchDataStd(selectId) {
+    alert("test");
     $(document).ready(function () {
         $('#search-data-std').prop('disabled', true);
 

@@ -2,11 +2,11 @@
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
-    <AssemblyName>StudentSupportSystem</AssemblyName>
-    <Nullable>enable</Nullable>
+		<AssemblyName>StudentSupportSystem</AssemblyName>
+		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
-	<PropertyGroup Condition=" '$(RunConfiguration)' == 'StudentSupportSystem' ">
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'Student Support System' ">
 		<ExternalConsole>true</ExternalConsole>
 	</PropertyGroup>
 	<ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using StudentSupportSystem.Model;
 using StudentSupportSystem.Service.Interface;
 using System.Text;
 
@@ -18,10 +19,10 @@ namespace StudentSupportSystem.Service.Implement
                 var request = new HttpRequestMessage(HttpMethod.Get, Url);
                 var response = await _httpClient.SendAsync(request);
                 var json = await response.Content.ReadAsStringAsync();
-                var data = JsonConvert.DeserializeObject<T>(json);
-                return data;
+                var data = JsonConvert.DeserializeObject<ResponseData<T>>(json);
+                return data.Result;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 throw;
             }
@@ -34,10 +35,10 @@ namespace StudentSupportSystem.Service.Implement
                 var request = new HttpRequestMessage(HttpMethod.Get, Url);
                 var response = await _httpClient.SendAsync(request);
                 var json = await response.Content.ReadAsStringAsync();
-                var data = JsonConvert.DeserializeObject<T>(json);
-                return data;
+                var data = JsonConvert.DeserializeObject<ResponseData<T>>(json);
+                return data.Result;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 throw;
             }
@@ -52,10 +53,10 @@ namespace StudentSupportSystem.Service.Implement
                 request.Content = content;
                 var response = await _httpClient.SendAsync(request);
                 var json = await response.Content.ReadAsStringAsync();
-                var data = JsonConvert.DeserializeObject<TR>(json);
-                return data;
+                var data = JsonConvert.DeserializeObject<ResponseData<TR>>(json);
+                return data.Result;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 throw;
             }
@@ -70,10 +71,10 @@ namespace StudentSupportSystem.Service.Implement
                 request.Content = content;
                 var response = await _httpClient.SendAsync(request);
                 var json = await response.Content.ReadAsStringAsync();
-                var data = JsonConvert.DeserializeObject<TR>(json);
-                return data;
+                var data = JsonConvert.DeserializeObject<ResponseData<TR>>(json);
+                return data.Result;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 throw;
             }

@@ -14,14 +14,14 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 // Conditional base address for HttpClient depending on build configuration
 #if DEBUG
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://192.168.10.220") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://192.168.10.220") });
 #else
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 #endif
 
 // Register services for dependency injection
 builder.Services.AddScoped<IHttpClientService, HttpClientService>(); // Adjusted to scoped
-builder.Services.AddSingleton<BaseViewModel>();
+builder.Services.AddScoped<BaseViewModel>();
 builder.Services.AddScoped<StudentSupportMasterViewModel>();
 builder.Services.AddScoped<CreareStudentSupportMasterViewModel>();
 builder.Services.AddSingleton<IDialogService>(d =>

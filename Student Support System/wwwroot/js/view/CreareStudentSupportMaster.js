@@ -73,6 +73,11 @@ function initializeSelect2SearchDataTeacher(dotNetHelper) {
             },
             minimumInputLength: 1,
             placeholder: '===กรุณาค้นหา===',
+            language: {
+                inputTooShort: function () {
+                    return "กรุณากรอกข้อมูล";
+                }
+            },
             allowClear: true
         });
 
@@ -95,6 +100,7 @@ function initializeSelect2SearchDataStd(dotNetHelper) {
                 url: BASE_API + "/api/GetStudentByNameAndStdId",
                 dataType: 'json',
                 delay: 250,
+                timeout: 3000,
                 data: function (params) {
                     return {
                         type: searchType,
@@ -112,10 +118,22 @@ function initializeSelect2SearchDataStd(dotNetHelper) {
                         })
                     };
                 },
-                cache: true
+                cache: true,
+                error: function (jqXHR, textStatus, errorThrown) {
+                    if (textStatus === 'timeout') {
+                        DialogError('The search request timed out. Please try again.');
+                    } else {
+                        DialogError('An error occurred: ' + errorThrown);
+                    }
+                }
             },
             minimumInputLength: 1,
             placeholder: '===กรุณาค้นหา===',
+            language: {
+                inputTooShort: function () {
+                    return "กรุณากรอกข้อมูล";
+                }
+            },
             allowClear: true
         });
 

@@ -116,6 +116,17 @@ namespace StudentSupportSystem.ViewModel
             }
         }
 
+        private List<int> _lstBreachDisciplineMstId = new List<int>();
+        public List<int> lstBreachDisciplineMstId
+        {
+            get => _lstBreachDisciplineMstId;
+            set
+            {
+                _lstBreachDisciplineMstId = value;
+                OnPropertyChanged();
+            }
+        }
+
         private TeacherModel? _teacherProfile = new TeacherModel();
         public TeacherModel? TeacherProfile
         {

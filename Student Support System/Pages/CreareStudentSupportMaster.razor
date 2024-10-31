@@ -157,7 +157,7 @@
                                             <option disabled selected value="">===กรุณาเลือก===</option>
                                             @foreach (var p in _viewModel.LstPovince)
                                             {
-                                            <option value="@p.Id">@p.NameInThai</option>
+                                                <option value="@p.Id">@p.NameInThai</option>
                                             }
                                         </select>
 
@@ -168,7 +168,7 @@
                                             <option disabled selected value="">===กรุณาเลือก===</option>
                                             @foreach (var d in _viewModel.LstDistrict)
                                             {
-                                            <option value="@d.Id">@d.NameInThai</option>
+                                                <option value="@d.Id">@d.NameInThai</option>
                                             }
                                         </select>
                                     </div>
@@ -178,7 +178,7 @@
                                             <option disabled selected value="">===กรุณาเลือก===</option>
                                             @foreach (var d in _viewModel.LstSubDistrict)
                                             {
-                                            <option value="@d.Id">@d.NameInThai</option>
+                                                <option value="@d.Id">@d.NameInThai</option>
                                             }
                                         </select>
                                     </div>
@@ -261,106 +261,27 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group col-md-4">
-                                        <div class="form-check mb-2">
-                                            <input type="checkbox" class="form-check-input" id="check1">
-                                            <label class="form-check-label" for="check1">
-                                                <b class="card-title">แต่งกายไม่ถูกระเบียบ</b>
-                                            </label>
+                                    @for (var index = 0; index < _viewModel.LstBreachDisciplineMst.Count; index++)
+                                    {<div class="form-group col-md-4">
+
+                                            @for (var row = 1; row <= 3; row++)
+                                            {
+                                                var idCheck = $"check{index}{row}";
+                                                var itemId = _viewModel.LstBreachDisciplineMst[index].Id; // Store ID in a variable
+                                                <div class="form-check mb-2">
+                                                    <input type="checkbox"
+                                                           class="form-check-input"
+                                                           id="@idCheck"
+                                                           value="@itemId"
+                                                           @onchange="(e) => UpdateSelectedIds(itemId, e.Value)">
+                                                    <label class="form-check-label" for="@idCheck">
+                                                        <b class="card-title">@_viewModel.LstBreachDisciplineMst[index].Name</b>
+                                                    </label>
+                                                </div>
+                                                index++;
+                                            }
                                         </div>
-                                        <div class="form-check mb-2">
-                                            <input type="checkbox" class="form-check-input" id="check2">
-                                            <label class="form-check-label" for="check2">
-                                                <b class="card-title">ชู้สาว</b>
-                                            </label>
-                                        </div>
-                                        <div class="form-check disabled">
-                                            <input type="checkbox" class="form-check-input" id="check3">
-                                            <label class="form-check-label" for="check3">
-                                                <b class="card-title">ดื่มของมึนเมาในสถานศึกษา</b>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <div class="form-check mb-2">
-                                            <input type="checkbox" class="form-check-input" id="check1">
-                                            <label class="form-check-label" for="check1">
-                                                <b class="card-title">สูบบุหรี่ในสถานศึกษา</b>
-                                            </label>
-                                        </div>
-                                        <div class="form-check mb-2">
-                                            <input type="checkbox" class="form-check-input" id="check2">
-                                            <label class="form-check-label" for="check2">
-                                                <b class="card-title">ร้องเท้าผิดระเบียบ</b>
-                                            </label>
-                                        </div>
-                                        <div class="form-check disabled">
-                                            <input type="checkbox" class="form-check-input" id="check3">
-                                            <label class="form-check-label" for="check3">
-                                                <b class="card-title">กางเกงผิดระเบียบ</b>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <div class="form-check mb-2">
-                                            <input type="checkbox" class="form-check-input" id="check1">
-                                            <label class="form-check-label" for="check1">
-                                                <b class="card-title">เนคไท</b>
-                                            </label>
-                                        </div>
-                                        <div class="form-check mb-2">
-                                            <input type="checkbox" class="form-check-input" id="check2">
-                                            <label class="form-check-label" for="check2">
-                                                <b class="card-title">กระโปรงผิดระเบียบ</b>
-                                            </label>
-                                        </div>
-                                        <div class="form-check disabled">
-                                            <input type="checkbox" class="form-check-input" id="check3">
-                                            <label class="form-check-label" for="check3">
-                                                <b class="card-title">ยาเสพติดประเภทร้ายแรง</b>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <div class="form-check mb-2">
-                                            <input type="checkbox" class="form-check-input" id="check1">
-                                            <label class="form-check-label" for="check1">
-                                                <b class="card-title">ทะเลาะวิวาท</b>
-                                            </label>
-                                        </div>
-                                        <div class="form-check mb-2">
-                                            <input type="checkbox" class="form-check-input" id="check2">
-                                            <label class="form-check-label" for="check2">
-                                                <b class="card-title">พกอาวุธ</b>
-                                            </label>
-                                        </div>
-                                        <div class="form-check disabled">
-                                            <input type="checkbox" class="form-check-input" id="check3">
-                                            <label class="form-check-label" for="check3">
-                                                <b class="card-title">การพนัน</b>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <div class="form-check mb-2">
-                                            <input type="checkbox" class="form-check-input" id="check1">
-                                            <label class="form-check-label" for="check1">
-                                                <b class="card-title">หลบ</b>
-                                            </label>
-                                        </div>
-                                        <div class="form-check mb-2">
-                                            <input type="checkbox" class="form-check-input" id="check2">
-                                            <label class="form-check-label" for="check2">
-                                                <b class="card-title">ส่งต่องานปกครอง ดำเนินการต่อ</b>
-                                            </label>
-                                        </div>
-                                        <div class="form-check disabled">
-                                            <input type="checkbox" class="form-check-input" id="check3">
-                                            <label class="form-check-label" for="check3">
-                                                <b class="card-title">อื่นๆ</b>
-                                            </label>
-                                        </div>
-                                    </div>
+                                    }
                                 </div>
                                 <div class="pull-right">
                                     <button type="button" @onclick="OnSave"
@@ -477,5 +398,23 @@
         }
         Console.WriteLine(data);
         return Task.FromResult(true);
+    }
+
+    private void UpdateSelectedIds(int id, object obj)
+    {
+        var isChecked = (bool)obj;
+        if (isChecked)
+        {
+            // If checked, add to the list
+            if (!_viewModel.lstBreachDisciplineMstId.Contains(id))
+            {
+                _viewModel.lstBreachDisciplineMstId.Add(id);
+            }
+        }
+        else
+        {
+            // If unchecked, remove from the list
+            _viewModel.lstBreachDisciplineMstId.Remove(id);
+        }
     }
 }

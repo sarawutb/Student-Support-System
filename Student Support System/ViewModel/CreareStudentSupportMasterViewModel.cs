@@ -1,4 +1,8 @@
-﻿using System.Reflection.Emit;
+﻿using System.Collections;
+using System.IO;
+using System.Reflection.Emit;
+using System.Reflection.PortableExecutable;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using StudentSupportSystem.Model;
@@ -104,6 +108,16 @@ namespace StudentSupportSystem.ViewModel
                 OnPropertyChanged();
             }
         }
+        private StdDateOfBirthModel? _stdDateOfBirth = new StdDateOfBirthModel();
+        public StdDateOfBirthModel? StdDateOfBirth
+        {
+            get => _stdDateOfBirth;
+            set
+            {
+                _stdDateOfBirth = value;
+                OnPropertyChanged();
+            }
+        }
 
         private List<BreachDisciplineMasterModel> _lstBreachDisciplineMst = new List<BreachDisciplineMasterModel>();
         public List<BreachDisciplineMasterModel> LstBreachDisciplineMst
@@ -146,7 +160,7 @@ namespace StudentSupportSystem.ViewModel
             set
             {
                 _provinceId = value;
-                if(_provinceId != null)
+                if (_provinceId != null)
                     ResetPovince();
                 GetDistrict();
                 OnPropertyChanged();
@@ -171,7 +185,7 @@ namespace StudentSupportSystem.ViewModel
             set
             {
                 _districtId = value;
-                if(_districtId != null)
+                if (_districtId != null)
                 {
                     ResetSubDistrict();
                     GetSubDistrict();
@@ -201,9 +215,59 @@ namespace StudentSupportSystem.ViewModel
             set
             {
                 _subDistrictId = value;
-                if(_subDistrictId != null)
+                if (_subDistrictId != null)
                     ZipCode = _lstSubDistrict.Find(d => d.Id == _subDistrictId)?.ZipCode.ToString();
                 OnPropertyChanged();
+            }
+        }
+
+        private StudentSupportAddressModel _studentSupportAddress = new StudentSupportAddressModel();
+        public StudentSupportAddressModel StudentSupportAddress
+        {
+            get => _studentSupportAddress;
+            set
+            {
+                _studentSupportAddress = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private FileCenterModel? _fileCenter;
+        public FileCenterModel? FileCenter
+        {
+            get => _fileCenter;
+            set
+            {
+                _fileCenter = value;
+                OnPropertyChanged();
+            }
+        }
+          
+        private IBrowserFile? _fileImageStd;
+        public IBrowserFile? FileImageStd
+        {
+            get => _fileImageStd;
+            set
+            {
+                _fileImageStd = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public void RemoveFileCenter()
+        {
+            FileCenter = null;
+        }
+
+        public void SetFileCenter(IBrowserFile? FileImageStd)
+        {
+            if (FileImageStd != null)
+            {
+                FileCenter = new FileCenterModel
+                {
+                    NameFile = FileImageStd.Name,
+                    ContentType = FileImageStd.ContentType
+                };
             }
         }
 
@@ -227,9 +291,9 @@ namespace StudentSupportSystem.ViewModel
             {
                 LstPovince = await _httpClient.Get<List<PovinceModel>>("api/GetProvince");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                _dialogService.DialogError(ex.ToString());
+                await _dialogService.DialogError(ex);
             }
         }
 
@@ -241,9 +305,9 @@ namespace StudentSupportSystem.ViewModel
                 LstSubDistrict = new List<SubDistrictModel>();
                 LstDistrict = await _httpClient.Get<List<DistrictModel>>($"api/GetDistrict?provinceId={ProvinceId}");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                _dialogService.DialogError(ex.ToString());
+                await _dialogService.DialogError(ex);
             }
         }
 
@@ -254,9 +318,9 @@ namespace StudentSupportSystem.ViewModel
                 SubDistrictId = null;
                 LstSubDistrict = await _httpClient.Get<List<SubDistrictModel>>($"api/GetSubDistrict?districtId={DistrictId}");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                _dialogService.DialogError(ex.ToString());
+                await _dialogService.DialogError(ex);
             }
         }
 
@@ -267,9 +331,9 @@ namespace StudentSupportSystem.ViewModel
                 LstBreachDisciplineMst = await _httpClient.Get<List<BreachDisciplineMasterModel>>("api/GetBreachDisciplineMaster");
                 Console.WriteLine(LstBreachDisciplineMst.Count > 0);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                _dialogService.DialogError(ex.ToString());
+                await _dialogService.DialogError(ex);
             }
         }
 
@@ -290,6 +354,42 @@ namespace StudentSupportSystem.ViewModel
             SubDistrictId = null;
             LstSubDistrict = new List<SubDistrictModel>();
             ZipCode = null;
+        }
+
+        public async Task OnSaveData()
+        {
+            try
+            {
+                using var content = new MultipartFormDataContent();
+                var fileContent = new StreamContent(FileImageStd.OpenReadStream());
+                fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(FileImageStd.ContentType);
+                content.Add(fileContent, "files[]", FileImageStd.Name);
+                var UploadFile = await _httpClient.UploadFile< UploadFileResponseModel>("api/UploadFiles", content);
+
+                if (UploadFile.Data.Count > 0)
+                {
+                    FileCenter.NameFile = UploadFile.Data[0].FileName;
+                    FileCenter.PathFile = UploadFile.Data[0].PathFile;
+                    StudentSupportAddress.IdProvinces = ProvinceId ?? 0;
+                    StudentSupportAddress.IdDistricts = DistrictId ?? 0;
+                    StudentSupportAddress.IdSubdistricts = SubDistrictId ?? 0;
+                    StudentSupportAddress.ZipCode = ZipCode;
+                    _studentSupportMst.StdAddress = StudentSupportAddress;
+                    _studentSupportMst.StdDateOfBirthSeparate = StdDateOfBirth;
+                    _studentSupportMst.IdStd = StudentProfile.IdStd;
+                    _studentSupportMst.CreateBy = 102;
+                    _studentSupportMst.CreateDate = DateTime.Now;
+                    _studentSupportMst.Std_FileCenter = FileCenter;
+                    //await _httpClient.Post<StudentSupportMasterModel, bool>("api/CreateStudentSupportMaster", _studentSupportMst);
+                    var test = JsonConvert.SerializeObject(_studentSupportMst);
+                    await _dialogService.DialogSuccess(test);
+                    await _dialogService.DialogSuccess("ทำรายการสำเร็จ");
+                }
+            }
+            catch (Exception ex)
+            {
+                await _dialogService.DialogError(ex);
+            }
         }
     }
 }

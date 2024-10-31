@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace StudentSupportSystem.Model
 {
-    public partial class BreachDisciplineMasterModel
+    public partial class BreachDisciplineMasterModel : ModifyData
     {
         [JsonProperty("Id")]
         public int Id { get; set; }
@@ -16,18 +16,6 @@ namespace StudentSupportSystem.Model
 
         [JsonProperty("IsUse")]
         public int IsUse { get; set; }
-
-        [JsonProperty("CreateBy")]
-        public int CreateBy { get; set; }
-
-        [JsonProperty("CreateDate")]
-        public string CreateDate { get; set; }
-
-        [JsonProperty("EditBy")]
-        public int? EditBy { get; set; }
-
-        [JsonProperty("EditDate")]
-        public string? EditDate { get; set; }
     }
 }
 

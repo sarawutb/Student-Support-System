@@ -4,23 +4,23 @@ const removeButton = document.getElementById('btn-remove');
 const BASE_API = "https://192.168.10.220";
 var searchType = 0;
 
-uploadInput.addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            previewImage.src = e.target.result; // Set the image src to the uploaded file
-            removeButton.hidden = false; // Show the remove button
-        };
-        reader.readAsDataURL(file); // Read the file as a data URL
-    }
-});
+//uploadInput.addEventListener('change', function (event) {
+//    const file = event.target.files[0];
+//    if (file) {
+//        const reader = new FileReader();
+//        reader.onload = function (e) {
+//            previewImage.src = e.target.result; // Set the image src to the uploaded file
+//            removeButton.hidden = false; // Show the remove button
+//        };
+//        reader.readAsDataURL(file); // Read the file as a data URL
+//    }
+//});
 
-removeButton.addEventListener('click', function () {
-    uploadInput.value = ''; // Clear the file input
-    previewImage.src = '/images/upload_image_std.jpg'; // Reset to default image
-    removeButton.hidden = true; // Hide the remove button
-});
+//removeButton.addEventListener('click', function () {
+//    uploadInput.value = ''; // Clear the file input
+//    previewImage.src = '/images/upload_image_std.jpg'; // Reset to default image
+//    removeButton.hidden = true; // Hide the remove button
+//});
 
 const radios = document.querySelectorAll('input[name="gridRadios"]');
 const otherPersonInput = document.getElementById('other-person-input');
@@ -61,9 +61,10 @@ function initializeSelect2SearchDataTeacher(dotNetHelper) {
                 processResults: function (data) {
                     return {
                         results: data.result.map(function (item) {
+                            var genderName = item.gender_teacher == 1 ? 'นาย' : item.gender_teacher == 2 ? 'นาง' : 'นางสาว';
                             return {
                                 id: item.id_teacher,
-                                text: item.name_teacher,
+                                text: genderName + " " + item.name_teacher,
                                 data: item
                             };
                         })

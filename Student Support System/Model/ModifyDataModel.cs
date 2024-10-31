@@ -11,9 +11,9 @@ namespace StudentSupportSystem.Model
         public DateTime CreateDate { get; set; }
 
         [JsonProperty("EditBy")]
-        public int EditBy { get; set; }
+        public int? EditBy { get; set; }
 
         [JsonProperty("EditDate")]
-        public DateTime EditDate { get; set; }
+        public DateTime? EditDate { get; set; }
     }
 }

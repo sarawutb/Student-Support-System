@@ -12,22 +12,26 @@ namespace StudentSupportSystem.Service.Implement
         {
             _jSRuntime = jSRuntime;
         }
-        public async void DialogError(string msg)
+        public async Task DialogError(string msg)
         {
             await _jSRuntime.InvokeVoidAsync(Dialog.DialogError, msg);
+        }  
+        public async Task DialogError(Exception err)
+        {
+            await _jSRuntime.InvokeVoidAsync(Dialog.DialogError, err.ToString());
         }
 
-        public async void DialogInfo(string msg)
+        public async Task DialogInfo(string msg)
         {
             await _jSRuntime.InvokeVoidAsync(Dialog.DialogInfo, msg);
         }
 
-        public async void DialogSuccess(string msg)
+        public async Task DialogSuccess(string msg)
         {
             await _jSRuntime.InvokeVoidAsync(Dialog.DialogSuccess, msg);
         }
 
-        public async void DialogWarning(string msg)
+        public async Task DialogWarning(string msg)
         {
             await _jSRuntime.InvokeVoidAsync(Dialog.DialogWarning, msg);
         }

@@ -38,15 +38,26 @@
                             <div class="col-12">
                                 <div class="pull-right">
                                     <p class="card-title text-center">แนบรูปภาพ</p>
-                                    <input hidden type="file" id="upload-image" accept="image/*" />
+                                    <InputFile hidden type="file" OnChange="HandleFileSelected" id="upload-image" accept="image/*" />
                                     <label for="upload-image">
-                                        <img class="upload-image-user" src="/images/upload_image_std.jpg"
-                                             width="160" height="185" id="preview-image" />
+                                        @if (imageDataUrl != null)
+                                        {
+                                            <img class="upload-image-user" src="@imageDataUrl"
+                                                 width="160" height="185" />
+                                        }
+                                        else
+                                        {
+                                            <img class="upload-image-user" src="/images/upload_image_std.jpg"
+                                                 width="160" height="185" />
+                                        }
                                     </label>
-                                    <button hidden id="btn-remove" type="button"
-                                            class="btn btn-square btn-outline-danger btn-block">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                    @if (imageDataUrl != null)
+                                    {
+                                        <button type="button"
+                                                class="btn btn-square btn-outline-danger btn-block" @onclick="OnRemoveFile">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -111,11 +122,11 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="card-title">เกิดวันที่</label>
-                                        <input type="text" class="form-control" placeholder="วันที่" />
+                                        <input type="text" class="form-control" placeholder="วันที่" @bind="_viewModel.StdDateOfBirth.Day" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">เดือน</label>
-                                        <select id="inputState" class="form-control">
+                                        <select id="inputState" class="form-control" @bind="_viewModel.StdDateOfBirth.Month">
                                             <option disabled selected="0">===กรุณาเลือก===</option>
                                             <option value="1">มกราคม</option>
                                             <option value="2">กุมภาพันธ์</option>
@@ -133,23 +144,23 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="card-title">ปี (พ.ศ.)</label>
-                                        <input type="text" class="form-control" placeholder="ปี" />
+                                        <input type="text" class="form-control" placeholder="ปี (พ.ศ.) เกิด" @bind="_viewModel.StdDateOfBirth.Year" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">เบอร์โทร</label>
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" @bind="_viewModel.studentSupportMst.StdPhone" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">เบอร์โทรผู้ปกครอง</label>
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" @bind="_viewModel.studentSupportMst.ParentsPhone" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">ชื่อหมู่บ้าน</label>
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" @bind="@_viewModel.StudentSupportAddress.VillageName" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">หมู่ที่</label>
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" @bind="@_viewModel.StudentSupportAddress.VillageNo" />
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="card-title">จังหวัด</label>
@@ -218,7 +229,7 @@
                                                 </label>
                                                 <div class="form-group" id="other-person-input" style="display: @(_viewModel.IsCurrentlyLivingWithOther ? "block" : "none")">
                                                     <label class="text-dark" for="other-person">โปรดระบุ:</label>
-                                                    <input type="text" class="form-control" id="other-person" />
+                                                    <input type="text" class="form-control" id="other-person" @bind="@_viewModel.studentSupportMst.CurrentlyLivingWithOther" />
                                                 </div>
                                             </div>
                                         </div>
@@ -262,7 +273,8 @@
                                 </div>
                                 <div class="form-row">
                                     @for (var index = 0; index < _viewModel.LstBreachDisciplineMst.Count; index++)
-                                    {<div class="form-group col-md-4">
+                                    {
+                                        <div class="form-group col-md-4">
 
                                             @for (var row = 1; row <= 3; row++)
                                             {
@@ -333,7 +345,7 @@
             }
             catch (Exception ex)
             {
-                _dialogService.DialogError(ex.ToString());
+                await _dialogService.DialogError(ex.ToString());
             }
         }
 
@@ -359,9 +371,6 @@
     {
         _viewModel.studentSupportMst.CurrentlyLivingWith = data;
         _viewModel.IsCurrentlyLivingWithOther = (data == 4);
-        StateHasChanged();
-
-        Console.WriteLine(data);
     }
 
     private async Task OnSave(MouseEventArgs e)
@@ -369,7 +378,7 @@
         var state = await _dialogService.DialogYesOrNo("แน่ใจว่าต้องการบันทึก ?");
         if (state)
         {
-
+            await _viewModel.OnSaveData();
         }
     }
 
@@ -416,5 +425,34 @@
             // If unchecked, remove from the list
             _viewModel.lstBreachDisciplineMstId.Remove(id);
         }
+    }
+
+    private string? imageDataUrl;
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            try
+            {
+                const int maxFileSize = 4 * 1024 * 1024; // Set to 4 MB or your desired limit
+                using var stream = file.OpenReadStream(maxFileSize);
+                var buffer = new byte[file.Size];
+                await stream.ReadAsync(buffer);
+                imageDataUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+                _viewModel.FileImageStd = file;
+                _viewModel.SetFileCenter(file);
+            }
+            catch
+            {
+                await _dialogService.DialogWarning("ขนาดไฟล์ ต้องไม่เกิน 4 MB");
+            }
+        }
+    }
+    private async Task OnRemoveFile(MouseEventArgs e)
+    {
+        imageDataUrl = null;
+        _viewModel.RemoveFileCenter();
     }
 }

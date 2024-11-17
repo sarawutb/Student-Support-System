@@ -334,7 +334,6 @@
             try
             {
                 var objRef = DotNetObjectReference.Create(this);
-                await StartJavaScriptDefault.StartJavaScript(JSRuntime);
                 await JSRuntime.InvokeVoidAsync("loadScript", "./js/view/ProfileStudentSupportMaster.js");
                 await JSRuntime.InvokeVoidAsync("initializeSelect2SearchDataStd", objRef);
                 await JSRuntime.InvokeVoidAsync("initializeSelect2SearchDataTeacher", objRef);
@@ -374,7 +373,7 @@
         {
             await _viewModel.OnSaveData();
         }
-    } 
+    }
 
     private async Task OnClear(MouseEventArgs e)
     {
@@ -453,7 +452,7 @@
             }
         }
     }
-    
+
     private async Task OnRemoveFile(MouseEventArgs e)
     {
         _viewModel.ImageDataUrl = null;

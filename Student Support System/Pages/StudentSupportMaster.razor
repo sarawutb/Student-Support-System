@@ -122,7 +122,6 @@
     {
         if (firstRender)
         {
-            await StartJavaScriptDefault.StartJavaScript(JSRuntime);
             await JSRuntime.InvokeVoidAsync("loadScript", "./vendor/datatables/js/jquery.dataTables.min.js");
             await JSRuntime.InvokeVoidAsync("loadScript", "./js/view/StudentSupportMaster.js");
             await JSRuntime.InvokeVoidAsync("DataTablesAdd", "StudentSupportMaster-table");

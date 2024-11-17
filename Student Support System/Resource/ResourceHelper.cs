@@ -43,7 +43,7 @@ public static class ResourceSystemMessenger
     public static string Qty => ResourceHelper.GetString("Qty");
     public static string ManagerData => ResourceHelper.GetString("Manager Data");
     public static string AddStudent => ResourceHelper.GetString("Add Student");
-    public static string ListNameStudent => ResourceHelper.GetString("List Name Student"); 
+    public static string ListNameStudent => ResourceHelper.GetString("List Name Student");
     public static string All => ResourceHelper.GetString("All");
     public static string DataStudent => ResourceHelper.GetString("Data Student");
     public static string HistoryCommitCrime => ResourceHelper.GetString("History Commit A Crime");
@@ -55,6 +55,7 @@ public static class ResourceSystemMessenger
     public static string Title => ResourceHelper.GetString("Title");
     public static string ViewDetail => ResourceHelper.GetString("View Detail");
     public static string StudentSupportSystem => ResourceHelper.GetString("Student Support System");
+    public static string Logout => ResourceHelper.GetString("Logout");
     public static string Test => ResourceHelper.GetString("");
 
 

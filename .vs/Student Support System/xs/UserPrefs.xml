@@ -1,39 +1,31 @@
 ﻿<Properties StartupConfiguration="{E556E186-F753-4CFB-91B7-F02373B8981E}|Student Support System">
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Student Support System/Properties/launchSettings.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Student Support System/Pages/CreareStudentSupportMaster.razor">
     <Files>
-      <File FileName="Student Support System/Properties/launchSettings.json" Line="11" Column="28" />
-      <File FileName="Student Support System/Pages/CreareStudentSupportMaster.razor" />
-      <File FileName="Student Support System/wwwroot/js/view/CreareStudentSupportMaster.js" />
-      <File FileName="Student Support System/Program.cs" />
+      <File FileName="Student Support System/Pages/CreareStudentSupportMaster.razor" Line="262" Column="39" />
       <File FileName="Student Support System/ViewModel/CreareStudentSupportMasterViewModel.cs" />
-      <File FileName="Student Support System/ViewModel/StudentSupportMasterViewModel.cs" />
-      <File FileName="Student Support System/Pages/StudentSupportMaster.razor" />
-      <File FileName="Student Support System/Utility/StartJavaScriptDefault.cs" />
-      <File FileName="Student Support System/Model/StudentModel.cs" />
-      <File FileName="Student Support System/ViewModel/BaseViewModel.cs" />
-      <File FileName="Student Support System/Service/Implement/HttpClientService.cs" />
-      <File FileName="Student Support System/Model/StudentSupportAddressModel.cs" />
-      <File FileName="Student Support System/Student Support System.csproj" />
-      <File FileName="Student Support System/wwwroot/index.html" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Student Support System" selected="True">
-            <Node name="Student Support System" expanded="True" />
+          <Node name="Student Support System" expanded="True">
+            <Node name="StudentSupportSystem">
+              <Node name="Pages">
+                <Node name="CreareStudentSupportMaster.razor" selected="True" />
+              </Node>
+            </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.Student_220Support_220System PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/rang/Projects/PunishStudent/Student Support System/Student Support System/Program.cs" relfile="Student Support System/Program.cs" line="24" column="1" />
-      <Breakpoint file="/Users/rang/Projects/PunishStudent/Student Support System/Student Support System/Program.cs" relfile="Student Support System/Program.cs" line="16" column="1" />
-    </BreakpointStore>
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/rang/Projects/PunishStudent/Student Support System/Student Support System/Service/Implement/HttpClientService.cs" relfile="Student Support System/Service/Implement/HttpClientService.cs" line="38" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.StudentSupportSystem PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.ItemProperties.Student_220Support_220System PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MultiItemStartupConfigurations />
 </Properties>

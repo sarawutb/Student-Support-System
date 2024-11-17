@@ -18,51 +18,17 @@
 
                 <ul class="navbar-nav header-right">
                     <li class="nav-item dropdown header-profile">
-                        <button class="nav-link" role="button" data-toggle="dropdown" @onclick="OnClickDropdown">
+                        <a class="nav-link" type="button" role="button" data-toggle="dropdown" @onclick="OnClickDropdown">
                             <i class="mdi mdi-account"></i>
-                        </button>
+                        </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="./app-profile.html" class="dropdown-item">
-                                <i class="icon-user"></i>
-                                <span class="ml-2">Profile </span>
-                            </a>
-                            <a href="./email-inbox.html" class="dropdown-item">
-                                <i class="icon-envelope-open"></i>
-                                <span class="ml-2">Inbox </span>
-                            </a>
                             <a href="./page-login.html" class="dropdown-item">
                                 <i class="icon-key"></i>
-                                <span class="ml-2">Logout </span>
+                                <span class="ml-2">@ResourceSystemMessenger.Logout </span>
                             </a>
                         </div>
                     </li>
                 </ul>
-
-                <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-header d-block">
-                            <h4 class="card-title">Basic Dropdown</h4>
-                            <p class="m-0 subtitle">
-                                A dropdown menu is a toggleable menu that allows the user to choose one value from a predefined list
-                            </p>
-                        </div>
-                        <div class="card-body">
-
-                            <div class="basic-dropdown">
-                                <div class="dropdown">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                        Dropdown button
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Link 1</a>
-                                        <a class="dropdown-item" href="#">Link 2</a>
-                                        <a class="dropdown-item" href="#">Link 3</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </nav>
     </div>

@@ -46,7 +46,19 @@ namespace StudentSupportSystem.ViewModel
             {
                 LstBreachDisciplineMst = await _loadingService.LoadingAsync(_supportMasterService.GetBreachDisciplineMaster());
             }
-            catch (Exception ex)
+            catch(Exception ex)
+            {
+                await _dialogService.DialogErrorAsync(ex);
+            }
+        }
+
+        public async Task OnAddBreachDisciplineStd()
+        {
+            try
+            {
+                LstBreachDisciplineMst = await _loadingService.LoadingAsync(_supportMasterService.GetBreachDisciplineMaster());
+            }
+            catch(Exception ex)
             {
                 await _dialogService.DialogErrorAsync(ex);
             }

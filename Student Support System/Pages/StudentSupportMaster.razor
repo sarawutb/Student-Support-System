@@ -1,7 +1,9 @@
-﻿@using StudentSupportSystem.Utility
+﻿@using StudentSupportSystem.Pages.Modal
+@using StudentSupportSystem.Utility
 @using StudentSupportSystem.ViewModel;
+@inject StudentSupportMasterViewModel _viewModel
+
 @page "/"
-@inject StudentSupportMasterViewModel viewModel
 
 <div class="content-body">
     <!-- row -->
@@ -9,10 +11,6 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <NavLink href="/CreareStudent" class="btn btn-primary">
-                        <i class="fa fa-plus"></i>
-                        เพิ่มนักศึกษา
-                    </NavLink>
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -23,90 +21,82 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row g-3">
+                            <div class="col-auto">
+                                <label class="card-title mt-1"><b>ค้นหาจาก</b></label>
+                            </div>
+                            <div class="col-auto">
+                                <select class="form-control" @bind="_viewModel.SearchType">
+                                    <option value="0">@ResourceSystemMessenger.All</option>
+                                    <option value="1">@ResourceSystemMessenger.NameAndLastName</option>
+                                    <option value="2">@ResourceSystemMessenger.NumberStudent</option>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <input disabled="@_viewModel.IsSearchText" type="text" @bind-value="_viewModel.SearchText" class="form-control" placeholder="กรอกข้อมูลที่จะค้นหา">
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-primary mb-3" @onclick="async () => { await OnGetStudentSupportMaster(); }"><i class="fa fa-search"></i> ค้นหา</button>
+                            </div>
+                        </div>
+                        <NavLink href="/CreareStudent" class="btn btn-primary mb-3">
+                            <i class="fa fa-plus"></i>
+                            @ResourceSystemMessenger.AddStudent
+                        </NavLink>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title"><b>รายชื่อนักศึกษา</b></h4>
+                        <h4 class="card-title"><b>@ResourceSystemMessenger.ListNameStudent</b></h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="example" class="display" style="min-width: 845px">
+                            <table id="StudentSupportMaster-table" class="display" style="min-width: 845px;width:100%">
                                 <thead>
                                     <tr>
-                                        <th scope="col">ลำดับ</th>
-                                        <th scope="col">รหัสนักศึกษา</th>
-                                        <th scope="col">ชื่อ-สกุล</th>
-                                        <th scope="col">ระดับ</th>
-                                        <th scope="col">สาขา</th>
-                                        <th scope="col">ชั้นปี</th>
-                                        <th scope="col">ห้อง</th>
-                                        <th scope="col">จำนวนที่กระทำผิด</th>
-                                        <th scope="col">จัดการข้อมูล</th>
+                                        <th width="5%" scope="col">@ResourceSystemMessenger.Number</th>
+                                        <th width="10%" scope="col">@ResourceSystemMessenger.NumberStudent</th>
+                                        <th width="15%" scope="col">@ResourceSystemMessenger.NameAndLastName</th>
+                                        <th width="8%" scope="col">@ResourceSystemMessenger.Level</th>
+                                        <th width="12%" scope="col">@ResourceSystemMessenger.Branch</th>
+                                        <th width="5%" scope="col">@ResourceSystemMessenger.Year</th>
+                                        <th width="5%" scope="col">@ResourceSystemMessenger.Room</th>
+                                        <th width="5%" scope="col">@ResourceSystemMessenger.Qty</th>
+                                        <th width="25%" scope="col">@ResourceSystemMessenger.ManagerData</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1234567890</td>
-                                        <td>นาย ศราวุธ บัวเขียว</td>
-                                        <td>ปวส.</td>
-                                        <td>ยานยนต์</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td class="text-center">ยังไม่มีการกะทำผิด</td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning"><i class="fa fa-pencil color-muted"></i> แก้ไข</button>
-                                            <button type="button" class="btn btn-danger"><i class="fa fa-close color-danger"></i> ลบ</button>
-                                            <button type="button" class="btn btn-info"><i class="fa fa-info"></i> ดูรายละเอียด</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>1234567890</td>
-                                        <td>นาย ศราวุธ บัวเขียว</td>
-                                        <td>ปวส.</td>
-                                        <td>ยานยนต์</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td class="text-center"><span class="badge badge-info">1</span></td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning"><i class="fa fa-pencil color-muted"></i> แก้ไข</button>
-                                            <button type="button" class="btn btn-danger"><i class="fa fa-close color-danger"></i> ลบ</button>
-                                            <button type="button" class="btn btn-info"><i class="fa fa-info"></i> ดูรายละเอียด</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>1234567890</td>
-                                        <td>นาย ศราวุธ บัวเขียว</td>
-                                        <td>ปวส.</td>
-                                        <td>ยานยนต์</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td class="text-center"><span class="badge badge-warning">2</span></td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning"><i class="fa fa-pencil color-muted"></i> แก้ไข</button>
-                                            <button type="button" class="btn btn-danger"><i class="fa fa-close color-danger"></i> ลบ</button>
-                                            <button type="button" class="btn btn-info"><i class="fa fa-info"></i> ดูรายละเอียด</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>1234567890</td>
-                                        <td>นาย ศราวุธ บัวเขียว</td>
-                                        <td>ปวส.</td>
-                                        <td>ยานยนต์</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td class="text-center"><span class="badge badge-danger">3</span></td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning"><i class="fa fa-pencil color-muted"></i> แก้ไข</button>
-                                            <button type="button" class="btn btn-danger"><i class="fa fa-close color-danger"></i> ลบ</button>
-                                            <button type="button" class="btn btn-info"><i class="fa fa-info"></i> ดูรายละเอียด</button>
-                                        </td>
-                                    </tr>
+                                    @{
+                                        int number = 1;
+                                        foreach (var data in _viewModel.LstStudentSupportMaster)
+                                        {
+                                            <tr>
+                                                <td class="text-primary">@number</td>
+                                                <td class="text-primary">@data.StudentProfile?.IdStd</td>
+                                                <td class="text-primary">@data.StudentProfile?.GenderDisplayTh() @data.StudentProfile?.firstNameStd @data.StudentProfile?.lastNameStd</td>
+                                                <td class="text-primary">@data.StudentProfile?.GenreStdDisplayTh()</td>
+                                                <td class="text-primary">@data.StudentProfile?.BranchNameStd</td>
+                                                <td class="text-primary">@data.StudentProfile?.DegreeStd</td>
+                                                <td class="text-primary">@data.StudentProfile?.SectionStd</td>
+                                                <td class="text-primary">99</td>
+                                                <td>
+                                                    <ModalAddCommitCrimeStd StudentProfile="data?.StudentProfile" />
+                                                    <a href="/ProfileStudent/@data?.Id" class="btn btn-warning"><i class="fa fa-info"></i> @ResourceSystemMessenger.ViewDetail</a>
+                                                    <button type="button" class="btn btn-danger" @onclick="() => OnRemoveStudentSupportMaster(data.Id)"><i class="fa fa-close color-danger"></i> @ResourceSystemMessenger.Delete</button>
+                                                </td>
+                                            </tr>
+                                            number++;
+                                        }
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -119,9 +109,13 @@
 
 @inject IJSRuntime JSRuntime
 @code {
-    protected override void OnInitialized()
+    protected override Task OnInitializedAsync()
     {
-        base.OnInitialized();
+        _viewModel.PropertyChanged += (sender, args) =>
+                {
+                    InvokeAsync(StateHasChanged);
+                };
+        return Task.CompletedTask;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -130,8 +124,38 @@
         {
             await StartJavaScriptDefault.StartJavaScript(JSRuntime);
             await JSRuntime.InvokeVoidAsync("loadScript", "./vendor/datatables/js/jquery.dataTables.min.js");
-            await JSRuntime.InvokeVoidAsync("loadScript", "./js/plugins-init/datatables.init.js");
+            await JSRuntime.InvokeVoidAsync("loadScript", "./js/view/StudentSupportMaster.js");
+            await JSRuntime.InvokeVoidAsync("DataTablesAdd", "StudentSupportMaster-table");
         }
+    }
+    private async Task OnRemoveStudentSupportMaster(int Id)
+    {
+        await _viewModel.RemoveStudentSupportMaster(Id);
+        if (_viewModel.LstStudentSupportMaster.Count < 1)
+        {
+            await RefreshDataTabels();
+        }
+    }
+
+    private async Task OnGetStudentSupportMaster()
+    {
+        if (_viewModel.LstStudentSupportMaster.Count < 1)
+        {
+            await RefreshDataTabels(_viewModel.GetStudentSupportMasterAll());
+        }
+        else
+        {
+            await _viewModel.GetStudentSupportMasterAll();
+        }
+        StateHasChanged();
+    }
+
+    private async Task RefreshDataTabels(Task? task = null)
+    {
+        await JSRuntime.InvokeVoidAsync("DataTablesRemove", "StudentSupportMaster-table");
+        if (task != null)
+            await task;
+        await JSRuntime.InvokeVoidAsync("DataTablesAdd", "StudentSupportMaster-table");
     }
 }
 @* <PageTitle>Index</PageTitle>

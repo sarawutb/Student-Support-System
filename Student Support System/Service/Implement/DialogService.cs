@@ -12,28 +12,45 @@ namespace StudentSupportSystem.Service.Implement
         {
             _jSRuntime = jSRuntime;
         }
-        public async Task DialogError(string msg)
+       
+        public async Task DialogErrorAsync(string msg)
         {
             await _jSRuntime.InvokeVoidAsync(Dialog.DialogError, msg);
-        }  
-        public async Task DialogError(Exception err)
+        }
+        
+        public async Task DialogErrorAsync(Exception err)
         {
             await _jSRuntime.InvokeVoidAsync(Dialog.DialogError, err.ToString());
         }
 
-        public async Task DialogInfo(string msg)
+        public void DialogInfo(string msg)
         {
-            await _jSRuntime.InvokeVoidAsync(Dialog.DialogInfo, msg);
+            _jSRuntime.InvokeVoidAsync(Dialog.DialogInfo, msg);
         }
 
-        public async Task DialogSuccess(string msg)
+        public async Task DialogInfoAsync(string msg)
         {
-            await _jSRuntime.InvokeVoidAsync(Dialog.DialogSuccess, msg);
+            await _jSRuntime.InvokeVoidAsync(Dialog.DialogInfoAsync, msg);
         }
 
-        public async Task DialogWarning(string msg)
+        public void DialogSuccess(string msg)
         {
-            await _jSRuntime.InvokeVoidAsync(Dialog.DialogWarning, msg);
+            _jSRuntime.InvokeVoidAsync(Dialog.DialogSuccess, msg);
+        }
+
+        public async Task DialogSuccessAsync(string msg)
+        {
+            await _jSRuntime.InvokeVoidAsync(Dialog.DialogSuccessAsync, msg);
+        }
+
+        public void DialogWarning(string msg)
+        {
+            _jSRuntime.InvokeVoidAsync(Dialog.DialogWarning, msg);
+        }
+
+        public async Task DialogWarningAsync(string msg)
+        {
+            await _jSRuntime.InvokeVoidAsync(Dialog.DialogWarningAsync, msg);
         }
 
         public async Task<bool> DialogYesOrNo(string msg)

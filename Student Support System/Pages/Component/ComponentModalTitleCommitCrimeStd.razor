@@ -1,0 +1,61 @@
+﻿<div class="profile-personal-info">
+    <h4 class="text-primary mb-4">@ResourceSystemMessenger.DataStudent</h4>
+    <div class="row mb-4">
+        <div class="col-2">
+            <h5 class="f-w-500">
+                @ResourceSystemMessenger.NumberStudent <span class="pull-right">:</span>
+            </h5>
+        </div>
+        <div class="col-10">
+            <span class="text-primary">@StudentProfile?.IdStd</span>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-2">
+            <h5 class="f-w-500">
+                @ResourceSystemMessenger.Name <span class="pull-right">:</span>
+            </h5>
+        </div>
+        <div class="col-10">
+            <span class="text-primary">@StudentProfile?.GenderDisplayTh() @StudentProfile?.firstNameStd @StudentProfile?.lastNameStd</span>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-2">
+            <h5 class="f-w-500">
+                @ResourceSystemMessenger.Level <span class="pull-right">:</span>
+            </h5>
+        </div>
+        <div class="col-10">
+            <span class="text-primary">@StudentProfile?.GenreStdDisplayTh()</span>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-2">
+            <h5 class="f-w-500">
+                @ResourceSystemMessenger.Branch <span class="pull-right">:</span>
+            </h5>
+        </div>
+        <div class="col-10">
+            <span class="text-primary">@StudentProfile?.BranchNameStd</span>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-2">
+            <h5 class="f-w-500">
+                @ResourceSystemMessenger.Room <span class="pull-right">:</span>
+            </h5>
+        </div>
+        <div class="col-10">
+            <span class="text-primary">@StudentProfile?.YearStd</span>
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    [Parameter]
+    public StudentSupportSystem.Model.StudentModel? StudentProfile { get; set; }
+
+}

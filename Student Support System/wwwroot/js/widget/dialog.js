@@ -24,7 +24,6 @@ function DialogYesOrNo(msg) {
         });
     });
 }
-
 function DialogError(msgError) {
     return new Promise((resolve) => {
         Swal.fire({
@@ -46,7 +45,7 @@ function DialogError(msgError) {
         });
     });
 }
-function DialogInfo(msg) {
+function DialogInfoAsync(msg) {
     return new Promise((resolve) => {
         Swal.fire({
             icon: "info",
@@ -64,7 +63,7 @@ function DialogInfo(msg) {
         });
     });
 }
-function DialogWarning(msg) {
+function DialogWarningAsync(msg) {
     return new Promise((resolve) => {
         Swal.fire({
             icon: "warning",
@@ -82,7 +81,7 @@ function DialogWarning(msg) {
         });
     });
 }
-function DialogSuccess(msg) {
+function DialogSuccessAsync(msg) {
     return new Promise((resolve) => {
         Swal.fire({
             icon: "success",
@@ -98,5 +97,35 @@ function DialogSuccess(msg) {
                 resolve();
             }
         });
+    });
+}
+function DialogSuccess(msg) {
+    Swal.fire({
+        icon: "success",
+        title: _title,
+        text: msg,
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: _confirmButtonText
+    });
+}
+function DialogInfo(msg) {
+    Swal.fire({
+        icon: "info",
+        title: _title,
+        text: msg,
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: _confirmButtonText
+    });
+}
+function DialogWarning(msg) {
+    Swal.fire({
+        icon: "warning",
+        title: _title,
+        text: msg,
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: _confirmButtonText
     });
 }

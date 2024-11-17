@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>F:\Project2024\Student Support System\Student Support System\bin\Release\net6.0\browser-wasm\publish\</_PublishTargetUrl>
+    <History>True|2024-11-15T14:38:51.6307855Z;True|2024-11-15T00:41:09.7806767+07:00;True|2024-11-15T00:33:59.8521162+07:00;True|2024-11-15T00:29:52.9649569+07:00;True|2024-11-15T00:24:21.9829861+07:00;True|2024-11-15T00:20:40.7045642+07:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>

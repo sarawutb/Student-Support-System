@@ -15,7 +15,7 @@ namespace StudentSupportSystem.Model
         public string? Messenger { get; set; }
 
         [JsonProperty("error")]
-        public object? Error { get; set; }
+        public string? Error { get; set; }
     }
 }
 

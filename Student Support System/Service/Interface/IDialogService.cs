@@ -4,11 +4,14 @@ namespace StudentSupportSystem.Service.Interface
 {
     public interface IDialogService
     {
-        Task DialogSuccess(string msg);
-        Task DialogInfo(string msg);
-        Task DialogWarning(string msg);
-        Task DialogError(string msg);
-        Task DialogError(Exception err);
+        void DialogSuccess(string msg);
+        void DialogInfo(string msg);
+        void DialogWarning(string msg);
+        Task DialogSuccessAsync(string msg);
+        Task DialogInfoAsync(string msg);
+        Task DialogWarningAsync(string msg);
+        Task DialogErrorAsync(string msg);
+        Task DialogErrorAsync(Exception err);
         Task<bool> DialogYesOrNo(string msg);
     }
 }

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>ระบบดูแลช่วยเหลือนักศึกษา - วิทยาลัยอาชีวศึกษาจุลมณีอุทุมพรพิสัย</title>
     <base href="/" />
+    <!--<base href="/StudentSupportSystem/" />-->
 
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png" />
 
@@ -14,16 +15,15 @@
     <link href="./vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="./vendor/select2/css/select2.min.css" />
     <link href="./css/style.css" rel="stylesheet" />
-
-    <link href="css/app.css" rel="stylesheet" />
-    <link href="Student Support System.styles.css" rel="stylesheet" />
+    <link href="./css/app.css" rel="stylesheet" />
+    <link href="StudentSupportSystem.styles.css" rel="stylesheet" />
 </head>
 
 <body>
     <div class="show" id="main-wrapper">
         <div id="app">
             <div id="preloader">
-                <div class="sk-three-bounce">
+                <div class="sk-three-bounce" style="background-color:transparent;margin-top:35px">
                     <div class="sk-child sk-bounce1"></div>
                     <div class="sk-child sk-bounce2"></div>
                     <div class="sk-child sk-bounce3"></div>
@@ -53,7 +53,7 @@
                 const script = document.createElement('script');
                 script.type = "text/javascript";
                 script.src = url;
-                script.async = true; 
+                script.async = true;
                 script.onload = function () {
                     resolve();
                 };
@@ -72,12 +72,23 @@
                 document.getElementById('main-wrapper').className = 'show';
         }</script>
     <script src="_framework/blazor.webassembly.js"></script>
-    <script src="./vendor/global/global.min.js"></script>
-    <script src="./js/quixnav-init.js"></script>
-    <script src="./js/custom.min.js"></script>
+    <!--<script src="./vendor/global/global.min.js"></script>
+    <script src="./js/quixnav-init.js"></script>-->
     <script src="./js/widget/dialog.js"></script>
+    <script src="./js/widget/loading.js"></script>
+    <script src="./js/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+
+
+    <!--<script>
+        LoadingShow();
+        setTimeout(() => {
+            LoadingHide();
+            // Your code here
+        }, 5000);
+    </script>-->
 </body>
 
 </html>

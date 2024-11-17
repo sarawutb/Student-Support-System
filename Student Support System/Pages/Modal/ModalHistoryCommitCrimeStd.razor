@@ -1,0 +1,110 @@
+﻿@using StudentSupportSystem.Pages.Component
+@using StudentSupportSystem.ViewModel;
+@using StudentSupportSystem.Model;
+@{
+    string ModalName = "ModalHistoryCommitCrimeStd";
+}
+
+<button type="button" class="btn btn-info" data-toggle="modal" data-target=".@ModalName"><i class="fa fa-search"></i> @ResourceSystemMessenger.ViewHistoryCommitCrime</button>
+<div class="modal fade @ModalName" tabindex="-1" id="@ModalName" role="dialog" aria-labelledby="@ModalName" aria-hidden="true">
+@* <div class="modal fade @ModalName" tabindex="-1" role="dialog" aria-hidden="true"> *@
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">@ResourceSystemMessenger.HistoryCommitCrime</h3>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ComponentModalTitleCommitCrimeStd StudentProfile="@StudentSupportMaster?.StudentProfile" />
+                <div class="table-responsive">
+                    <table id="ModalHistoryCommitCrimeStdViewModel-table" class="display" style="min-width: 845px;width:100%">
+                        <thead>
+                            <tr>
+                                <th width="10%" scope="col">@ResourceSystemMessenger.Number</th>
+                                <th width="10%" scope="col">@ResourceSystemMessenger.Qty</th>
+                                <th width="15%" scope="col">@ResourceSystemMessenger.Title</th>
+                                <th width="10%" scope="col">@ResourceSystemMessenger.CreateBy</th>
+                                <th width="10%" scope="col">@ResourceSystemMessenger.CreateDate</th>
+                                <th width="10%" scope="col">@ResourceSystemMessenger.EditBy</th>
+                                <th width="10%" scope="col">@ResourceSystemMessenger.EditDate</th>
+                                <th width="25%" scope="col">@ResourceSystemMessenger.ManagerData</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var i = 1; i <= 100; i++)
+                            {
+                                <tr>
+                                    <td class="text-primary">@i</td>
+                                    <td class="text-primary">5 ครั้ง</td>
+                                    <td class="text-primary">
+                                        <button type="button" class="btn btn-primary"><i class="fa fa-info"></i> @ResourceSystemMessenger.ViewDetail</button>
+                                    </td>
+                                    <td class="text-primary">ศราวุธ</td>
+                                    <td class="text-primary">@DateTime.Now.ToString()</td>
+                                    <td class="text-primary">ศราวุธ</td>
+                                    <td class="text-primary">@DateTime.Now.ToLocalTime()</td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger"><i class="fa fa-close color-danger"></i> @ResourceSystemMessenger.Delete</button>
+                                    </td>
+                                </tr>
+                            }
+                            @*     @{
+                            int number = 1;
+                            foreach (var data in _viewModel.LstStudentSupportMaster)
+                            {
+                            <tr>
+                            <td class="text-primary">@number</td>
+                            <td class="text-primary">@data.StudentProfile?.IdStd</td>
+                            <td class="text-primary">@data.StudentProfile?.GenderDisplayTh() @data.StudentProfile?.firstNameStd @data.StudentProfile?.lastNameStd</td>
+                            <td class="text-primary">@data.StudentProfile?.GenreStdDisplayTh()</td>
+                            <td class="text-primary">@data.StudentProfile?.BranchNameStd</td>
+                            <td class="text-primary">@data.StudentProfile?.DegreeStd</td>
+                            <td class="text-primary">@data.StudentProfile?.SectionStd</td>
+                            <td class="text-primary">99</td>
+                            <td>
+                            <ModalAddCommitCrimeStd StudentProfile="data?.StudentProfile" />
+                            <a href="/ProfileStudent/@data.Id" class="btn btn-warning"><i class="fa fa-info"></i> ดูรายละเอียด</a>
+                            <button type="button" class="btn btn-danger" @onclick="() => OnRemoveStudentSupportMaster(data.Id)"><i class="fa fa-close color-danger"></i> ลบ</button>
+                            </td>
+                            </tr>
+                            number++;
+                            }
+                            } *@
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">@ResourceSystemMessenger.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@inject IJSRuntime JSRuntime
+@inject ModalHistoryCommitCrimeStdViewModel _viewModel;
+@code {
+    protected override void OnInitialized()
+    {
+        _viewModel.PropertyChanged += (sender, args) =>
+        {
+            InvokeAsync(StateHasChanged);
+        };
+        base.OnInitialized();
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("loadScript", "./vendor/datatables/js/jquery.dataTables.min.js");
+            await JSRuntime.InvokeVoidAsync("DataTablesAdd", "ModalHistoryCommitCrimeStdViewModel-table");
+        }
+    }
+
+    [Parameter]
+    public StudentSupportMasterModel? StudentSupportMaster { get; set; }
+
+}

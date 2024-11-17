@@ -165,6 +165,18 @@ function SetSelect2SearchStd(state, value) {
     $('#search-data-std').prop('disabled', !state);
     searchType = value;
 }
+
+function SetCheckedCurrentlyLivingWith(value) {
+    let elementId = "CurrentlyLivingWith-" + value;
+    document.getElementById(elementId).checked = true;
+}
+
+function SetSearchTeacherDisabled(value) {
+    $(document).ready(function () {
+        if (value != null)
+            $('#search-data-teacher').prop('disabled', value);
+    });
+}
 //$("#search-data-std").select2({
 //    width: "100%",
 //    ajax: {

@@ -6,7 +6,7 @@
 @using StudentSupportSystem.Service.Implement;
 @using Newtonsoft.Json;
 
-@page "/CreareStudent"
+@page "/ProfileStudent/{MasterId:int}"
 
 <div class="content-body">
     <!-- row -->
@@ -28,7 +28,11 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title"><b>เพิ่มนักศึกษา</b></h4>
+                        <h4 class="card-title"><b>รายละเอียด</b></h4>
+                        <div class="pull-right">
+                            <ModalAddCommitCrimeStd StudentProfile="_viewModel?.StudentProfile"/>
+                            <ModalHistoryCommitCrimeStd StudentSupportMaster="_viewModel?.studentSupportMst"/>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="form-row">
@@ -63,7 +67,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-2">
                                         <label class="card-title">ค้าหาจาก</label>
-                                        <select id="selSearchStd" class="form-control" @onchange="OnSelectTypeSearch">
+                                        <select disabled="@_viewModel.IsModeEdit" id="selSearchStd" class="form-control" @onchange="OnSelectTypeSearch">
                                             <option disabled selected="">===กรุณาเลือก===</option>
                                             <option value="1">รหัสนักศึกษา</option>
                                             <option value="2">ชื่อ-สกุล</option>
@@ -83,47 +87,47 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="card-title">รหัสนักศึกษา</label>
-                                        <input id="noStd" readonly type="text" @bind="_viewModel.StudentProfile.IdStd" class="form-control"
+                                        <input disabled="@_viewModel.IsModeEdit" id="noStd" readonly type="text" @bind="_viewModel.StudentProfile.IdStd" class="form-control"
                                                placeholder="รหัสนักศึกษา" />
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="card-title">คำนำหน้า</label>
-                                        <select readonly id="prefixStd" @bind="_viewModel.StudentProfile.GenderStd" class="form-control">
+                                        <select disabled id="prefixStd" @bind="_viewModel.StudentProfile.GenderStd" class="form-control">
                                             <option value="1">นาย</option>
                                             <option value="2">นางสาว</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">ชื่อ</label>
-                                        <input id="fNameStd" readonly @bind="@_viewModel.StudentProfile.firstNameStd" type="text" class="form-control" placeholder="ชื่อ" />
+                                        <input disabled="@_viewModel.IsModeEdit" id="fNameStd" readonly @bind="@_viewModel.StudentProfile.firstNameStd" type="text" class="form-control" placeholder="ชื่อ" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">สกุล</label>
-                                        <input id="lNameStd" readonly @bind="@_viewModel.StudentProfile.lastNameStd" type="text" class="form-control" placeholder="สกุล" />
+                                        <input disabled="@_viewModel.IsModeEdit" id="lNameStd" readonly @bind="@_viewModel.StudentProfile.lastNameStd" type="text" class="form-control" placeholder="สกุล" />
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="card-title">ชื่อเล่น</label>
-                                        <input id="nickNameStd" type="text" class="form-control" placeholder="ชื่อเล่น" />
+                                        <input disabled="@_viewModel.IsModeEdit" id="nickNameStd" @bind="@_viewModel.studentSupportMst.StdNicName" type="text" class="form-control" placeholder="ชื่อเล่น" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">สาขา</label>
-                                        <input readonly type="text" class="form-control" @bind="_viewModel.StudentProfile.BranchNameStd" placeholder="สาขา" />
+                                        <input disabled="@_viewModel.IsModeEdit" readonly type="text" class="form-control" @bind="_viewModel.StudentProfile.BranchNameStd" placeholder="สาขา" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">ระดับชั้น</label>
-                                        <input readonly type="text" class="form-control" @bind="_viewModel.StudentProfile.DegreeStd" placeholder="ระดับชั้น" />
+                                        <input disabled="@_viewModel.IsModeEdit" readonly type="text" class="form-control" @bind="_viewModel.StudentProfile.DegreeStd" placeholder="ระดับชั้น" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">ห้อง</label>
-                                        <input readonly type="text" class="form-control" @bind="_viewModel.StudentProfile.SectionStd" placeholder="ห้อง" />
+                                        <input disabled="@_viewModel.IsModeEdit" readonly type="text" class="form-control" @bind="_viewModel.StudentProfile.SectionStd" placeholder="ห้อง" />
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="card-title">เกิดวันที่</label>
-                                        <input type="text" class="form-control" placeholder="วันที่" @bind="_viewModel.StdDateOfBirth.Day" />
+                                        <input disabled="@_viewModel.IsModeEdit" type="text" class="form-control" placeholder="วันที่" @bind="_viewModel.StdDateOfBirth.Day" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">เดือน</label>
-                                        <select id="inputState" class="form-control" @bind="_viewModel.StdDateOfBirth.Month">
+                                        <select disabled="@_viewModel.IsModeEdit" id="inputState" class="form-control" @bind="_viewModel.StdDateOfBirth.Month">
                                             <option disabled selected="0">===กรุณาเลือก===</option>
                                             <option value="1">มกราคม</option>
                                             <option value="2">กุมภาพันธ์</option>
@@ -141,27 +145,27 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="card-title">ปี (พ.ศ.)</label>
-                                        <input type="text" class="form-control" placeholder="ปี (พ.ศ.) เกิด" @bind="_viewModel.StdDateOfBirth.Year" />
+                                        <input disabled="@_viewModel.IsModeEdit" type="text" class="form-control" placeholder="ปี (พ.ศ.) เกิด" @bind="_viewModel.StdDateOfBirth.Year" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">เบอร์โทร</label>
-                                        <input type="text" class="form-control" @bind="_viewModel.studentSupportMst.StdPhone" />
+                                        <input disabled="@_viewModel.IsModeEdit" type="text" class="form-control" @bind="_viewModel.studentSupportMst.StdPhone" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">เบอร์โทรผู้ปกครอง</label>
-                                        <input type="text" class="form-control" @bind="_viewModel.studentSupportMst.ParentsPhone" />
+                                        <input disabled="@_viewModel.IsModeEdit" type="text" class="form-control" @bind="_viewModel.studentSupportMst.ParentsPhone" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">ชื่อหมู่บ้าน</label>
-                                        <input type="text" class="form-control" @bind="@_viewModel.StudentSupportAddress.VillageName" />
+                                        <input disabled="@_viewModel.IsModeEdit" type="text" class="form-control" @bind="@_viewModel.StudentSupportAddress.VillageName" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">หมู่ที่</label>
-                                        <input type="text" class="form-control" @bind="@_viewModel.StudentSupportAddress.VillageNo" />
+                                        <input disabled="@_viewModel.IsModeEdit" type="text" class="form-control" @bind="@_viewModel.StudentSupportAddress.VillageNo" />
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="card-title">จังหวัด</label>
-                                        <select class="form-control" @bind="_viewModel.ProvinceId">
+                                        <select disabled="@_viewModel.IsModeEdit" class="form-control" @bind="_viewModel.ProvinceId">
                                             <option disabled selected value="">===กรุณาเลือก===</option>
                                             @foreach (var p in _viewModel.LstPovince)
                                             {
@@ -170,63 +174,105 @@
                                         </select>
 
                                     </div>
-                                    <div class="form-group col-md-3">
-                                        <label class="card-title">อำเภอ</label>
-                                        <select class="form-control" @bind="_viewModel.DistrictId" disabled="@_viewModel.IsDistrict">
-                                            <option disabled selected value="">===กรุณาเลือก===</option>
-                                            @foreach (var d in _viewModel.LstDistrict)
-                                            {
-                                                <option value="@d.Id">@d.NameInThai</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label class="card-title">ตำบล</label>
-                                        <select class="form-control" @bind="_viewModel.SubDistrictId" disabled="@_viewModel.IsSubDistrict">
-                                            <option disabled selected value="">===กรุณาเลือก===</option>
-                                            @foreach (var d in _viewModel.LstSubDistrict)
-                                            {
-                                                <option value="@d.Id">@d.NameInThai</option>
-                                            }
-                                        </select>
-                                    </div>
+                                    @if (_viewModel.IsModeEdit)
+                                    {
+                                        <div class="form-group col-md-3">
+                                            <label class="card-title">อำเภอ</label>
+                                            <select class="form-control" @bind="_viewModel.DistrictId" disabled="@_viewModel.IsModeEdit">
+                                                <option disabled selected value="">===กรุณาเลือก===</option>
+                                                @foreach (var d in _viewModel.LstDistrict)
+                                                {
+                                                    <option value="@d.Id">@d.NameInThai</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group col-md-3">
+                                            <label class="card-title">อำเภอ</label>
+                                            <select class="form-control" @bind="_viewModel.DistrictId" disabled="@_viewModel.IsDistrict">
+                                                <option disabled selected value="">===กรุณาเลือก===</option>
+                                                @foreach (var d in _viewModel.LstDistrict)
+                                                {
+                                                    <option value="@d.Id">@d.NameInThai</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    }
+                                    @if (_viewModel.IsModeEdit)
+                                    {
+                                        <div class="form-group col-md-3">
+                                            <label class="card-title">ตำบล</label>
+                                            <select class="form-control" @bind="_viewModel.SubDistrictId" disabled="@_viewModel.IsModeEdit">
+                                                <option disabled selected value="">===กรุณาเลือก===</option>
+                                                @{
+                                                    if (_viewModel.LstSubDistrict != null)
+                                                    {
+                                                        foreach (var d in _viewModel.LstSubDistrict)
+                                                        {
+                                                            <option value="@d.Id">@d.NameInThai</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group col-md-3">
+                                            <label class="card-title">ตำบล</label>
+                                            <select class="form-control" @bind="_viewModel.SubDistrictId" disabled="@_viewModel.IsSubDistrict">
+                                                <option disabled selected value="">===กรุณาเลือก===</option>
+                                                @{
+                                                    if (_viewModel.LstSubDistrict != null)
+                                                    {
+                                                        foreach (var d in _viewModel.LstSubDistrict)
+                                                        {
+                                                            <option value="@d.Id">@d.NameInThai</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    }
                                     <div class="form-group col-md-3">
                                         <label class="card-title">รหัสไปรษณีย์</label>
-                                        <input readonly type="text" class="form-control" @bind-value="_viewModel.ZipCode" />
+                                        <input disabled="@_viewModel.IsModeEdit" readonly type="text" class="form-control" @bind-value="_viewModel.ZipCode" />
                                     </div>
                                     <fieldset class="form-group col-md-4">
                                         <label class="col-form-label card-title">ปัจจุบันพักอยู่กับ</label>
                                         <div class="col-sm-10">
                                             <div class="form-check">
-                                                <input class="form-check-input" id="radio-1" type="radio"
+                                                <input disabled="@_viewModel.IsModeEdit" class="form-check-input" id="CurrentlyLivingWith-1" type="radio"
                                                        name="gridRadios" value="1" @onclick="() => OnClickCurrentlyLivingWith(1)" />
-                                                <label class="form-check-label card-title" for="radio-1">
+                                                <label class="form-check-label card-title" for="CurrentlyLivingWith-1">
                                                     บิดามารดา
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" id="radio-2" type="radio"
+                                                <input disabled="@_viewModel.IsModeEdit" class="form-check-input" id="CurrentlyLivingWith-2" type="radio"
                                                        name="gridRadios" value="2" @onclick="() => OnClickCurrentlyLivingWith(2)" />
-                                                <label class="form-check-label card-title" for="radio-2">
+                                                <label class="form-check-label card-title" for="CurrentlyLivingWith-2">
                                                     บิดา
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" id="radio-3" type="radio"
+                                                <input disabled="@_viewModel.IsModeEdit" class="form-check-input" id="CurrentlyLivingWith-3" type="radio"
                                                        name="gridRadios" value="3" @onclick="() => OnClickCurrentlyLivingWith(3)" />
-                                                <label class="form-check-label card-title" for="radio-3">
+                                                <label class="form-check-label card-title" for="CurrentlyLivingWith-3">
                                                     มารดา
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" id="radio-4" type="radio"
+                                                <input disabled="@_viewModel.IsModeEdit" class="form-check-input" id="CurrentlyLivingWith-4" type="radio"
                                                        name="gridRadios" value="4" @onclick="() => OnClickCurrentlyLivingWith(4)" />
-                                                <label class="form-check-label card-title" for="radio-4">
+                                                <label class="form-check-label card-title" for="CurrentlyLivingWith-4">
                                                     บุคคลอื่น(ระบุ)
                                                 </label>
                                                 <div class="form-group" id="other-person-input" style="display: @(_viewModel.IsCurrentlyLivingWithOther ? "block" : "none")">
                                                     <label class="text-dark" for="other-person">โปรดระบุ:</label>
-                                                    <input type="text" class="form-control" id="other-person" @bind="@_viewModel.studentSupportMst.CurrentlyLivingWithOther" />
+                                                    <input disabled="@_viewModel.IsModeEdit" type="text" class="form-control" id="other-person" @bind="@_viewModel.studentSupportMst.CurrentlyLivingWithOther" />
                                                 </div>
                                             </div>
                                         </div>
@@ -242,7 +288,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-2">
                                         <label class="card-title">คำนำหน้า</label>
-                                        <select readonly id="prefixStd" @bind="_viewModel.TeacherProfile.GenderTeacher" class="form-control">
+                                        <select disabled="@_viewModel.IsModeEdit" readonly id="prefixStd" @bind="_viewModel.TeacherProfile.GenderTeacher" class="form-control">
                                             <option value="1">นาย</option>
                                             <option value="2">นาง</option>
                                             <option value="3">นางสาว</option>
@@ -250,57 +296,76 @@
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label class="card-title">ชื่อ</label>
-                                        <input readonly type="text" class="form-control" @bind="_viewModel.TeacherProfile.firstNameTeacher" placeholder="ชื่อ" />
+                                        <input disabled="@_viewModel.IsModeEdit" readonly type="text" class="form-control" @bind="_viewModel.TeacherProfile.firstNameTeacher" placeholder="ชื่อ" />
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label class="card-title">สกุล</label>
-                                        <input readonly type="text" class="form-control" @bind="_viewModel.TeacherProfile.lastNameTeacher" placeholder="สกุล" />
+                                        <input disabled="@_viewModel.IsModeEdit" readonly type="text" class="form-control" @bind="_viewModel.TeacherProfile.lastNameTeacher" placeholder="สกุล" />
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <h4 class="card-title">
-                                        <b>@ResourceSystemMessenger.StudentsWhoViolateDisciplineBehaveImproperly</b>
-                                    </h4>
+                                @*     <div class="form-row">
+                                <h4 class="card-title">
+                                <b>นักศึกษาที่กระทำผิดระเบียบวินัยมีพฤติกรรมที่ไม่เหมาะสม</b>
+                                </h4>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group col-md-offset-12">
-                                        <label class="card-title">จำนวนครั้ง</label>
-                                        <input id="unit-test" type="number" class="form-control text-lg-center" value="1" />
-                                    </div>
+                                <div class="form-group col-md-offset-12">
+                                <label class="card-title">จำนวนครั้ง</label>
+                                <input id="unit-test" type="number" class="form-control text-lg-center" value="1" />
+                                </div>
                                 </div>
                                 <div class="form-row">
-                                    @for (var index = 0; index < _viewModel.LstBreachDisciplineMst.Count; index++)
-                                    {
-                                        <div class="form-group col-md-4">
+                                @for (var index = 0; index < _viewModel.LstBreachDisciplineMst.Count; index++)
+                                {
+                                <div class="form-group col-md-4">
 
-                                            @for (var row = 1; row <= 3; row++)
-                                            {
-                                                var idCheck = $"check{index}{row}";
-                                                var itemId = _viewModel.LstBreachDisciplineMst[index].Id;
-                                                <div class="form-check mb-2">
-                                                    <input type="checkbox"
-                                                           class="form-check-input"
-                                                           id="@idCheck"
-                                                           value="@itemId"
-                                                           @onchange="(e) => UpdateSelectedIds(itemId, e.Value)">
-                                                    <label class="form-check-label" for="@idCheck">
-                                                        <b class="card-title">@_viewModel.LstBreachDisciplineMst[index].Name</b>
-                                                    </label>
-                                                </div>
-                                                index++;
-                                            }
-                                        </div>
-                                    }
+                                @for (var row = 1; row <= 3; row++)
+                                {
+                                var idCheck = $"check{index}{row}";
+                                var itemId = _viewModel.LstBreachDisciplineMst[index].Id;
+                                <div class="form-check mb-2">
+                                <input type="checkbox"
+                                class="form-check-input"
+                                id="@idCheck"
+                                value="@itemId"
+                                @onchange="(e) => UpdateSelectedIds(itemId, e.Value)">
+                                <label class="form-check-label" for="@idCheck">
+                                <b class="card-title">@_viewModel.LstBreachDisciplineMst[index].Name</b>
+                                </label>
                                 </div>
+                                index++;
+                                }
+                                </div>
+                                }
+                                </div>
+                                *@
                                 <div class="pull-right">
-                                    <button type="button" @onclick="OnSave"
-                                            class="btn btn-square btn-success px-lg-5">
-                                        <i class="fa fa-save"></i> @ResourceSystemMessenger.Save
-                                    </button>
-                                    <button type="button" @onclick="OnClear"
-                                            class="btn btn-square btn-warning px-lg-5">
-                                        <i class="fa fa-refresh"></i> @ResourceSystemMessenger.ClearData
-                                    </button>
+                                    @if (_viewModel.IsModeEdit)
+                                    {
+                                        <button type="button" @onclick="OnSetCancelEdit"
+                                                class="btn btn-square btn-warning px-lg-5">
+                                            <i class="fa fa-edit"></i> @ResourceSystemMessenger.Edit
+                                        </button>
+                                        <button type="button" @onclick="async () => { await _viewModel.RemoveStudentSupportMaster(MasterId); }"
+                                                class="btn btn-square btn-danger px-lg-5">
+                                            <i class="fa fa-close"></i> @ResourceSystemMessenger.Delete
+                                        </button>
+                                    }
+                                    @if (!_viewModel.IsModeEdit)
+                                    {
+                                        <button type="button" @onclick="OnSave"
+                                                class="btn btn-square btn-success px-lg-5">
+                                            <i class="fa fa-save"></i> @ResourceSystemMessenger.Save
+                                        </button>
+                                        <button hidden="@_viewModel.IsModeEdit" type="button" @onclick="OnClear"
+                                                class="btn btn-square btn-warning px-lg-5">
+                                            <i class="fa fa-refresh"></i> @ResourceSystemMessenger.ClearData
+                                        </button>
+                                        <button type="button" @onclick="OnSetEdit"
+                                                class="btn btn-square btn-danger px-lg-5">
+                                            <i class="fa fa-close"></i> @ResourceSystemMessenger.Cancel
+                                        </button>
+                                    }
                                 </div>
                             </form>
                         </div>
@@ -314,6 +379,8 @@
 @inject ProfileStudentSupportMasterViewModel _viewModel;
 @inject IDialogService _dialogService;
 @code {
+    [Parameter]
+    public int MasterId { get; set; }
     private bool ShowOtherPersonInput { get; set; }
     private string selectedValue { get; set; }
 
@@ -325,6 +392,8 @@
         };
         await _viewModel.GetPovince();
         await _viewModel.GetBreachDisciplineMst();
+        await _viewModel.LoadDataEdit(MasterId);
+        _viewModel.ModeEdit = StateData.Edit;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -352,7 +421,6 @@
         {
             _viewModel.SelectTypeSearch = int.Parse(e.Value.ToString());
             _viewModel.IsSearchStd = true;
-            Console.WriteLine(_viewModel.SelectTypeSearch);
         }
         else
         {
@@ -363,22 +431,33 @@
 
     private void OnClickCurrentlyLivingWith(int data)
     {
-        _viewModel.studentSupportMst.CurrentlyLivingWith = data;
-        _viewModel.IsCurrentlyLivingWithOther = (data == 4);
+        _viewModel.SetCurrentlyLivingWith(data);
+    }
+
+    private async Task OnSetEdit(MouseEventArgs e)
+    {
+        _viewModel.ModeEdit = StateData.Edit;
+        StateHasChanged();
+    }
+
+    private async Task OnSetCancelEdit(MouseEventArgs e)
+    {
+        _viewModel.ModeEdit = StateData.Nothing;
+        StateHasChanged();
     }
 
     private async Task OnSave(MouseEventArgs e)
     {
-        var state = await _dialogService.DialogYesOrNo("แน่ใจว่าต้องการบันทึก ?");
+        var state = await _dialogService.DialogYesOrNo(ResourceSystemMessenger.AreYouSureYouWantToUpdate);
         if (state)
         {
-            await _viewModel.OnSaveData();
+            //await _viewModel.OnSaveData();
         }
-    } 
+    }
 
     private async Task OnClear(MouseEventArgs e)
     {
-        var state = await _dialogService.DialogYesOrNo("แน่ใจว่าต้องการล้างข้อมูล ?");
+        var state = await _dialogService.DialogYesOrNo(ResourceSystemMessenger.AreYouSureYouWantToClearYourData);
         if (state)
         {
             await _viewModel.OnClearFrom();
@@ -453,7 +532,7 @@
             }
         }
     }
-    
+
     private async Task OnRemoveFile(MouseEventArgs e)
     {
         _viewModel.ImageDataUrl = null;

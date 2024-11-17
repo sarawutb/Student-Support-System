@@ -5,6 +5,7 @@ using StudentSupportSystem.Service.Interface;
 using StudentSupportSystem.ViewModel;
 using StudentSupportSystem;
 using Microsoft.JSInterop;
+using StudentSupportSystem.Pages;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -16,19 +17,32 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 #if DEBUG
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://192.168.10.220") });
 #else
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://192.168.10.220") });
+//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 #endif
 
 // Register services for dependency injection
-builder.Services.AddScoped<IHttpClientService, HttpClientService>(); // Adjusted to scoped
+builder.Services.AddScoped<IHttpClientService, HttpClientService>();
+builder.Services.AddScoped<IStudentSupportMasterService, StudentSupportMasterService>();
+
 builder.Services.AddScoped<BaseViewModel>();
 builder.Services.AddScoped<StudentSupportMasterViewModel>();
-builder.Services.AddScoped<CreareStudentSupportMasterViewModel>();
+builder.Services.AddTransient<ModalAddCommitCrimeStdViewModel>();
+builder.Services.AddTransient<ModalHistoryCommitCrimeStdViewModel>();
+builder.Services.AddTransient<ProfileStudentSupportMasterViewModel>();
+
 builder.Services.AddSingleton<IDialogService>(d =>
 {
     var js = d.GetRequiredService<IJSRuntime>()!;
     return new DialogService(js);
 });
+builder.Services.AddSingleton<ILoadingService>(d =>
+{
+    var js = d.GetRequiredService<IJSRuntime>()!;
+    return new LoadingService(js);
+});
+
+//builder.Services.AddSingleton<StudentSupportMaster>();
 
 // Build and run the app
 await builder.Build().RunAsync();

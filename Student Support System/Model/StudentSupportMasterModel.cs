@@ -8,7 +8,10 @@ namespace StudentSupportSystem.Model
         public int Id { get; set; }
 
         [JsonProperty("IdStd")]
-        public string? IdStd { get; set; }
+        public int? IdStd { get; set; }
+
+        [JsonProperty("StudentProfile")]
+        public StudentModel? StudentProfile { get; set; }
 
         [JsonProperty("StdPrefix")]
         public int? StdPrefix { get; set; }
@@ -46,15 +49,18 @@ namespace StudentSupportSystem.Model
 
         [JsonProperty("Std_Phone")]
         public string? StdPhone { get; set; }
-        
+
         [JsonProperty("Id_File_Cener")]
         public int? Id_File_Cener { get; set; }
 
         [JsonProperty("Std_Address")]
-        public StudentSupportAddressModel? StdAddress { get; set; }   
-        
+        public StudentSupportAddressModel? StdAddress { get; set; }
+
         [JsonProperty("Std_FileCenter")]
         public FileCenterModel? Std_FileCenter { get; set; }
+
+        [JsonProperty("LstBreachDisciplineMaster")]
+        public List<int>? LstBreachDisciplineMaster { get; set; }
 
         private void SetStdDateOfBirthSeparate()
         {
@@ -72,6 +78,17 @@ namespace StudentSupportSystem.Model
     {
         public int? Day { get; set; }
         public int? Month { get; set; }
-        public int? Year { get; set; }
+        private int? _year;
+        public int? Year
+        {
+            get => _year;
+            set
+            {
+                if (value != null)
+                {
+                    _year = (value + 543);
+                }
+            }
+        }
     }
 }

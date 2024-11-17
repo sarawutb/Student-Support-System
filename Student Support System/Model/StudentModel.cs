@@ -14,16 +14,12 @@ namespace StudentSupportSystem.Model
         public string? YearStd { get; set; }
 
         [JsonProperty("name_std")]
-        private string _fullName;
-        public string fullName
-        {
-            get => _fullName;
-            set
-            {
-                _fullName = value;
-            }
-        }
+        public string NameStd { get; set; }
+
+        [JsonProperty("firstNameStd")]
         public string? firstNameStd { get; set; }
+
+        [JsonProperty("lastNameStd")]
         public string? lastNameStd { get; set; }
 
         [JsonProperty("branch_id_std")]
@@ -46,11 +42,38 @@ namespace StudentSupportSystem.Model
         [JsonProperty("gender_std")]
         public int? GenderStd { get; set; }
 
-        public void SetNameStd()
+        public string GenderDisplayTh()
         {
-            string[] parts = fullName.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            firstNameStd = parts[0];
-            lastNameStd = parts.Length > 1 ? parts[1] : string.Empty;
+            string _gender = string.Empty;
+            if (GenderStd != null)
+            {
+                if (GenderStd == 1)
+                {
+                    _gender = "นาย";
+                }
+                else
+                {
+                    _gender = "นางสาว";
+                }
+            }
+            return _gender;
+        }
+        
+        public string GenreStdDisplayTh()
+        {
+            string _genreStd = string.Empty;
+            if (GenderStd != null)
+            {
+                if (GenreStd == 1)
+                {
+                    _genreStd = "ปวช.";
+                }
+                else
+                {
+                    _genreStd = "ปวส.";
+                }
+            }
+            return _genreStd;
         }
     }
 }

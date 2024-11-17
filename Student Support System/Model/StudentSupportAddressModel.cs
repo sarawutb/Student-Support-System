@@ -23,7 +23,7 @@ namespace StudentSupportSystem.Model
         public string? VillageName { get; set; }
 
         [JsonProperty("Village_No")]
-        public int VillageNo { get; set; }        
+        public int? VillageNo { get; set; }        
         
         [JsonProperty("ZipCode")]
         public string ZipCode { get; set; }

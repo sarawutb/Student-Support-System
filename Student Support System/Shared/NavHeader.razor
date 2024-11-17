@@ -1,9 +1,9 @@
 ﻿<div class="nav-header">
     <NavLink href="/" class="brand-logo" Match="NavLinkMatch.All">
-        ระบบดูแลช่วยเหลือนักศึกษา
-        <!-- <img class="logo-abbr" src="./images/logo.png" alt="">
-        <img class="logo-compact" src="./images/logo-text.png" alt="">
-        <img class="brand-title" src="./images/logo-text.png" alt=""> -->
+        @if (IsShowTitleName)
+        {
+            <label>@ResourceSystemMessenger.StudentSupportSystem</label>
+        }
     </NavLink>
 
     <div class="nav-control">
@@ -25,18 +25,23 @@
             NavMenuCssClass = _collapseNavMenu ? "hamburger" : "hamburger is-active";
         }
     }
+    private bool IsShowTitleName { get; set; }
     private string? NavMenuCssClass { get; set; }
 
     protected override void OnInitialized()
     {
         collapseNavMenu = true;
+        IsShowTitleName = true;
         base.OnInitialized();
     }
 
-    private async Task ToggleNavMenu()
+    private async void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
         await JSRuntime.InvokeVoidAsync("OnToggleNavMenu", collapseNavMenu);
-
+        if (collapseNavMenu)
+            await Task.Delay(100);
+        IsShowTitleName = collapseNavMenu;
+        StateHasChanged();
     }
 }

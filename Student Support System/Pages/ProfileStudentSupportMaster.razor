@@ -30,8 +30,8 @@
                     <div class="card-header">
                         <h4 class="card-title"><b>รายละเอียด</b></h4>
                         <div class="pull-right">
-                            <ModalAddCommitCrimeStd StudentProfile="_viewModel?.StudentProfile" />
-                            <ModalHistoryCommitCrimeStd StudentSupportMaster="_viewModel?.studentSupportMst" />
+                            <ModalAddCommitCrimeStd StudentProfile="_viewModel?.StudentProfile"/>
+                            <ModalHistoryCommitCrimeStd StudentSupportMaster="_viewModel?.studentSupportMst"/>
                         </div>
                     </div>
                     <div class="card-body">
@@ -304,40 +304,40 @@
                                     </div>
                                 </div>
                                 @*     <div class="form-row">
-                                    <h4 class="card-title">
-                                    <b>นักศึกษาที่กระทำผิดระเบียบวินัยมีพฤติกรรมที่ไม่เหมาะสม</b>
-                                    </h4>
-                                    </div>
-                                    <div class="form-row">
-                                    <div class="form-group col-md-offset-12">
-                                    <label class="card-title">จำนวนครั้ง</label>
-                                    <input id="unit-test" type="number" class="form-control text-lg-center" value="1" />
-                                    </div>
-                                    </div>
-                                    <div class="form-row">
-                                    @for (var index = 0; index < _viewModel.LstBreachDisciplineMst.Count; index++)
-                                    {
-                                    <div class="form-group col-md-4">
+                                <h4 class="card-title">
+                                <b>นักศึกษาที่กระทำผิดระเบียบวินัยมีพฤติกรรมที่ไม่เหมาะสม</b>
+                                </h4>
+                                </div>
+                                <div class="form-row">
+                                <div class="form-group col-md-offset-12">
+                                <label class="card-title">จำนวนครั้ง</label>
+                                <input id="unit-test" type="number" class="form-control text-lg-center" value="1" />
+                                </div>
+                                </div>
+                                <div class="form-row">
+                                @for (var index = 0; index < _viewModel.LstBreachDisciplineMst.Count; index++)
+                                {
+                                <div class="form-group col-md-4">
 
-                                    @for (var row = 1; row <= 3; row++)
-                                    {
-                                    var idCheck = $"check{index}{row}";
-                                    var itemId = _viewModel.LstBreachDisciplineMst[index].Id;
-                                    <div class="form-check mb-2">
-                                    <input type="checkbox"
-                                    class="form-check-input"
-                                    id="@idCheck"
-                                    value="@itemId"
-                                    @onchange="(e) => UpdateSelectedIds(itemId, e.Value)">
-                                    <label class="form-check-label" for="@idCheck">
-                                    <b class="card-title">@_viewModel.LstBreachDisciplineMst[index].Name</b>
-                                    </label>
-                                    </div>
-                                    index++;
-                                    }
-                                    </div>
-                                    }
-                                    </div>
+                                @for (var row = 1; row <= 3; row++)
+                                {
+                                var idCheck = $"check{index}{row}";
+                                var itemId = _viewModel.LstBreachDisciplineMst[index].Id;
+                                <div class="form-check mb-2">
+                                <input type="checkbox"
+                                class="form-check-input"
+                                id="@idCheck"
+                                value="@itemId"
+                                @onchange="(e) => UpdateSelectedIds(itemId, e.Value)">
+                                <label class="form-check-label" for="@idCheck">
+                                <b class="card-title">@_viewModel.LstBreachDisciplineMst[index].Name</b>
+                                </label>
+                                </div>
+                                index++;
+                                }
+                                </div>
+                                }
+                                </div>
                                 *@
                                 <div class="pull-right">
                                     @if (_viewModel.IsModeEdit)
@@ -494,18 +494,22 @@
     private void UpdateSelectedIds(int id, object obj)
     {
         var isChecked = (bool)obj;
+        var checkList = new StudentSupportBreachDisciplineChecklist
+            {
+                CheckLsitId = id
+            };
         if (isChecked)
         {
             // If checked, add to the list
-            if (!_viewModel.lstBreachDisciplineMstId.Contains(id))
+            if (!_viewModel.lstBreachDisciplineMstId.Select(x => x.CheckLsitId).Contains(id))
             {
-                _viewModel.lstBreachDisciplineMstId.Add(id);
+                _viewModel.lstBreachDisciplineMstId.Add(checkList);
             }
         }
         else
         {
             // If unchecked, remove from the list
-            _viewModel.lstBreachDisciplineMstId.Remove(id);
+            _viewModel.lstBreachDisciplineMstId.Remove(checkList);
         }
     }
 

@@ -8,7 +8,6 @@ namespace StudentSupportSystem.Service.Interface
     {
         Task<List<PovinceModel>> GetPovince();
         Task<List<BreachDisciplineMasterModel>> GetBreachDisciplineMaster();
-        Task<bool> OnAddBreachDisciplineStd();
         Task<List<DistrictModel>> GetDistrict(int ProvinceId);
         Task<List<SubDistrictModel>> GetSubDistrict(int DistrictId);
         Task<UploadFileResponseModel> UploadFile(IBrowserFile browserFile);
@@ -20,5 +19,8 @@ namespace StudentSupportSystem.Service.Interface
         Task<StudentSupportMasterModel> GetStudentSupportMaster(int Id);
         Task<TeacherModel> GetTeachertById(int Id);
         Task<FileCenterModel> GetFileCenter(int Id);
+        Task<bool> CreateSupportBreachDiscipline(BreachDisciplineMasterCheckListModel checkListModel);
+        Task<bool> RemoveSupportBreachDisciplineById(int Id);
+        Task<bool> RemoveSupportBreachDisciplineByMasterId(int Id);
     }
 }

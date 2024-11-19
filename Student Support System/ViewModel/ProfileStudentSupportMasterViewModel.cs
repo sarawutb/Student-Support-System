@@ -135,8 +135,8 @@ namespace StudentSupportSystem.ViewModel
             }
         }
 
-        private List<int> _lstBreachDisciplineMstId = new List<int>();
-        public List<int> lstBreachDisciplineMstId
+        private List<StudentSupportBreachDisciplineChecklist> _lstBreachDisciplineMstId = new List<StudentSupportBreachDisciplineChecklist>();
+        public List<StudentSupportBreachDisciplineChecklist> lstBreachDisciplineMstId
         {
             get => _lstBreachDisciplineMstId;
             set
@@ -435,7 +435,7 @@ namespace StudentSupportSystem.ViewModel
                     _dialogService.DialogWarning("กรอกวันเกิด ไม่ถูกต้อง");
                 }
                 _studentSupportMst.StdDateOfBirthSeparate = StdDateOfBirth;
-                _studentSupportMst.LstBreachDisciplineMaster = _lstBreachDisciplineMstId;
+                //_studentSupportMst.LstBreachDisciplineMaster = _lstBreachDisciplineMstId;
                 _studentSupportMst.IdStd = StudentProfile.Id;
                 _studentSupportMst.CreateBy = 102;
                 _studentSupportMst.CreateDate = DateTime.Now;

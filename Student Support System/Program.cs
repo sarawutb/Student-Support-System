@@ -15,7 +15,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 // Conditional base address for HttpClient depending on build configuration
 #if DEBUG
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://192.168.252.243") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://192.168.10.220") });
 #else
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://192.168.10.220") });
 //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
@@ -27,8 +27,8 @@ builder.Services.AddScoped<IStudentSupportMasterService, StudentSupportMasterSer
 
 builder.Services.AddScoped<BaseViewModel>();
 builder.Services.AddScoped<StudentSupportMasterViewModel>();
-builder.Services.AddTransient<ModalAddCommitCrimeStdViewModel>();
-builder.Services.AddTransient<ModalHistoryCommitCrimeStdViewModel>();
+builder.Services.AddScoped<ModalAddCommitCrimeStdViewModel>();
+builder.Services.AddScoped<ModalHistoryCommitCrimeStdViewModel>();
 builder.Services.AddTransient<ProfileStudentSupportMasterViewModel>();
 
 builder.Services.AddSingleton<IDialogService>(d =>

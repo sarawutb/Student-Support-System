@@ -89,7 +89,7 @@
                                                 <td class="text-primary">@data.StudentProfile?.SectionStd</td>
                                                 <td class="text-primary">99</td>
                                                 <td>
-                                                    <ModalAddCommitCrimeStd StudentProfile="data?.StudentProfile" />
+                                                    <ModalAddCommitCrimeStd StudentProfile="data?.StudentProfile" IdStudentSupportMaster="data!.Id" />
                                                     <a href="/ProfileStudent/@data?.Id" class="btn btn-warning"><i class="fa fa-info"></i> @ResourceSystemMessenger.ViewDetail</a>
                                                     <button type="button" class="btn btn-danger" @onclick="() => OnRemoveStudentSupportMaster(data.Id)"><i class="fa fa-close color-danger"></i> @ResourceSystemMessenger.Delete</button>
                                                 </td>

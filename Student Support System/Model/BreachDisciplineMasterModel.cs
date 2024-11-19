@@ -16,6 +16,9 @@ namespace StudentSupportSystem.Model
 
         [JsonProperty("IsUse")]
         public int IsUse { get; set; }
+
+        [JsonProperty("IsOther")]
+        public bool IsOther { get; set; }
     }
 }
 

@@ -292,6 +292,7 @@
                                         </div>
                                     }
                                 </div>
+                                @_viewModel.LstBreachDisciplineMst.Count();
                                 <div class="pull-right">
                                     <button type="button" @onclick="OnSave"
                                             class="btn btn-square btn-success px-lg-5">
@@ -368,7 +369,7 @@
 
     private async Task OnSave(MouseEventArgs e)
     {
-        var state = await _dialogService.DialogYesOrNo("แน่ใจว่าต้องการบันทึก ?");
+        var state = await _dialogService.DialogYesOrNo(ResourceSystemMessenger.AreYouSureYouWantToSave);
         if (state)
         {
             await _viewModel.OnSaveData();
@@ -377,7 +378,7 @@
 
     private async Task OnClear(MouseEventArgs e)
     {
-        var state = await _dialogService.DialogYesOrNo("แน่ใจว่าต้องการล้างข้อมูล ?");
+        var state = await _dialogService.DialogYesOrNo(ResourceSystemMessenger.AreYouSureYouWantToClearYourData);
         if (state)
         {
             await _viewModel.OnClearFrom();
@@ -415,18 +416,20 @@
     private void UpdateSelectedIds(int id, object obj)
     {
         var isChecked = (bool)obj;
+        var checkList = new StudentSupportBreachDisciplineChecklist
+            {
+                CheckLsitId = id
+            };
         if (isChecked)
         {
-            // If checked, add to the list
-            if (!_viewModel.lstBreachDisciplineMstId.Contains(id))
+            if (!_viewModel.lstBreachDisciplineMstId.Select(x => x.CheckLsitId).Contains(id))
             {
-                _viewModel.lstBreachDisciplineMstId.Add(id);
+                _viewModel.lstBreachDisciplineMstId.Add(checkList);
             }
         }
         else
         {
-            // If unchecked, remove from the list
-            _viewModel.lstBreachDisciplineMstId.Remove(id);
+            _viewModel.lstBreachDisciplineMstId.Remove(checkList);
         }
     }
 

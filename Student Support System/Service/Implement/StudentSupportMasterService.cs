@@ -110,5 +110,26 @@ namespace StudentSupportSystem.Service.Implement
             var Data = await _httpClient.UploadFile<UploadFileResponseModel>(url, content);
             return Data;
         }
+
+        public async Task<bool> CreateSupportBreachDiscipline(BreachDisciplineMasterCheckListModel checkListModel)
+        {
+            string url = $"api/CreateSupportBreachDiscipline";
+            var Data = await _httpClient.Post<BreachDisciplineMasterCheckListModel, bool>(url, checkListModel);
+            return Data;
+        }
+
+        public async Task<bool> RemoveSupportBreachDisciplineById(int Id)
+        {
+            string url = $"api/RemoveSupportBreachDisciplineById?id={Id}";
+            var Data = await _httpClient.Get<bool>(url);
+            return Data;
+        }
+
+        public async Task<bool> RemoveSupportBreachDisciplineByMasterId(int Id)
+        {
+            string url = $"api/RemoveSupportBreachDisciplineByMasterId?id={Id}";
+            var Data = await _httpClient.Get<bool>(url);
+            return Data;
+        }
     }
 }

@@ -1,13 +1,10 @@
 ﻿@using StudentSupportSystem.Pages.Component
 @using StudentSupportSystem.ViewModel;
 @using StudentSupportSystem.Model;
-@{
-    string ModalName = "ModalAddCommitCrimeStd";
-}
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".@ModalName"><i class="fa fa-plus"></i> @ResourceSystemMessenger.AddCommitCrime</button>
-<div class="modal fade @ModalName" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".@_viewModel.ModalName"><i class="fa fa-plus"></i> @ResourceSystemMessenger.AddCommitCrime</button>
+<div class="modal fade @_viewModel.ModalName" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" id="@_viewModel.ModalId">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">@ResourceSystemMessenger.StudentsWhoViolateDisciplineBehaveImproperly</h3>
@@ -20,7 +17,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-offset-12">
                         <label class="card-title">จำนวนครั้ง</label>
-                        <input id="unit-test" type="number" class="form-control text-lg-center" value="1" />
+                        <input id="unit-test" type="number" class="form-control text-lg-center" @bind-value="_viewModel.Qty" />
                     </div>
                 </div>
                 <div class="form-row">
@@ -34,9 +31,10 @@
                                 var itemId = _viewModel.LstBreachDisciplineMst[index].Id;
                                 <div class="form-check mb-2">
                                     <input type="checkbox"
-                                           class="form-check-input"
+                                           class="form-check-input @_viewModel.UnCheckBoxModalAddCommitCrimeStd"
                                            id="@idCheck"
-                                           value="@itemId" />
+                                           value="@itemId"
+                                           @onchange="(e) => _viewModel.UpdateSelectedCheckListId(itemId, e.Value)" />
                                     <label class="form-check-label" for="@idCheck">
                                         <b class="card-title">@_viewModel.LstBreachDisciplineMst[index].Name</b>
                                     </label>
@@ -49,7 +47,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">@ResourceSystemMessenger.Close</button>
-                <button type="button" class="btn btn-primary">@ResourceSystemMessenger.Save</button>
+                <button type="button" class="btn btn-primary" @onclick="() => _viewModel.AddBreachDisciplineMasterCheckList(IdStudentSupportMaster)">@ResourceSystemMessenger.Save</button>
             </div>
         </div>
     </div>
@@ -73,5 +71,8 @@
 
     [Parameter]
     public StudentModel? StudentProfile { get; set; }
+
+    [Parameter]
+    public int IdStudentSupportMaster { get; set; }
 
 }

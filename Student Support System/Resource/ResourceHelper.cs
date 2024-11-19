@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics.Metrics;
+using System.Globalization;
 using System.Resources;
 using System.Xml.Linq;
 
@@ -56,6 +57,7 @@ public static class ResourceSystemMessenger
     public static string ViewDetail => ResourceHelper.GetString("View Detail");
     public static string StudentSupportSystem => ResourceHelper.GetString("Student Support System");
     public static string Logout => ResourceHelper.GetString("Logout");
+    public static string PleaseEnterNumberOfTime => ResourceHelper.GetString("Please enter number of times");
     public static string Test => ResourceHelper.GetString("");
 
 

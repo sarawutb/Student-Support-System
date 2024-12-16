@@ -1,7 +1,7 @@
 ﻿const uploadInput = document.getElementById('upload-image');
 const previewImage = document.getElementById('preview-image');
 const removeButton = document.getElementById('btn-remove');
-const BASE_API = "https://192.168.10.220";
+const BASE_API = "https://192.168.10.33";
 var searchType = 0;
 
 //uploadInput.addEventListener('change', function (event) {
@@ -33,15 +33,6 @@ radios.forEach(radio => {
             otherPersonInput.style.display = 'none'; // Hide the input field
         }
     });
-});
-
-const unitTestInput = document.getElementById('unit-test');
-unitTestInput.addEventListener('input', function () {
-    if (this.value < 1) {
-        this.value = 1;
-    } else if (this.value >= 3)
-        this.value = 3;
-
 });
 
 var dataStd = [];
@@ -168,7 +159,9 @@ function SetSelect2SearchStd(state, value) {
 
 function SetCheckedCurrentlyLivingWith(value) {
     let elementId = "CurrentlyLivingWith-" + value;
-    document.getElementById(elementId).checked = true;
+    let CheckedCurrentlyLivingWith = document.getElementById(elementId)
+    if (CheckedCurrentlyLivingWith != null)
+        CheckedCurrentlyLivingWith.checked = true;
 }
 
 function SetSearchTeacherDisabled(value) {

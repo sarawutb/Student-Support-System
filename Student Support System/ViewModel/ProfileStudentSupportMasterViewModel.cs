@@ -3,10 +3,13 @@ using System.Globalization;
 using System.IO;
 using System.Reflection.Emit;
 using System.Reflection.PortableExecutable;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using StudentSupportSystem.Model;
+using StudentSupportSystem.Pages;
 using StudentSupportSystem.Service.Implement;
 using StudentSupportSystem.Service.Interface;
 
@@ -14,16 +17,21 @@ namespace StudentSupportSystem.ViewModel
 {
     public class ProfileStudentSupportMasterViewModel : BaseViewModel
     {
+        private readonly int userLoginID = 102;
         private readonly IDialogService _dialogService;
         private readonly IStudentSupportMasterService _supportMasterService;
         private readonly ILoadingService _loadingService;
         private readonly IJSRuntime _jSRuntime;
-        public ProfileStudentSupportMasterViewModel(IDialogService dialogService, IStudentSupportMasterService supportMasterService, ILoadingService loadingService, IJSRuntime jSRuntime)
+        private readonly NavigationManager _navigationManager;
+        private readonly StudentSupportMasterViewModel _studentSupportMasterViewModel;
+        public ProfileStudentSupportMasterViewModel(IDialogService dialogService, IStudentSupportMasterService supportMasterService, ILoadingService loadingService, IJSRuntime jSRuntime, NavigationManager navigationManager, StudentSupportMasterViewModel studentSupportMasterViewModel)
         {
             _dialogService = dialogService;
             _supportMasterService = supportMasterService;
             _loadingService = loadingService;
             _jSRuntime = jSRuntime;
+            _navigationManager = navigationManager;
+            _studentSupportMasterViewModel = studentSupportMasterViewModel;
         }
 
         private StudentModel? _studentProfile = new StudentModel();
@@ -179,6 +187,17 @@ namespace StudentSupportSystem.ViewModel
             set
             {
                 _lstPovince = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _qty = 1;
+        public int Qty
+        {
+            get => _qty;
+            set
+            {
+                _qty = value;
                 OnPropertyChanged();
             }
         }
@@ -414,7 +433,12 @@ namespace StudentSupportSystem.ViewModel
                     if (UploadFile != null)
                     {
                         FileCenter.NameFile = UploadFile!.Data[0].FileName;
+                        FileCenter.ContentType = FileImageStd.ContentType;
+                        FileCenter.NameFileOld = FileImageStd.Name;
+                        FileCenter.SizeFile = FileImageStd.Size;
+                        FileCenter.TypeFile = 1;
                         FileCenter.PathFile = UploadFile!.Data[0].PathFile;
+                        FileCenter.CreateBy = userLoginID;
                         _studentSupportMst.Std_FileCenter = FileCenter;
                     }
                 }
@@ -426,23 +450,39 @@ namespace StudentSupportSystem.ViewModel
                 try
                 {
                     _studentSupportMst.StdAddress = StudentSupportAddress;
-                    var _textStdDateOfBirth = string.Format("{0:0000}-{1:00}-{2:00}", (StdDateOfBirth?.Year), StdDateOfBirth?.Month, StdDateOfBirth?.Day);
-                    DateTime _stdDateOfBirth = DateTime.ParseExact(_textStdDateOfBirth, "yyyy-MM-dd", new CultureInfo("th-TH"));
-                    _studentSupportMst.StdDateOfBirth = _stdDateOfBirth;
+                    var _textStdDateOfBirthTH = string.Format("{0:0000}-{1:00}-{2:00}", (StdDateOfBirth?.Year), StdDateOfBirth?.Month, StdDateOfBirth?.Day);
+                    var _textStdDateOfBirthEN = string.Format("{0:0000}-{1:00}-{2:00}", (StdDateOfBirth?.Year - 543), StdDateOfBirth?.Month, StdDateOfBirth?.Day);
+                    DateTime _stdDateOfBirthTH = DateTime.ParseExact(_textStdDateOfBirthTH, "yyyy-MM-dd", new CultureInfo("th-TH"));
+                    DateTime _stdDateOfBirthEN = DateTime.ParseExact(_textStdDateOfBirthEN, "yyyy-MM-dd", new CultureInfo("en-US"));
+                    _studentSupportMst.StdDateOfBirthTH = _stdDateOfBirthTH;
+                    _studentSupportMst.StdDateOfBirthEN = _stdDateOfBirthEN;
                 }
                 catch
                 {
                     _dialogService.DialogWarning("กรอกวันเกิด ไม่ถูกต้อง");
+                    return;
                 }
                 _studentSupportMst.StdDateOfBirthSeparate = StdDateOfBirth;
-                //_studentSupportMst.LstBreachDisciplineMaster = _lstBreachDisciplineMstId;
-                _studentSupportMst.IdStd = StudentProfile.Id;
-                _studentSupportMst.CreateBy = 102;
-                _studentSupportMst.CreateDate = DateTime.Now;
-                var state = await _supportMasterService.CreateStudentSupportMaster(_studentSupportMst);
-                if (state)
+                _studentSupportMst.Qty = Qty;
+
+                var CheckList = new BreachDisciplineMasterCheckListModel
                 {
-                    _dialogService.DialogSuccess(ResourceSystemMessenger.Successful);
+                    CreateBy = userLoginID,
+                    Qty = _studentSupportMst.Qty ?? 0,
+                    StudentSupportBreachDisciplineChecklist = _lstBreachDisciplineMstId,
+                };
+
+                _studentSupportMst.BreachDisciplineMasterCheckList = CheckList;
+                _studentSupportMst.IdStd = StudentProfile.Id;
+                _studentSupportMst.StdAge = StdDateOfBirth.StdAge;
+                _studentSupportMst.IdTeacher = TeacherProfile.IdTeacher;
+                _studentSupportMst.CreateBy = userLoginID;
+                _studentSupportMst.CreateDate = DateTime.Now;
+                var mstID = await _supportMasterService.CreateStudentSupportMaster(_studentSupportMst);
+                if (mstID != 0)
+                {
+                    await _dialogService.DialogSuccessAsync(ResourceSystemMessenger.Successful);
+                    _navigationManager.NavigateTo(RoutePathModel.PageProfileStudentSupportMaster(mstID));
                 }
                 else
                 {
@@ -455,11 +495,11 @@ namespace StudentSupportSystem.ViewModel
                 {
                     try
                     {
-                        await _supportMasterService.RemoveFile(FileImageStd.Name, DateTime.Now.ToString("yyyy-MM-dd", new CultureInfo("en-US")));
+                        await _supportMasterService.RemoveFile(FileCenter!.NameFile, DateTime.Now.ToString("yyyy-MM-dd", new CultureInfo("en-US")));
                     }
                     catch (Exception err)
                     {
-                        Console.WriteLine(err);
+                        await _dialogService.DialogErrorAsync(err);
                     }
                 }
                 await _dialogService.DialogErrorAsync(ex);
@@ -518,19 +558,41 @@ namespace StudentSupportSystem.ViewModel
         {
             try
             {
-                var _state = await _dialogService.DialogYesOrNo(ResourceHelper.GetString("Are you sure you want to delete the item"));
+                var _state = await _dialogService.DialogYesOrNo(ResourceSystemMessenger.AreYouSureYouWantToDeleteTheItem);
                 if (_state)
                 {
                     var _result = await _loadingService.LoadingAsync(_supportMasterService.RemoveStudentSupportMaster(Id));
-                    if (_result)
+                    if (true)
                     {
-
+                        await _dialogService.DialogSuccessAsync(ResourceSystemMessenger.Successful);
+                        _navigationManager.NavigateTo(RoutePathModel.PageStudentSupportMaster);
+                        await _studentSupportMasterViewModel.GetStudentSupportMasterAll();
                     }
                 }
             }
             catch (Exception ex)
             {
                 await _dialogService.DialogErrorAsync(ex);
+            }
+        }
+
+        public bool OnValidateFrom()
+        {
+            if (string.IsNullOrEmpty(studentSupportMst?.StdNicName)
+                || string.IsNullOrEmpty(StudentSupportAddress.VillageName)
+                || StudentSupportAddress.VillageNo == null
+                || ProvinceId == null
+                || DistrictId == null
+                || SubDistrictId == null
+                || studentSupportMst.CurrentlyLivingWith == null
+                || StdDateOfBirth?.StdAge == null
+                || TeacherProfile?.IdTeacher == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

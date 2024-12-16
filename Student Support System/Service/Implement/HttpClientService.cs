@@ -18,6 +18,9 @@ namespace StudentSupportSystem.Service.Implement
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Get, Url);
+                string jsonRequest = JsonConvert.SerializeObject(obj);
+                var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+                request.Content = content;
                 var response = await _httpClient.SendAsync(request);
                 var json = await response.Content.ReadAsStringAsync();
                 var data = JsonConvert.DeserializeObject<ResponseData<T>>(json);
@@ -37,14 +40,14 @@ namespace StudentSupportSystem.Service.Implement
             }
         }
 
-        public async Task<T> Get<T>(string Url)
+        public async Task<T?> Get<T>(string Url)
         {
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Get, Url);
                 var response = await _httpClient.SendAsync(request);
                 var json = await response.Content.ReadAsStringAsync();
-                var data = JsonConvert.DeserializeObject<ResponseData<T>>(json);
+                var data = JsonConvert.DeserializeObject<ResponseData<T?>>(json);
                 if (data.Error != null)
                 {
                     throw new Exception(data.Error!);
@@ -54,6 +57,21 @@ namespace StudentSupportSystem.Service.Implement
                     throw new Exception(data.Messenger);
                 }
                 return data.Result;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<byte[]> GetFile(string Url)
+        {
+            try
+            {
+                var request = new HttpRequestMessage(HttpMethod.Get, Url);
+                var response = await _httpClient.SendAsync(request);
+                var data = await response.Content.ReadAsByteArrayAsync();
+                return data;
             }
             catch (Exception ex)
             {
@@ -94,7 +112,7 @@ namespace StudentSupportSystem.Service.Implement
             {
                 var request = new HttpRequestMessage(HttpMethod.Put, Url);
                 string jsonRequest = JsonConvert.SerializeObject(obj);
-                var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+                var content = new StringContent(jsonRequest, null, "application/json");
                 request.Content = content;
                 var response = await _httpClient.SendAsync(request);
                 var json = await response.Content.ReadAsStringAsync();

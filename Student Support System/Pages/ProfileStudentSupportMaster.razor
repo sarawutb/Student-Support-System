@@ -1,4 +1,5 @@
-﻿@using StudentSupportSystem.Model
+﻿@using StudentSupportSystem.Const
+@using StudentSupportSystem.Model
 @using StudentSupportSystem.Pages.Modal
 @using StudentSupportSystem.Utility
 @using StudentSupportSystem.ViewModel;
@@ -30,16 +31,16 @@
                     <div class="card-header">
                         <h4 class="card-title"><b>รายละเอียด</b></h4>
                         <div class="pull-right">
-                            <ModalAddCommitCrimeStd StudentProfile="_viewModel?.StudentProfile"/>
-                            <ModalHistoryCommitCrimeStd StudentSupportMaster="_viewModel?.studentSupportMst"/>
+                            <ModalAddCommitCrimeStd StudentProfile="_viewModel?.StudentProfile" IdStudentSupportMaster="_viewModel.studentSupportMst.Id" />
+                            <ModalHistoryCommitCrimeStd StudentSupportMaster="_viewModel?.studentSupportMst" />
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-12">
                                 <div class="pull-right">
-                                    <p class="card-title text-center">แนบรูปภาพ</p>
-                                    <InputFile hidden type="file" OnChange="HandleFileSelected" id="upload-image" accept="image/*" />
+                                    <p class="card-title text-center"><b>แนบรูปภาพ</b></p>
+                                    <InputFile disabled="@_viewModel.IsModeEdit" hidden type="file" OnChange="HandleFileSelected" id="upload-image" accept="image/*" />
                                     <label for="upload-image">
                                         @if (_viewModel.ImageDataUrl != null)
                                         {
@@ -52,7 +53,7 @@
                                                  width="160" height="185" />
                                         }
                                     </label>
-                                    @if (_viewModel.ImageDataUrl != null)
+                                    @if (_viewModel.ImageDataUrl != null && !_viewModel.IsModeEdit)
                                     {
                                         <button type="button"
                                                 class="btn btn-square btn-outline-danger btn-block" @onclick="OnRemoveFile">
@@ -67,7 +68,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-2">
                                         <label class="card-title">ค้าหาจาก</label>
-                                        <select disabled="@_viewModel.IsModeEdit" id="selSearchStd" class="form-control" @onchange="OnSelectTypeSearch">
+                                        <select disabled id="selSearchStd" class="form-control" @onchange="OnSelectTypeSearch">
                                             <option disabled selected="">===กรุณาเลือก===</option>
                                             <option value="1">รหัสนักศึกษา</option>
                                             <option value="2">ชื่อ-สกุล</option>
@@ -75,7 +76,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="card-title">ค้นหา</label>
-                                        <select class="form-control w-100" id="search-data-std" @bind="@selectedValue"></select>
+                                        <select disabled class="form-control w-100" id="search-data-std" @bind="@selectedValue"></select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">ระดับ</label>
@@ -106,7 +107,7 @@
                                         <input disabled="@_viewModel.IsModeEdit" id="lNameStd" readonly @bind="@_viewModel.StudentProfile.lastNameStd" type="text" class="form-control" placeholder="สกุล" />
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="card-title">ชื่อเล่น</label>
+                                        <label class="card-title">ชื่อเล่น <span class="text-danger">*</span></label>
                                         <input disabled="@_viewModel.IsModeEdit" id="nickNameStd" @bind="@_viewModel.studentSupportMst.StdNicName" type="text" class="form-control" placeholder="ชื่อเล่น" />
                                     </div>
                                     <div class="form-group col-md-4">
@@ -122,11 +123,11 @@
                                         <input disabled="@_viewModel.IsModeEdit" readonly type="text" class="form-control" @bind="_viewModel.StudentProfile.SectionStd" placeholder="ห้อง" />
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="card-title">เกิดวันที่</label>
+                                        <label class="card-title">เกิดวันที่ <span class="text-danger">*</span></label>
                                         <input disabled="@_viewModel.IsModeEdit" type="text" class="form-control" placeholder="วันที่" @bind="_viewModel.StdDateOfBirth.Day" />
                                     </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="card-title">เดือน</label>
+                                    <div class="form-group col-md-2">
+                                        <label class="card-title">เดือน <span class="text-danger">*</span></label>
                                         <select disabled="@_viewModel.IsModeEdit" id="inputState" class="form-control" @bind="_viewModel.StdDateOfBirth.Month">
                                             <option disabled selected="0">===กรุณาเลือก===</option>
                                             <option value="1">มกราคม</option>
@@ -144,8 +145,12 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="card-title">ปี (พ.ศ.)</label>
+                                        <label class="card-title">ปี (พ.ศ.) <span class="text-danger">*</span></label>
                                         <input disabled="@_viewModel.IsModeEdit" type="text" class="form-control" placeholder="ปี (พ.ศ.) เกิด" @bind="_viewModel.StdDateOfBirth.Year" />
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="card-title">อายุ</label>
+                                        <input readonly type="text" class="form-control" placeholder="" @bind="_viewModel.StdDateOfBirth.StdAge" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">เบอร์โทร</label>
@@ -164,7 +169,7 @@
                                         <input disabled="@_viewModel.IsModeEdit" type="text" class="form-control" @bind="@_viewModel.StudentSupportAddress.VillageNo" />
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label class="card-title">จังหวัด</label>
+                                        <label class="card-title">จังหวัด <span class="text-danger">*</span></label>
                                         <select disabled="@_viewModel.IsModeEdit" class="form-control" @bind="_viewModel.ProvinceId">
                                             <option disabled selected value="">===กรุณาเลือก===</option>
                                             @foreach (var p in _viewModel.LstPovince)
@@ -177,7 +182,7 @@
                                     @if (_viewModel.IsModeEdit)
                                     {
                                         <div class="form-group col-md-3">
-                                            <label class="card-title">อำเภอ</label>
+                                            <label class="card-title">อำเภอ <span class="text-danger">*</span></label>
                                             <select class="form-control" @bind="_viewModel.DistrictId" disabled="@_viewModel.IsModeEdit">
                                                 <option disabled selected value="">===กรุณาเลือก===</option>
                                                 @foreach (var d in _viewModel.LstDistrict)
@@ -190,7 +195,7 @@
                                     else
                                     {
                                         <div class="form-group col-md-3">
-                                            <label class="card-title">อำเภอ</label>
+                                            <label class="card-title">อำเภอ <span class="text-danger">*</span></label>
                                             <select class="form-control" @bind="_viewModel.DistrictId" disabled="@_viewModel.IsDistrict">
                                                 <option disabled selected value="">===กรุณาเลือก===</option>
                                                 @foreach (var d in _viewModel.LstDistrict)
@@ -203,7 +208,7 @@
                                     @if (_viewModel.IsModeEdit)
                                     {
                                         <div class="form-group col-md-3">
-                                            <label class="card-title">ตำบล</label>
+                                            <label class="card-title">ตำบล <span class="text-danger">*</span></label>
                                             <select class="form-control" @bind="_viewModel.SubDistrictId" disabled="@_viewModel.IsModeEdit">
                                                 <option disabled selected value="">===กรุณาเลือก===</option>
                                                 @{
@@ -221,7 +226,7 @@
                                     else
                                     {
                                         <div class="form-group col-md-3">
-                                            <label class="card-title">ตำบล</label>
+                                            <label class="card-title">ตำบล <span class="text-danger">*</span></label>
                                             <select class="form-control" @bind="_viewModel.SubDistrictId" disabled="@_viewModel.IsSubDistrict">
                                                 <option disabled selected value="">===กรุณาเลือก===</option>
                                                 @{
@@ -241,7 +246,7 @@
                                         <input disabled="@_viewModel.IsModeEdit" readonly type="text" class="form-control" @bind-value="_viewModel.ZipCode" />
                                     </div>
                                     <fieldset class="form-group col-md-4">
-                                        <label class="col-form-label card-title">ปัจจุบันพักอยู่กับ</label>
+                                        <label class="col-form-label card-title">ปัจจุบันพักอยู่กับ <span class="text-danger">*</span></label>
                                         <div class="col-sm-10">
                                             <div class="form-check">
                                                 <input disabled="@_viewModel.IsModeEdit" class="form-check-input" id="CurrentlyLivingWith-1" type="radio"
@@ -281,7 +286,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
-                                        <label class="card-title">ค้นหาอาจารย์ที่ปรึกษา</label>
+                                        <label class="card-title">ค้นหาอาจารย์ที่ปรึกษา <span class="text-danger">*</span></label>
                                         <select class="form-control w-100" id="search-data-teacher"></select>
                                     </div>
                                 </div>
@@ -342,7 +347,7 @@
                                 <div class="pull-right">
                                     @if (_viewModel.IsModeEdit)
                                     {
-                                        <button type="button" @onclick="OnSetCancelEdit"
+                                        <button type="button" @onclick="OnSetEdit"
                                                 class="btn btn-square btn-warning px-lg-5">
                                             <i class="fa fa-edit"></i> @ResourceSystemMessenger.Edit
                                         </button>
@@ -361,7 +366,7 @@
                                                 class="btn btn-square btn-warning px-lg-5">
                                             <i class="fa fa-refresh"></i> @ResourceSystemMessenger.ClearData
                                         </button>
-                                        <button type="button" @onclick="OnSetEdit"
+                                        <button type="button" @onclick="OnSetCancelEdit"
                                                 class="btn btn-square btn-danger px-lg-5">
                                             <i class="fa fa-close"></i> @ResourceSystemMessenger.Cancel
                                         </button>
@@ -403,6 +408,7 @@
             try
             {
                 var objRef = DotNetObjectReference.Create(this);
+                await StartJavaScriptDefault.StartJavaScript(JSRuntime);
                 await JSRuntime.InvokeVoidAsync("loadScript", "./js/view/ProfileStudentSupportMaster.js");
                 await JSRuntime.InvokeVoidAsync("initializeSelect2SearchDataStd", objRef);
                 await JSRuntime.InvokeVoidAsync("initializeSelect2SearchDataTeacher", objRef);
@@ -435,13 +441,14 @@
 
     private async Task OnSetEdit(MouseEventArgs e)
     {
-        _viewModel.ModeEdit = StateData.Edit;
+        _viewModel.ModeEdit = StateData.Nothing;
         StateHasChanged();
     }
 
     private async Task OnSetCancelEdit(MouseEventArgs e)
     {
-        _viewModel.ModeEdit = StateData.Nothing;
+        _viewModel.ModeEdit = StateData.Edit;
+        await _viewModel.LoadDataEdit(MasterId);
         StateHasChanged();
     }
 
@@ -513,7 +520,6 @@
         }
     }
 
-
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
         var file = e.File;
@@ -521,8 +527,7 @@
         {
             try
             {
-                const int maxFileSize = 4 * 1024 * 1024; // Set to 4 MB or your desired limit
-                using var stream = file.OpenReadStream(maxFileSize);
+                using var stream = file.OpenReadStream(ConfigConst.MAX_FILE_SIZE);
                 var buffer = new byte[file.Size];
                 await stream.ReadAsync(buffer);
                 _viewModel.ImageDataUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
@@ -531,7 +536,7 @@
             }
             catch
             {
-                _dialogService.DialogWarning("ขนาดไฟล์ ต้องไม่เกิน 4 MB");
+                _dialogService.DialogWarning(ResourceSystemMessenger.FileSizeMustNotExceed_4_Mb);
             }
         }
     }

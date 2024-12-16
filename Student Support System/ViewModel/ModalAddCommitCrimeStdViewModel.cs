@@ -11,13 +11,15 @@ namespace StudentSupportSystem.ViewModel
         private readonly IStudentSupportMasterService _supportMasterService;
         private readonly ILoadingService _loadingService;
         private readonly IJSRuntime _jSRuntime;
+        private readonly StudentSupportMasterViewModel _studentSupportMasterViewModel;
 
-        public ModalAddCommitCrimeStdViewModel(IDialogService dialogService, IStudentSupportMasterService supportMasterService, ILoadingService loadingService, IJSRuntime jSRuntime)
+        public ModalAddCommitCrimeStdViewModel(IDialogService dialogService, IStudentSupportMasterService supportMasterService, ILoadingService loadingService, IJSRuntime jSRuntime, StudentSupportMasterViewModel studentSupportMasterViewModel)
         {
             _dialogService = dialogService;
             _supportMasterService = supportMasterService;
             _loadingService = loadingService;
             _jSRuntime = jSRuntime;
+            _studentSupportMasterViewModel = studentSupportMasterViewModel;
         }
         private List<BreachDisciplineMasterModel> _lstBreachDisciplineMst = new List<BreachDisciplineMasterModel>();
         public List<BreachDisciplineMasterModel> LstBreachDisciplineMst
@@ -37,10 +39,20 @@ namespace StudentSupportSystem.ViewModel
                 OnPropertyChanged();
             }
         }
+        public int _idStudentSupportMaster;
+        public int IdStudentSupportMaster
+        {
+            get => _idStudentSupportMaster;
+            set
+            {
+                _idStudentSupportMaster = value;
+                ModalIdOpen = "IdModalAddCommitCrimeStdOpen" + _idStudentSupportMaster;
+                ModalIdClose = "IdModalAddCommitCrimeStdClose" + _idStudentSupportMaster;
+            }
+        }
 
-        public string ModalName = "ModalAddCommitCrimeStd";
-
-        public string ModalId = "IdModalAddCommitCrimeStd";
+        public string ModalIdOpen { get; set; }
+        public string ModalIdClose { get; set; }
 
         public string UnCheckBoxModalAddCommitCrimeStd = "checklit-modal-add";
 
@@ -108,7 +120,9 @@ namespace StudentSupportSystem.ViewModel
             }
             else
             {
-                LstCheckListBreachDisciplineId.Remove(checkList);
+                var _remove = LstCheckListBreachDisciplineId.FirstOrDefault(d => d.CheckLsitId == checkList.CheckLsitId);
+                if (_remove != null)
+                    LstCheckListBreachDisciplineId.Remove(_remove);
             }
         }
 
@@ -120,6 +134,15 @@ namespace StudentSupportSystem.ViewModel
                 {
                     await _dialogService.DialogWarningAsync(ResourceSystemMessenger.PleaseEnterNumberOfTime);
                     return;
+                }
+                else if (LstCheckListBreachDisciplineId.Count <= 0)
+                {
+                    await _dialogService.DialogWarningAsync(ResourceSystemMessenger.PleaseSelectTopicBreakTheRules);
+                    return;
+                }
+                else
+                {
+                    await _jSRuntime.InvokeVoidAsync("CloseModalById", ModalIdClose);
                 }
                 var chk = await _dialogService.DialogYesOrNo(ResourceSystemMessenger.AreYouSureYouWantToSave);
                 if (chk)
@@ -134,9 +157,9 @@ namespace StudentSupportSystem.ViewModel
                     var state = await _supportMasterService.CreateSupportBreachDiscipline(CheckList);
                     if (state)
                     {
-                        await _jSRuntime.InvokeVoidAsync("CloseModalByClassName", ModalName);
                         await _dialogService.DialogSuccessAsync(ResourceSystemMessenger.Successful);
                         await ModelAddDefaultData();
+                        await _studentSupportMasterViewModel.GetStudentSupportMasterAll();
                     }
                     else
                     {

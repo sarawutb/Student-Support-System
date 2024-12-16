@@ -23,6 +23,7 @@ namespace StudentSupportSystem.Utility
             //await jSRuntime.InvokeVoidAsync("loadScript", "./js/plugins-init/datatables.init.js");
             await jSRuntime.InvokeVoidAsync("loadScript", "./vendor/select2/js/select2.full.min.js");
             await jSRuntime.InvokeVoidAsync("loadScript", "./js/plugins-init/select2-init.js");
+            await jSRuntime.InvokeVoidAsync("loadScript", "./js/widget/loading.js");
         }
     }
 }

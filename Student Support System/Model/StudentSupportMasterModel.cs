@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using StudentSupportSystem.ViewModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace StudentSupportSystem.Model
 {
@@ -22,15 +24,29 @@ namespace StudentSupportSystem.Model
         [JsonProperty("Std_Age")]
         public int? StdAge { get; set; }
 
-        private DateTime? _stdDateOfBirth;
+        [JsonProperty("Qty")]
+        public int? Qty { get; set; }
+
+        private DateTime? _stdDateOfBirthEN;
         [JsonProperty("Std_DateOfBirth")]
-        public DateTime? StdDateOfBirth
+        public DateTime? StdDateOfBirthEN
         {
-            get => _stdDateOfBirth;
+            get => _stdDateOfBirthEN;
             set
             {
-                _stdDateOfBirth = value;
+                _stdDateOfBirthEN = value;
                 SetStdDateOfBirthSeparate();
+            }
+        }
+
+        private DateTime? _stdDateOfBirthTH;
+        [JsonProperty("Std_DateOfBirth_TH")]
+        public DateTime? StdDateOfBirthTH
+        {
+            get => _stdDateOfBirthTH;
+            set
+            {
+                _stdDateOfBirthTH = value;
             }
         }
         public StdDateOfBirthModel? StdDateOfBirthSeparate { get; set; }
@@ -59,36 +75,87 @@ namespace StudentSupportSystem.Model
         [JsonProperty("Std_FileCenter")]
         public FileCenterModel? Std_FileCenter { get; set; }
 
-        [JsonProperty("LstBreachDisciplineMaster")]
-        public List<int>? LstBreachDisciplineMaster { get; set; }
+        [JsonProperty("BreachDisciplineMasterCheckList")]
+        public BreachDisciplineMasterCheckListModel? BreachDisciplineMasterCheckList { get; set; }
 
         private void SetStdDateOfBirthSeparate()
         {
-            if (_stdDateOfBirth != null)
+            if (StdDateOfBirthEN != null)
                 StdDateOfBirthSeparate = new StdDateOfBirthModel
                 {
-                    Day = _stdDateOfBirth.Value.Day,
-                    Month = _stdDateOfBirth.Value.Month,
-                    Year = _stdDateOfBirth.Value.Year,
+                    Day = StdDateOfBirthEN.Value.Day,
+                    Month = StdDateOfBirthEN.Value.Month,
+                    Year = StdDateOfBirthEN.Value.Year,
                 };
         }
     }
 
-    public class StdDateOfBirthModel
+    public class StdDateOfBirthModel : BaseViewModel
     {
-        public int? Day { get; set; }
-        public int? Month { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกวันที่")]
+        private int? _day;
+        public int? Day
+        {
+            get => _day;
+            set
+            {
+                _day = value;
+                StdAge = CalculateAge(this);
+                OnPropertyChanged();
+            }
+        }
+        private int? _month;
+        public int? Month
+        {
+            get => _month;
+            set
+            {
+                _month = value;
+                StdAge = CalculateAge(this);
+                OnPropertyChanged();
+            }
+        }
         private int? _year;
         public int? Year
         {
             get => _year;
             set
             {
-                if (value != null)
-                {
-                    _year = (value + 543);
-                }
+                _year = value;
+                StdAge = CalculateAge(this);
+                OnPropertyChanged();
             }
+        }
+        private int? _stdAge;
+        public int? StdAge
+        {
+            get => _stdAge;
+            set
+            {
+                _stdAge = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private int? CalculateAge(StdDateOfBirthModel dateOfBirth)
+        {
+            if (dateOfBirth == null || dateOfBirth.Day == null || dateOfBirth.Month == null || dateOfBirth.Year == null)
+            {
+                return null;
+            }
+            int birthYear = dateOfBirth.Year.Value - 543;
+            int birthMonth = dateOfBirth.Month.Value;
+            int birthDay = dateOfBirth.Day.Value;
+            DateTime currentDate = DateTime.Now;
+            int age = currentDate.Year - birthYear;
+            if (currentDate.Month < birthMonth ||
+                (currentDate.Month == birthMonth && currentDate.Day < birthDay))
+            {
+                age--;
+            }
+
+            return age;
         }
     }
 }

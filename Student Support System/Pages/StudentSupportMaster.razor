@@ -1,6 +1,7 @@
 ﻿@using StudentSupportSystem.Pages.Modal
 @using StudentSupportSystem.Utility
 @using StudentSupportSystem.ViewModel;
+@using StudentSupportSystem.Model;
 @inject StudentSupportMasterViewModel _viewModel
 
 @page "/"
@@ -60,7 +61,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="StudentSupportMaster-table" class="display" style="min-width: 845px;width:100%">
+                            <table id="StudentSupportMaster-table" class="table table-bordered table-striped verticle-middle table-responsive-sm" style="min-width: 845px;width:100%">
                                 <thead>
                                     <tr>
                                         <th width="5%" scope="col">@ResourceSystemMessenger.Number</th>
@@ -87,7 +88,7 @@
                                                 <td class="text-primary">@data.StudentProfile?.BranchNameStd</td>
                                                 <td class="text-primary">@data.StudentProfile?.DegreeStd</td>
                                                 <td class="text-primary">@data.StudentProfile?.SectionStd</td>
-                                                <td class="text-primary">99</td>
+                                                <td class="text-primary">@data?.Qty ครั้ง</td>
                                                 <td>
                                                     <ModalAddCommitCrimeStd StudentProfile="data?.StudentProfile" IdStudentSupportMaster="data!.Id" />
                                                     <a href="/ProfileStudent/@data?.Id" class="btn btn-warning"><i class="fa fa-info"></i> @ResourceSystemMessenger.ViewDetail</a>

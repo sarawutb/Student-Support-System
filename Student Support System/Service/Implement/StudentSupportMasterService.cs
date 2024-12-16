@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
+using StudentSupportSystem.Const;
 using StudentSupportSystem.Model;
 using StudentSupportSystem.Service.Interface;
 using System.Collections.Generic;
@@ -14,11 +15,11 @@ namespace StudentSupportSystem.Service.Implement
             _httpClient = httpClient;
         }
 
-        public async Task<bool> CreateStudentSupportMaster(StudentSupportMasterModel obj)
+        public async Task<int> CreateStudentSupportMaster(StudentSupportMasterModel obj)
         {
             string url = "api/CreateStudentSupportMaster";
-            var Data = await _httpClient.Post<StudentSupportMasterModel, bool>(url, obj);
-            return Data;
+            var Data = await _httpClient.Post<StudentSupportMasterModel, int?>(url, obj);
+            return Data ?? 0;
         }
 
         public async Task<List<BreachDisciplineMasterModel>> GetBreachDisciplineMaster()
@@ -79,19 +80,21 @@ namespace StudentSupportSystem.Service.Implement
 
         public async Task<bool> RemoveFile(string fileName, string fileDate)
         {
-            var ReqData = new Dictionary<string, dynamic>();
-            ReqData.Add("fileName", fileName);
-            ReqData.Add("fileDate", fileDate);
-            string url = "RemoveFiles";
-            var Data = await _httpClient.Post<dynamic, bool>(url, ReqData);
+            var ReqData = new RenoveFileModel
+            {
+                fileName = fileName,
+                fileDate = fileDate
+            };
+            string url = "api/RemoveFiles";
+            var Data = await _httpClient.Post<RenoveFileModel, bool>(url, ReqData);
             return Data;
         }
 
         public async Task<bool> RemoveStudentSupportMaster(int Id)
         {
             string url = $"api/RemoveStudentSupportMaster?id={Id}";
-            var Data = await _httpClient.Get<bool>(url);
-            return Data;
+            var Data = await _httpClient.Get<bool?>(url);
+            return Data ?? false;
         }
 
         public Task<bool> UpdateStudentSupportMaster(StudentSupportMasterModel obj)
@@ -102,9 +105,8 @@ namespace StudentSupportSystem.Service.Implement
         public async Task<UploadFileResponseModel> UploadFile(IBrowserFile browserFile)
         {
             string url = "api/UploadFiles";
-
             using var content = new MultipartFormDataContent();
-            var fileContent = new StreamContent(browserFile.OpenReadStream());
+            var fileContent = new StreamContent(browserFile.OpenReadStream(ConfigConst.MAX_FILE_SIZE));
             fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(browserFile.ContentType);
             content.Add(fileContent, "files[]", browserFile.Name);
             var Data = await _httpClient.UploadFile<UploadFileResponseModel>(url, content);
@@ -115,6 +117,13 @@ namespace StudentSupportSystem.Service.Implement
         {
             string url = $"api/CreateSupportBreachDiscipline";
             var Data = await _httpClient.Post<BreachDisciplineMasterCheckListModel, bool>(url, checkListModel);
+            return Data;
+        }
+
+        public async Task<bool> UpdateSupportBreachDiscipline(BreachDisciplineMasterCheckListModel checkListModel)
+        {
+            string url = $"api/UpdateSupportBreachDiscipline";
+            var Data = await _httpClient.Put<BreachDisciplineMasterCheckListModel, bool>(url, checkListModel);
             return Data;
         }
 
@@ -129,6 +138,34 @@ namespace StudentSupportSystem.Service.Implement
         {
             string url = $"api/RemoveSupportBreachDisciplineByMasterId?id={Id}";
             var Data = await _httpClient.Get<bool>(url);
+            return Data;
+        }
+
+        public async Task<List<BreachDisciplineMasterCheckListModelDetailsModel>> GetBreachDisciplineChecklistByBreachDisciplineId(int Id)
+        {
+            string url = $"api/GetBreachDisciplineChecklistByBreachDisciplineId?id={Id}";
+            var lstData = await _httpClient.Get<List<BreachDisciplineMasterCheckListModelDetailsModel>>(url);
+            return lstData;
+        }
+
+        public async Task<List<BreachDisciplineModel>> GetSupportBreachDiscipline(int mstId)
+        {
+            string url = $"api/GetSupportBreachDiscipline?mstId={mstId}";
+            var lstData = await _httpClient.Get<List<BreachDisciplineModel>>(url);
+            return lstData;
+        }
+
+        public async Task<byte[]> ReportStudentSupport(int Id)
+        {
+            string url = $"api/ReportStudentSupport?Id={Id}";
+            var filePdf = await _httpClient.GetFile(url);
+            return filePdf;
+        }
+
+        public Task<LoginModel> Login(FormLoginModel formLogin)
+        {
+            string url = $"api/Login/Teacher";
+            var Data = _httpClient.Post<FormLoginModel, LoginModel>(url, formLogin);
             return Data;
         }
     }

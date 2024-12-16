@@ -1554,7 +1554,6 @@ pre {
   .table-responsive-sm {
     display: block;
     width: 100%;
-    overflow-x: auto;
     -webkit-overflow-scrolling: touch; }
     .table-responsive-sm > .table-bordered {
       border: 0; } }
@@ -1563,7 +1562,6 @@ pre {
   .table-responsive-md {
     display: block;
     width: 100%;
-    overflow-x: auto;
     -webkit-overflow-scrolling: touch; }
     .table-responsive-md > .table-bordered {
       border: 0; } }
@@ -1572,7 +1570,6 @@ pre {
   .table-responsive-lg {
     display: block;
     width: 100%;
-    overflow-x: auto;
     -webkit-overflow-scrolling: touch; }
     .table-responsive-lg > .table-bordered {
       border: 0; } }
@@ -1581,7 +1578,6 @@ pre {
   .table-responsive-xl {
     display: block;
     width: 100%;
-    overflow-x: auto;
     -webkit-overflow-scrolling: touch; }
     .table-responsive-xl > .table-bordered {
       border: 0; } }
@@ -1590,7 +1586,6 @@ pre {
   .table-responsive-xxl {
     display: block;
     width: 100%;
-    overflow-x: auto;
     -webkit-overflow-scrolling: touch; }
     .table-responsive-xxl > .table-bordered {
       border: 0; } }
@@ -1598,7 +1593,6 @@ pre {
 .table-responsive {
   display: block;
   width: 100%;
-  overflow-x: auto;
   -webkit-overflow-scrolling: touch; }
   .table-responsive > .table-bordered {
     border: 0; }
@@ -4437,7 +4431,7 @@ a.close.disabled {
   z-index: 1040;
   width: 100vw;
   height: 100vh;
-  background-color: #00000073;
+  background-color: #000;
 }
   .modal-backdrop.fade {
     opacity: 0; }
@@ -13576,7 +13570,8 @@ svg text {
   height: 100%; }
 
 .form-control:disabled, .form-control[readonly] {
-  background: #fff;
+  color: #6C757D;
+  background: #eee;
   opacity: 1; }
 
 .custom-file-label {

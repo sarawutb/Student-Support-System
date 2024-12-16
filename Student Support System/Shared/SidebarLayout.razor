@@ -1,4 +1,6 @@
-﻿@inject IJSRuntime JSRuntime
+﻿@using StudentSupportSystem.Service.Implement;
+@using Microsoft.AspNetCore.Components;
+@inject IJSRuntime JSRuntime
 
 <div class="quixnav">
     <div class="quixnav-scroll">
@@ -20,10 +22,17 @@
                     <li><NavLink href="#">ใบเชิญผู้ปกครอง</NavLink></li>
                 </ul>
             </li>
+            <li>
+                <a href="#" aria-expanded="false" @onclick="() => Logout()">
+                    <i class="icon icon-logout"></i><span class="nav-text">ออกจากระบบ</span>
+                </a>
+            </li>
         </ul>
     </div>
 </div>
 
+@inject AuthenticationService _authenticationServic;
+@inject NavigationManager _navigationManager;
 @code {
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -31,5 +40,11 @@
         {
             await JSRuntime.InvokeVoidAsync("loadScript", "./vendor/global/global.min.js");
         }
+    }
+
+    private async Task Logout()
+    {
+        await _authenticationServic.SignOut();
+        _navigationManager.NavigateTo("/login");
     }
 }

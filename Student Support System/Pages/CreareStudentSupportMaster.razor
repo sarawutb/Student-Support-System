@@ -1,4 +1,5 @@
-﻿@using StudentSupportSystem.Model
+﻿@using StudentSupportSystem.Const
+@using StudentSupportSystem.Model
 @using StudentSupportSystem.Pages.Modal
 @using StudentSupportSystem.Utility
 @using StudentSupportSystem.ViewModel;
@@ -34,7 +35,7 @@
                         <div class="form-row">
                             <div class="col-12">
                                 <div class="pull-right">
-                                    <p class="card-title text-center">แนบรูปภาพ</p>
+                                    <p class="card-title text-center"><b>แนบรูปภาพ</b></p>
                                     <InputFile hidden type="file" OnChange="HandleFileSelected" id="upload-image" accept="image/*" />
                                     <label for="upload-image">
                                         @if (_viewModel.ImageDataUrl != null)
@@ -62,7 +63,7 @@
                             <form>
                                 <div class="form-row">
                                     <div class="form-group col-md-2">
-                                        <label class="card-title">ค้าหาจาก</label>
+                                        <label class="card-title">ค้าหาจาก <span class="text-danger">*</span></label>
                                         <select id="selSearchStd" class="form-control" @onchange="OnSelectTypeSearch">
                                             <option disabled selected="">===กรุณาเลือก===</option>
                                             <option value="1">รหัสนักศึกษา</option>
@@ -70,7 +71,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label class="card-title">ค้นหา</label>
+                                        <label class="card-title">ค้นหา <span class="text-danger">*</span></label>
                                         <select class="form-control w-100" id="search-data-std" @bind="@selectedValue"></select>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -102,8 +103,8 @@
                                         <input id="lNameStd" readonly @bind="@_viewModel.StudentProfile.lastNameStd" type="text" class="form-control" placeholder="สกุล" />
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="card-title">ชื่อเล่น</label>
-                                        <input id="nickNameStd" type="text" class="form-control" placeholder="ชื่อเล่น" />
+                                        <label class="card-title">ชื่อเล่น <span class="text-danger">*</span></label>
+                                        <input id="nickNameStd" type="text" class="form-control" @bind="@_viewModel.studentSupportMst.StdNicName" placeholder="ชื่อเล่น" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">สาขา</label>
@@ -118,11 +119,11 @@
                                         <input readonly type="text" class="form-control" @bind="_viewModel.StudentProfile.SectionStd" placeholder="ห้อง" />
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="card-title">เกิดวันที่</label>
+                                        <label class="card-title">เกิดวันที่ <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" placeholder="วันที่" @bind="_viewModel.StdDateOfBirth.Day" />
                                     </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="card-title">เดือน</label>
+                                    <div class="form-group col-md-2">
+                                        <label class="card-title">เดือน <span class="text-danger">*</span></label>
                                         <select id="inputState" class="form-control" @bind="_viewModel.StdDateOfBirth.Month">
                                             <option disabled selected="0">===กรุณาเลือก===</option>
                                             <option value="1">มกราคม</option>
@@ -140,8 +141,12 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="card-title">ปี (พ.ศ.)</label>
+                                        <label class="card-title">ปี (พ.ศ.) <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" placeholder="ปี (พ.ศ.) เกิด" @bind="_viewModel.StdDateOfBirth.Year" />
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="card-title">อายุ</label>
+                                        <input readonly type="text" class="form-control" placeholder="" @bind="_viewModel.StdDateOfBirth.StdAge" />
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="card-title">เบอร์โทร</label>
@@ -152,15 +157,15 @@
                                         <input type="text" class="form-control" @bind="_viewModel.studentSupportMst.ParentsPhone" />
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label class="card-title">ชื่อหมู่บ้าน</label>
+                                        <label class="card-title">ชื่อหมู่บ้าน <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" @bind="@_viewModel.StudentSupportAddress.VillageName" />
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label class="card-title">หมู่ที่</label>
+                                        <label class="card-title">หมู่ที่ <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" @bind="@_viewModel.StudentSupportAddress.VillageNo" />
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label class="card-title">จังหวัด</label>
+                                        <label class="card-title">จังหวัด <span class="text-danger">*</span></label>
                                         <select class="form-control" @bind="_viewModel.ProvinceId">
                                             <option disabled selected value="">===กรุณาเลือก===</option>
                                             @foreach (var p in _viewModel.LstPovince)
@@ -171,7 +176,7 @@
 
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label class="card-title">อำเภอ</label>
+                                        <label class="card-title">อำเภอ <span class="text-danger">*</span></label>
                                         <select class="form-control" @bind="_viewModel.DistrictId" disabled="@_viewModel.IsDistrict">
                                             <option disabled selected value="">===กรุณาเลือก===</option>
                                             @foreach (var d in _viewModel.LstDistrict)
@@ -181,7 +186,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label class="card-title">ตำบล</label>
+                                        <label class="card-title">ตำบล <span class="text-danger">*</span></label>
                                         <select class="form-control" @bind="_viewModel.SubDistrictId" disabled="@_viewModel.IsSubDistrict">
                                             <option disabled selected value="">===กรุณาเลือก===</option>
                                             @foreach (var d in _viewModel.LstSubDistrict)
@@ -195,7 +200,7 @@
                                         <input readonly type="text" class="form-control" @bind-value="_viewModel.ZipCode" />
                                     </div>
                                     <fieldset class="form-group col-md-4">
-                                        <label class="col-form-label card-title">ปัจจุบันพักอยู่กับ</label>
+                                        <label class="col-form-label card-title">ปัจจุบันพักอยู่กับ <span class="text-danger">*</span></label>
                                         <div class="col-sm-10">
                                             <div class="form-check">
                                                 <input class="form-check-input" id="radio-1" type="radio"
@@ -235,14 +240,14 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
-                                        <label class="card-title">ค้นหาอาจารย์ที่ปรึกษา</label>
+                                        <label class="card-title">ค้นหาอาจารย์ที่ปรึกษา <span class="text-danger">*</span></label>
                                         <select class="form-control w-100" id="search-data-teacher"></select>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-2">
                                         <label class="card-title">คำนำหน้า</label>
-                                        <select readonly id="prefixStd" @bind="_viewModel.TeacherProfile.GenderTeacher" class="form-control">
+                                        <select disabled id="prefixStd" @bind="_viewModel.TeacherProfile.GenderTeacher" class="form-control">
                                             <option value="1">นาย</option>
                                             <option value="2">นาง</option>
                                             <option value="3">นางสาว</option>
@@ -264,8 +269,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-offset-12">
-                                        <label class="card-title">จำนวนครั้ง</label>
-                                        <input id="unit-test" type="number" class="form-control text-lg-center" value="1" />
+                                        <label class="card-title">จำนวนครั้ง <span class="text-danger">*</span></label>
+                                        <input id="unit-qty" type="number" class="form-control text-lg-center" @bind="_viewModel.Qty" />
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -292,7 +297,6 @@
                                         </div>
                                     }
                                 </div>
-                                @_viewModel.LstBreachDisciplineMst.Count();
                                 <div class="pull-right">
                                     <button type="button" @onclick="OnSave"
                                             class="btn btn-square btn-success px-lg-5">
@@ -369,10 +373,18 @@
 
     private async Task OnSave(MouseEventArgs e)
     {
-        var state = await _dialogService.DialogYesOrNo(ResourceSystemMessenger.AreYouSureYouWantToSave);
-        if (state)
+        var validateChk = _viewModel.OnValidateFrom();
+        if (validateChk)
         {
-            await _viewModel.OnSaveData();
+            await _dialogService.DialogWarningAsync(ResourceSystemMessenger.PleaseFillInCompleteInformation);
+        }
+        else
+        {
+            var state = await _dialogService.DialogYesOrNo(ResourceSystemMessenger.AreYouSureYouWantToSave);
+            if (state)
+            {
+                await _viewModel.OnSaveData();
+            }
         }
     }
 
@@ -429,10 +441,14 @@
         }
         else
         {
-            _viewModel.lstBreachDisciplineMstId.Remove(checkList);
+            var _remove = _viewModel.lstBreachDisciplineMstId.FirstOrDefault(d => d.CheckLsitId == checkList.CheckLsitId);
+            if (_remove != null)
+            {
+                _viewModel.lstBreachDisciplineMstId.Remove(checkList);
+            }
         }
+        StateHasChanged();
     }
-
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
@@ -441,8 +457,7 @@
         {
             try
             {
-                const int maxFileSize = 4 * 1024 * 1024; // Set to 4 MB or your desired limit
-                using var stream = file.OpenReadStream(maxFileSize);
+                using var stream = file.OpenReadStream(ConfigConst.MAX_FILE_SIZE);
                 var buffer = new byte[file.Size];
                 await stream.ReadAsync(buffer);
                 _viewModel.ImageDataUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
@@ -451,7 +466,7 @@
             }
             catch
             {
-                _dialogService.DialogWarning("ขนาดไฟล์ ต้องไม่เกิน 4 MB");
+                _dialogService.DialogWarning(ResourceSystemMessenger.FileSizeMustNotExceed_4_Mb);
             }
         }
     }

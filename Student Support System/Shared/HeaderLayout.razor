@@ -1,4 +1,7 @@
-﻿<div class="header">
+﻿@using StudentSupportSystem.Service.Implement;
+@using Microsoft.AspNetCore.Components;
+
+<div class="header">
     <div class="header-content">
         <nav class="navbar navbar-expand">
             <div class="collapse navbar-collapse justify-content-between">
@@ -17,15 +20,15 @@
                 </div>
 
                 <ul class="navbar-nav header-right">
-                    <li class="nav-item dropdown header-profile">
-                        <a class="nav-link" type="button" role="button" data-toggle="dropdown" @onclick="OnClickDropdown">
+                    <li class="nav-item dropdown header-profile @TextShow">
+                        <NavLink href="javascript:void(0)" @onclick="OnClickDropdown" class="nav-link" type="button" role="button" data-toggle="dropdown">
                             <i class="mdi mdi-account"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a href="./page-login.html" class="dropdown-item">
+                        </NavLink>
+                        <div class="dropdown-menu dropdown-menu-right @TextShow">
+                            <NavLink href="javascript:void(0)" class="dropdown-item" @onclick="() => Logout()">
                                 <i class="icon-key"></i>
                                 <span class="ml-2">@ResourceSystemMessenger.Logout </span>
-                            </a>
+                            </NavLink>
                         </div>
                     </li>
                 </ul>
@@ -34,12 +37,29 @@
     </div>
 </div>
 
+@inject AuthenticationService _authenticationServic;
+@inject NavigationManager _navigationManager;
 @code {
-
-    private string TextShow { get; set; }
+    private string? TextShow { get; set; }
+    private bool IsShow { get; set; }
 
     private void OnClickDropdown(MouseEventArgs e)
     {
-        //throw new NotImplementedException();
+        // IsShow = !IsShow;
+        // if (IsShow)
+        // {
+        //     TextShow = "show";
+        // }
+        // else
+        // {
+        //     TextShow = null;
+        // }
+        // StateHasChanged();
+    }
+
+    private async Task Logout()
+    {
+        await _authenticationServic.SignOut();
+        _navigationManager.NavigateTo("/login");
     }
 }

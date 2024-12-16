@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.Metrics;
 using System.Globalization;
+using System.Numerics;
 using System.Resources;
 using System.Xml.Linq;
 
@@ -58,6 +59,10 @@ public static class ResourceSystemMessenger
     public static string StudentSupportSystem => ResourceHelper.GetString("Student Support System");
     public static string Logout => ResourceHelper.GetString("Logout");
     public static string PleaseEnterNumberOfTime => ResourceHelper.GetString("Please enter number of times");
+    public static string PleaseFillInMarked => ResourceHelper.GetString("Please fill in marked *");
+    public static string FileSizeMustNotExceed_4_Mb => ResourceHelper.GetString("File size must not exceed 4 MB");
+    public static string PleaseSelectTopicBreakTheRules => ResourceHelper.GetString("Please select topic break the rules");
+    public static string PleaseFillInCompleteInformation => ResourceHelper.GetString("Please fill in complete information");
     public static string Test => ResourceHelper.GetString("");
 
 

@@ -243,7 +243,19 @@
   <data name="Logout" xml:space="preserve">
     <value>ออกจากระบบ</value>
   </data>
+  <data name="File size must not exceed 4 MB" xml:space="preserve">
+    <value>ขนาดไฟล์ ต้องไม่เกิน 4 MB</value>
+  </data>
   <data name="Please enter number of times" xml:space="preserve">
     <value>กรุณากรอก จำนวนครั้ง</value>
+  </data>
+  <data name="Please fill in marked *" xml:space="preserve">
+    <value>กรุณากรอกที่มีเครื่องหมาย *</value>
+  </data>
+  <data name="Please select topic break the rules" xml:space="preserve">
+    <value>กรุณาเลือกหัวข้อ กระทำผิดระเบียบ</value>
+  </data>
+  <data name="Please fill in complete information" xml:space="preserve">
+    <value>กรุณากรอกข้อมูลให้ครบ</value>
   </data>
 </root>

@@ -1,13 +1,15 @@
 ﻿@using StudentSupportSystem.Pages.Component
 @using StudentSupportSystem.ViewModel;
 @using StudentSupportSystem.Model;
+@using StudentSupportSystem.Utility;
+@using StudentSupportSystem.Service.Implement;
+@using StudentSupportSystem.Service.Interface;
+@using System.Globalization
 @{
-    string ModalName = "ModalHistoryCommitCrimeStd";
+    string jsondata = @"[{""Id"":48,""Id_student_support_master"":29,""student_support_breach_discipline_Id"":35,""breach_discipline_master_Id"":3,""breach_discipline_master_other"":null,""CheckListName"":""ดื่มของมึนเมาในสถานศึกษา"",""CreateBy"":102,""CreateDate"":""2024-11-24T16:08:47"",""EditBy"":null,""EditDate"":null},{""Id"":49,""Id_student_support_master"":29,""student_support_breach_discipline_Id"":35,""breach_discipline_master_Id"":2,""breach_discipline_master_other"":null,""CheckListName"":""ชู้สาว"",""CreateBy"":102,""CreateDate"":""2024-11-24T16:08:47"",""EditBy"":null,""EditDate"":null},{""Id"":50,""Id_student_support_master"":29,""student_support_breach_discipline_Id"":35,""breach_discipline_master_Id"":1,""breach_discipline_master_other"":null,""CheckListName"":""แต่งกายไม่ถูกระเบียบ"",""CreateBy"":102,""CreateDate"":""2024-11-24T16:08:47"",""EditBy"":null,""EditDate"":null}]";
 }
-
-<button type="button" class="btn btn-info" data-toggle="modal" data-target=".@ModalName"><i class="fa fa-search"></i> @ResourceSystemMessenger.ViewHistoryCommitCrime</button>
+<button type="button" @onclick="() => OnGetSupportBreachDiscipline()" class="btn btn-info"><i class="fa fa-search"></i> @ResourceSystemMessenger.ViewHistoryCommitCrime</button>
 <div class="modal fade @ModalName" tabindex="-1" id="@ModalName" role="dialog" aria-labelledby="@ModalName" aria-hidden="true">
-@* <div class="modal fade @ModalName" tabindex="-1" role="dialog" aria-hidden="true"> *@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -19,59 +21,139 @@
             <div class="modal-body">
                 <ComponentModalTitleCommitCrimeStd StudentProfile="@StudentSupportMaster?.StudentProfile" />
                 <div class="table-responsive">
-                    <table id="ModalHistoryCommitCrimeStdViewModel-table" class="display" style="min-width: 845px;width:100%">
+                    <table id="@ModalHistoryCommitCrimeStdViewModelTable" class="display" style="min-width: 845px;width:100%">
                         <thead>
                             <tr>
                                 <th width="10%" scope="col">@ResourceSystemMessenger.Number</th>
                                 <th width="10%" scope="col">@ResourceSystemMessenger.Qty</th>
                                 <th width="15%" scope="col">@ResourceSystemMessenger.Title</th>
-                                <th width="10%" scope="col">@ResourceSystemMessenger.CreateBy</th>
-                                <th width="10%" scope="col">@ResourceSystemMessenger.CreateDate</th>
-                                <th width="10%" scope="col">@ResourceSystemMessenger.EditBy</th>
-                                <th width="10%" scope="col">@ResourceSystemMessenger.EditDate</th>
-                                <th width="25%" scope="col">@ResourceSystemMessenger.ManagerData</th>
+                                <th width="20%" scope="col">@ResourceSystemMessenger.CreateBy</th>
+                                <th width="20%" scope="col">@ResourceSystemMessenger.CreateDate</th>
+                                <th width="30%" scope="col">@ResourceSystemMessenger.ManagerData</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @for (var i = 1; i <= 100; i++)
-                            {
-                                <tr>
-                                    <td class="text-primary">@i</td>
-                                    <td class="text-primary">5 ครั้ง</td>
-                                    <td class="text-primary">
-                                        <button type="button" class="btn btn-primary"><i class="fa fa-info"></i> @ResourceSystemMessenger.ViewDetail</button>
-                                    </td>
-                                    <td class="text-primary">ศราวุธ</td>
-                                    <td class="text-primary">@DateTime.Now.ToString()</td>
-                                    <td class="text-primary">ศราวุธ</td>
-                                    <td class="text-primary">@DateTime.Now.ToLocalTime()</td>
-                                    <td>
-                                        <button type="button" class="btn btn-danger"><i class="fa fa-close color-danger"></i> @ResourceSystemMessenger.Delete</button>
-                                    </td>
-                                </tr>
+                            @{
+                                int number = 1;
+                                foreach (var item in _viewModel?.lstBreachDisciplineModel.ToList())
+                                {
+                                // <tr data-row="@jsondata">
+                                    <tr>
+                                        @if (item.IsEdit)
+                                        {
+                                            <td colspan="6" style="border-top: none;">
+                                                <table class="display" style="margin-left: -20px;width:100%">
+                                                    <tr>
+                                                        <td width="14.5%" class="text-primary">@(number++)</td>
+                                                        <td width="15.5%" class="text-primary">@item.Qty ครั้ง</td>
+                                                        <td width="21.5%" class="text-primary">
+                                                            <button disabled type="button" class="btn btn-primary view-details"><i class="fa fa-info"></i> ดูรายละเอียด</button>
+                                                        </td>
+                                                        <td width="15%" class="text-primary">@item.CreateByName</td>
+                                                        <td width="18%" class="text-primary">@item.CreateDate.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("th-TH"))</td>
+                                                        <td width="18%"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="6">
+                                                            <div class="card">
+                                                                <div class="card-header d-block">
+                                                                    <h4 class="card-title">@ResourceSystemMessenger.CommitCrime</h4>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="row form-group col-12">
+                                                                        @foreach (var checkList in item.lstBreachDisciplineMasters.ToList())
+                                                                        {
+                                                                            bool IsChecked = false;
+                                                                            if (item.lstCheckListModelDetailsModels.Any(d => d.BreachDisciplineMasterId == checkList.Id))
+                                                                            {
+                                                                                IsChecked = true;
+                                                                            }
+                                                                            <div class="form-check col-4 mb-2">
+                                                                                <input checked="@IsChecked" type="checkbox" class="form-check-input" @onchange="(e) => _viewModel.UpdateSelectedCheckListId(checkList.Id, e.Value)">
+                                                                                <label class="form-check-label text-primary"><b> @checkList.Name</b></label>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <div class="pull-right">
+                                                                                <button type="button" class="btn btn-success" @onclick="() => _viewModel.OnUpdateBreachDiscipline(item)"><i class="fa fa-save"></i> @ResourceSystemMessenger.Save</button>
+                                                                                <button type="button" @onclick="() => _viewModel.OnEditMode(false,item)" class="btn btn-warning"><i class="fa fa-close"></i> @ResourceSystemMessenger.Cancel</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                        }
+                                        else if (item.IsDetail)
+                                        {
+                                            <td colspan="6">
+                                                <table class="display" style="margin-left: -20px;width:100%">
+                                                    <tr>
+                                                        <td width="14.5%" class="text-primary">@(number++)</td>
+                                                        <td width="15.5%" class="text-primary">@item.Qty ครั้ง</td>
+                                                        <td width="21.5%" class="text-primary">
+                                                            <button type="button" @onclick="() => OnViewDetailsCheckList(false,item)" class="btn btn-warning"><i class="fa fa-close"></i> ซ่อน</button>
+                                                        </td>
+                                                        <td width="15%" class="text-primary">@item.CreateByName</td>
+                                                        <td width="18%" class="text-primary">@item.CreateDate.ToString()</td>
+                                                        <td width="18%">
+                                                            <button type="button" class="btn btn-info" @onclick="() => _viewModel.GetReportStudentSupport(item.Id)"><i class="fa fa-file-text-o"></i> ออกใบเตือน</button><br />
+                                                            <button type="button" @onclick="() => _viewModel.OnEditMode(true,item)" class="btn btn-warning mt-1"><i class="fa fa-edit"></i> @ResourceSystemMessenger.Edit</button>
+                                                            <button type="button" class="btn btn-danger" @onclick="() => OnDeleteBreachDiscipline(item)"><i class="fa fa-close"></i> @ResourceSystemMessenger.Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="6">
+                                                            <div class="card">
+                                                                <div class="card-header d-block">
+                                                                    <h4 class="card-title">@ResourceSystemMessenger.CommitCrime</h4>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="row form-group col-12">
+                                                                        @foreach (var checkList in item.lstCheckListModelDetailsModels.ToList())
+                                                                        {
+                                                                            <div class="form-check col-4 mb-2">
+                                                                                <input checked disabled type="checkbox" class="form-check-input">
+                                                                                <label class="form-check-label text-primary"><b>@checkList.CheckListName</b></label>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-primary">@(number++)</td>
+                                            <td class="text-primary">@item.Qty ครั้ง</td>
+                                            <td class="text-primary">
+                                                <button type="button" class="btn btn-primary @btnViewHistory" @onclick="() => OnViewDetailsCheckList(true,item)">
+                                                    <i class="fa fa-info"></i> @ResourceSystemMessenger.ViewDetail
+                                                </button>
+                                            </td>
+                                            <td class="text-primary">@item.CreateByName</td>
+                                            <td class="text-primary">@item.CreateDate.ToString()</td>
+                                        }
+                                        @if (!item.IsEdit && !item.IsDetail)
+                                        {
+                                            <td>
+                                                <button type="button" class="btn btn-info" @onclick="() => _viewModel.GetReportStudentSupport(item.Id)"><i class="fa fa-file-text-o"></i> ออกใบเตือน</button><br />
+                                                <button type="button" @onclick="() => _viewModel.OnEditMode(true,item)" class="btn btn-warning mt-1"><i class="fa fa-edit"></i> @ResourceSystemMessenger.Edit</button>
+                                                <button type="button" class="btn btn-danger" @onclick="() => OnDeleteBreachDiscipline(item)"><i class="fa fa-close"></i> @ResourceSystemMessenger.Delete</button>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
                             }
-                            @*     @{
-                            int number = 1;
-                            foreach (var data in _viewModel.LstStudentSupportMaster)
-                            {
-                            <tr>
-                            <td class="text-primary">@number</td>
-                            <td class="text-primary">@data.StudentProfile?.IdStd</td>
-                            <td class="text-primary">@data.StudentProfile?.GenderDisplayTh() @data.StudentProfile?.firstNameStd @data.StudentProfile?.lastNameStd</td>
-                            <td class="text-primary">@data.StudentProfile?.GenreStdDisplayTh()</td>
-                            <td class="text-primary">@data.StudentProfile?.BranchNameStd</td>
-                            <td class="text-primary">@data.StudentProfile?.DegreeStd</td>
-                            <td class="text-primary">@data.StudentProfile?.SectionStd</td>
-                            <td class="text-primary">99</td>
-                            <td>
-                            <ModalAddCommitCrimeStd StudentProfile="data?.StudentProfile" />
-                            <a href="/ProfileStudent/@data.Id" class="btn btn-warning"><i class="fa fa-info"></i> ดูรายละเอียด</a>
-                            <button type="button" class="btn btn-danger" @onclick="() => OnRemoveStudentSupportMaster(data.Id)"><i class="fa fa-close color-danger"></i> ลบ</button>
-                            </td>
-                            </tr>
-                            number++;
-                            }
-                            } *@
                         </tbody>
                     </table>
                 </div>
@@ -85,9 +167,16 @@
 
 @inject IJSRuntime JSRuntime
 @inject ModalHistoryCommitCrimeStdViewModel _viewModel;
+@inject IDialogService _dialogService;
 @code {
+    private string btnViewHistory;
+    private string ModalHistoryCommitCrimeStdViewModelTable;
+    private string ModalName = "ModalHistoryCommitCrimeStd";
+
     protected override void OnInitialized()
     {
+        btnViewHistory = _viewModel.btnViewHistory;
+        ModalHistoryCommitCrimeStdViewModelTable = _viewModel.ModalHistoryCommitCrimeStdViewModelTable;
         _viewModel.PropertyChanged += (sender, args) =>
         {
             InvokeAsync(StateHasChanged);
@@ -99,12 +188,49 @@
     {
         if (firstRender)
         {
+            await StartJavaScriptDefault.StartJavaScript(JSRuntime);
             await JSRuntime.InvokeVoidAsync("loadScript", "./vendor/datatables/js/jquery.dataTables.min.js");
-            await JSRuntime.InvokeVoidAsync("DataTablesAdd", "ModalHistoryCommitCrimeStdViewModel-table");
+            await JSRuntime.InvokeVoidAsync("loadScript", "./js/view/ModalHistoryCommitCrimeStd.js");
+            await JSRuntime.InvokeVoidAsync("initializeDataTableWithChildRows", ModalHistoryCommitCrimeStdViewModelTable);
+            await JSRuntime.InvokeVoidAsync("DataTablesAdd", ModalHistoryCommitCrimeStdViewModelTable);
         }
     }
 
     [Parameter]
     public StudentSupportMasterModel? StudentSupportMaster { get; set; }
 
+    private async Task OnGetSupportBreachDiscipline()
+    {
+        await OpenModal();
+        await RefreshDataTabels(_viewModel.OnGetSupportBreachDiscipline(StudentSupportMaster.Id!));
+    }
+
+    private async Task OnDeleteBreachDiscipline(BreachDisciplineModel obj)
+    {
+        bool state = await _dialogService.DialogYesOrNo(ResourceSystemMessenger.AreYouSureYouWantToDeleteTheItem);
+        if (state)
+        {
+            await RefreshDataTabels(_viewModel.OnDeleteBreachDiscipline(obj));
+        }
+    }
+
+    private async Task RefreshDataTabels(Task? task = null)
+    {
+        await JSRuntime.InvokeVoidAsync("DataTablesRemove", ModalHistoryCommitCrimeStdViewModelTable);
+        if (task != null)
+            await task;
+        StateHasChanged();
+        await JSRuntime.InvokeVoidAsync("DataTablesAdd", ModalHistoryCommitCrimeStdViewModelTable);
+    }
+
+    private async Task OpenModal()
+    {
+        await JSRuntime.InvokeVoidAsync("OpenModalById", ModalName);
+    }
+
+    private async Task OnViewDetailsCheckList(bool state, BreachDisciplineModel obj)
+    {
+        await _viewModel.OnViewDetail(state, obj);
+        StateHasChanged();
+    }
 }

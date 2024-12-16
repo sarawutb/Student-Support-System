@@ -12,11 +12,15 @@ function DataTablesRemove(table) {
     return new Promise((resolve) => {
         if ($.fn.DataTable != undefined)
             if ($.fn.DataTable.isDataTable('#' + table)) {
-                $('#' + table).DataTable().clear().destroy();
+                $('#' + table).DataTable().destroy();
             }
         resolve();
     });
 }
+
+$(document).on('hidden.bs.modal', function () {
+    $('.modal-backdrop').remove();
+});
 
 function CloseModalByClassName(className) {
     if (!className.includes(".")) {
@@ -30,11 +34,42 @@ function CloseModalById(elementId) {
     if (!elementId.includes("#")) {
         elementId = "#" + elementId;
     }
-    $(elementId).modal('hide');
-    $('.modal-backdrop').remove();
+    document.querySelector(elementId).click();
+}
+
+function OpenModalById(elementId) {
+    if (!elementId.includes("#")) {
+        elementId = "#" + elementId;
+    }
+    $(elementId).modal('show');
 }
 
 function UnCheckBoxModalAddCommitCrimeStd(className) {
     const checkboxes = document.querySelectorAll('.' + className);
     checkboxes.forEach(checkbox => checkbox.checked = false);
 }
+
+const unitQtyInput = document.getElementById('unit-qty');
+if (unitQtyInput != undefined) {
+    unitQtyInput.addEventListener('input', function () {
+        if (this.value < 1) {
+            this.value = 1;
+        } else if (this.value >= 3)
+            this.value = 3;
+
+    });
+}
+
+function triggerClickByClass(btnClass) {
+    const button = document.querySelector(`.${btnClass}`);
+    if (button) {
+        button.click();
+    }
+};
+
+function triggerClickById(btnId) {
+    const button = document.querySelector(`#${btnId}`);
+    if (button) {
+        button.click();
+    }
+};

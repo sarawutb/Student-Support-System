@@ -2,16 +2,22 @@
 @inherits LayoutComponentBase
 @inject IJSRuntime JSRuntime
 
-<div class="page">
-    <main>
-        <NavHeader />
-        <HeaderLayout />
-        <SidebarLayout />
+<AuthorizeView>
+    <Authorized>
+        <div class="page">
+            <main>
+                <NavHeader />
+                <HeaderLayout />
+                <SidebarLayout />
+                @Body
+                @* <FooterLayout /> *@
+            </main>
+        </div>
+    </Authorized>
+    <NotAuthorized>
         @Body
-        @* <FooterLayout /> *@
-    </main>
-</div>
-
+    </NotAuthorized>
+</AuthorizeView>
 @code {
     protected override async Task OnInitializedAsync()
     {

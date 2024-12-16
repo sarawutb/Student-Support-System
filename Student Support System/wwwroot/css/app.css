@@ -71,7 +71,7 @@ a, .btn-link {
     justify-content: center;
     flex-direction: column;
     border-radius: 5px;
-    border: 2px dashed #343957;
+    border: 0.5px solid #343957;
 }
 
 .custom-swal {

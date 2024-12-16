@@ -25,9 +25,12 @@ namespace StudentSupportSystem.Model
         public int? GenderTeacher { get; set; }
         public void SetNameTeacher()
         {
-            string[] parts = fullName.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            firstNameTeacher = parts[0];
-            lastNameTeacher = parts.Length > 1 ? parts[1] : string.Empty;
+            if (!string.IsNullOrEmpty(fullName))
+            {
+                string[] parts = fullName.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                firstNameTeacher = parts[0];
+                lastNameTeacher = parts.Length > 1 ? parts[1] : string.Empty;
+            }
         }
     }
 }

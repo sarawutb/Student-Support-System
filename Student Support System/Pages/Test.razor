@@ -1,0 +1,38 @@
+﻿@page "/Test"
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="content-body">
+    <!-- row -->
+    <div class="container-fluid">
+        <h3>Blazor Bootstrap Dropdown Example</h3>
+
+        <!-- Dropdown -->
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Select an Option
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" href="#" @onclick="() => SelectOption(1)">Option 1</a></li>
+                <li><a class="dropdown-item" href="#" @onclick="() => SelectOption(2)">Option 2</a></li>
+                <li><a class="dropdown-item" href="#" @onclick="() => SelectOption(3)">Option 3</a></li>
+            </ul>
+        </div>
+
+
+        <!-- Display selected option -->
+        <div class="mt-3">
+            <p>Selected Option: @SelectedOption</p>
+        </div>
+
+
+    </div>
+</div>
+
+@code {
+    private int SelectedOption = 0;
+
+    private void SelectOption(int option)
+    {
+        SelectedOption = option;
+    }
+}

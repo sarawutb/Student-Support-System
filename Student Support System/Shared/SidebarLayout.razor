@@ -6,7 +6,7 @@
     <div class="quixnav-scroll">
         <ul class="metismenu" id="menu">
             <li class="nav-label first">เมนูหลัก</li>
-            <li>
+            <li class="@OnActiveLink("/")">
                 <NavLink href="/" aria-expanded="false" Match="NavLinkMatch.All">
                     <i class="icon icon-home"></i><span class="nav-text">หน้าหลัก</span>
                 </NavLink>
@@ -16,24 +16,22 @@
                 <NavLink class="has-arrow" href="#" aria-expanded="false">
                     <i class="icon icon-single-04"></i><span class="nav-text">ข้อมูลนักศึกษา</span>
                 </NavLink>
-                <ul aria-expanded="false">
-                    <li><NavLink href="#" class="mm-active">จัดการนักศึกษา</NavLink></li>
+                <ul aria-expanded="false" class="@OnActiveCollapse("/test1")">
+                    <li><NavLink href="/StudentSupportMasterViewModel" class="mm-active">จัดการนักศึกษา</NavLink></li>
                     <li><NavLink href="#">ใบลาออกนักศึกษา</NavLink></li>
                     <li><NavLink href="#">ใบเชิญผู้ปกครอง</NavLink></li>
                 </ul>
-            </li>
-            <li>
-                <a href="#" aria-expanded="false" @onclick="() => Logout()">
-                    <i class="icon icon-logout"></i><span class="nav-text">ออกจากระบบ</span>
-                </a>
             </li>
         </ul>
     </div>
 </div>
 
-@inject AuthenticationService _authenticationServic;
-@inject NavigationManager _navigationManager;
+@inject NavigationManager _navigationManager
 @code {
+    private string? currentUrl;
+    private string? activeLink = "mm-active";
+    private string? activeCollapse = "mm-collapse mm-show";
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -42,9 +40,13 @@
         }
     }
 
-    private async Task Logout()
+    private string OnActiveLink(string href)
     {
-        await _authenticationServic.SignOut();
-        _navigationManager.NavigateTo("/login");
+        return _navigationManager.Uri;
+    }
+
+    private string OnActiveCollapse(string href)
+    {
+        return _navigationManager.Uri;
     }
 }

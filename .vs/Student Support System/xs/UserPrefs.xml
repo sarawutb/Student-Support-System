@@ -1,31 +1,51 @@
 ﻿<Properties StartupConfiguration="{E556E186-F753-4CFB-91B7-F02373B8981E}|Student Support System">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Student Support System/Pages/CreareStudentSupportMaster.razor">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/rang/Projects/PunishStudent/Student Support System/Student Support System/Service/Implement/HttpClientService.cs" relfile="Student Support System/Service/Implement/HttpClientService.cs" line="38" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Student Support System/Service/Interface/IStudentSupportMasterService.cs">
     <Files>
-      <File FileName="Student Support System/Pages/CreareStudentSupportMaster.razor" Line="262" Column="39" />
-      <File FileName="Student Support System/ViewModel/CreareStudentSupportMasterViewModel.cs" />
+      <File FileName="Student Support System/Pages/CreareStudentSupportMaster.razor" Line="2" Column="40" />
+      <File FileName="Student Support System/_Imports.razor" Line="1" Column="1" />
+      <File FileName="Student Support System/App.razor" Line="20" Column="49" />
+      <File FileName="Student Support System/Utility/StartJavaScriptDefault.cs" Line="7" Column="34" />
+      <File FileName="Student Support System/Pages/ProfileStudentSupportMaster.razor" Line="406" Column="1" />
+      <File FileName="Student Support System/Program.cs" Line="18" Column="97" />
+      <File FileName="Student Support System/Pages/StudentSupportMaster.razor" Line="92" Column="76" />
+      <File FileName="Student Support System/Pages/Counter.razor" Line="1" Column="1" />
+      <File FileName="Student Support System/Pages/FetchData.razor" Line="1" Column="1" />
+      <File FileName="Student Support System/Shared/HeaderLayout.razor" Line="24" Column="72" />
+      <File FileName="Student Support System/Resource/ResourceSystemMessenger .resx" Line="243" Column="20" />
+      <File FileName="Student Support System/Resource/ResourceHelper.cs" Line="58" Column="32" />
+      <File FileName="Student Support System/Pages/Modal/ModalAddCommitCrimeStd.razor" Line="17" Column="19" />
+      <File FileName="Student Support System/ViewModel/ModalAddCommitCrimeStdViewModel.cs" Line="59" Column="119" />
+      <File FileName="Student Support System/Service/Interface/IStudentSupportMasterService.cs" Line="11" Column="47" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Student Support System" expanded="True">
             <Node name="StudentSupportSystem">
-              <Node name="Pages">
-                <Node name="CreareStudentSupportMaster.razor" selected="True" />
+              <Node name="Pages" expanded="True">
+                <Node name="Component" expanded="True" />
+                <Node name="Modal" expanded="True" />
               </Node>
+              <Node name="Resource" expanded="True" />
+              <Node name="Service" expanded="True">
+                <Node name="Interface" expanded="True" />
+              </Node>
+              <Node name="Shared" expanded="True" />
+              <Node name="ViewModel" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/rang/Projects/PunishStudent/Student Support System/Student Support System/Service/Implement/HttpClientService.cs" relfile="Student Support System/Service/Implement/HttpClientService.cs" line="38" column="1" />
-    </BreakpointStore>
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.ItemProperties.StudentSupportSystem PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.ItemProperties.Student_220Support_220System PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.Student_220Support_220System PreferredExecutionTarget="/Applications/Google Chrome.app" />
 </Properties>

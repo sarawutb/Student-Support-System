@@ -10,7 +10,7 @@ function DialogYesOrNo(msg) {
             showCancelButton: true,
             allowOutsideClick: false,
             allowEscapeKey: true,
-            confirmButtonColor: "#3085d6",
+            confirmButtonColor: "#4425cb",
             cancelButtonColor: "#d33",
             confirmButtonText: _confirmButtonText,
             cancelButtonText: _cancelButtonText,
@@ -31,7 +31,7 @@ function DialogError(msgError) {
             title: _title,
             text: msgError,
             showCancelButton: false,
-            confirmButtonColor: "#3085d6",
+            confirmButtonColor: "#4425cb",
             confirmButtonText: _confirmButtonText,
             customClass: {
                 popup: 'custom-swal'
@@ -52,7 +52,7 @@ function DialogInfoAsync(msg) {
             title: _title,
             text: msg,
             showCancelButton: false,
-            confirmButtonColor: "#3085d6",
+            confirmButtonColor: "#4425cb",
             confirmButtonText: _confirmButtonText
         }).then((result) => {
             if (result.isConfirmed) {
@@ -70,7 +70,7 @@ function DialogWarningAsync(msg) {
             title: _title,
             text: msg,
             showCancelButton: false,
-            confirmButtonColor: "#3085d6",
+            confirmButtonColor: "#4425cb",
             confirmButtonText: _confirmButtonText
         }).then((result) => {
             if (result.isConfirmed) {
@@ -88,7 +88,7 @@ function DialogSuccessAsync(msg) {
             title: _title,
             text: msg,
             showCancelButton: false,
-            confirmButtonColor: "#3085d6",
+            confirmButtonColor: "#4425cb",
             confirmButtonText: _confirmButtonText
         }).then((result) => {
             if (result.isConfirmed) {
@@ -105,7 +105,7 @@ function DialogSuccess(msg) {
         title: _title,
         text: msg,
         showCancelButton: false,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#4425cb",
         confirmButtonText: _confirmButtonText
     });
 }
@@ -115,7 +115,7 @@ function DialogInfo(msg) {
         title: _title,
         text: msg,
         showCancelButton: false,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#4425cb",
         confirmButtonText: _confirmButtonText
     });
 }
@@ -125,7 +125,7 @@ function DialogWarning(msg) {
         title: _title,
         text: msg,
         showCancelButton: false,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#4425cb",
         confirmButtonText: _confirmButtonText
     });
 }

@@ -19,4 +19,10 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.25" PrivateAssets="all" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Shared\Error\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Shared\Error\" />
+	</ItemGroup>
 </Project>
